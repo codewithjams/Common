@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Common ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="app_name">Common</string>
+    <string name="ok">OK</string>
+    <string name="no_phone_state_permission">
+        Permission to read Phone State is required in order to determine whether the application is
+        connected over internet or not.
+    </string>
+    <string name="default_error_tile">Error</string>
+    <string name="default_error_message">Something went wrong. Please try again later.</string>
+    <string name="default_failure_message">We are unable to load content. Please check connectivity and retry. If the problem persists, try after sometime.</string>
+    <string name="default_ssl_error_message">It seems some issue with SSL Handshake.\nPlease inform the Administrator.</string>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Content Descriptions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <string name="imcd_close">Close</string>
+
+</resources>

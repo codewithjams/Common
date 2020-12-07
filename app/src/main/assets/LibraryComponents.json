@@ -1,0 +1,85 @@
+{
+  "status": "SUCCESS",
+  "result": [
+    {
+      "title": "BaseAuthenticator",
+      "description": "An implementation of okhttp3.Authenticator, which can be used to authenticate every REST request."
+    },
+    {
+      "title": "BaseInterceptor",
+      "description": "An implementation of okhttp3.Interceptor, which can be used to modify every ongoing REST Request."
+    },
+    {
+      "title": "CacheInterceptor",
+      "description": "An implementation of BaseInterceptor, which applies Cache Control to every ongoing REST request."
+    },
+    {
+      "title": "DataStorePreference",
+      "description": "A wrapper of DataStore of type Preference, fulfills the purpose of storing/retrieving the Data from the Persistence Storage."
+    },
+    {
+      "title": "BaseModel",
+      "description": "A Class that encapsulates common data related to UI which is used between BaseActivity and BaseViewModel."
+    },
+    {
+      "title": "BaseRepository",
+      "description": "A Class that encapsulates the common set-up required to set-up a Repository."
+    },
+    {
+      "title": "BaseViewModel",
+      "description": "A Class that encapsulates the common set-up required to set-up a androidx.lifecycle.ViewModel."
+    },
+    {
+      "title": "BaseViewModel",
+      "description": "An extension of ViewModel to contain the common methods related to Controlling View as well as Data."
+    },
+    {
+      "title": "ViewModelKey",
+      "description": "An Annotation of type dagger.MapKey which is used to inject the ViewModel using Dagger."
+    },
+    {
+      "title": "VMFactory",
+      "description": "An extension of androidx.lifecycle.ViewModelProvider.Factory which is generic in nature and is used to supply ViewModel."
+    },
+    {
+      "title": "BaseActivity",
+      "description": "An extension of androidx.appcompat.app.AppCompatActivity with code set-up along with BaseModel, BaseViewModel, and the Data Binding Class required for an Activity."
+    },
+    {
+      "title": "BaseSingleVHAdapter",
+      "description": "An extension of androidx.recyclerview.widget.RecyclerView.Adapter with code set-up along with BaseViewModel, to support a RecyclerView.Adapter with a single type of RecyclerView.ViewHolder."
+    },
+    {
+      "title": "BaseMultipleVHAdapter",
+      "description": "An extension of androidx.recyclerview.widget.RecyclerView.Adapter, to support a RecyclerView.Adapter with a multiple types of RecyclerView.ViewHolder."
+    },
+    {
+      "title": "BaseBottomSheetDialog",
+      "description": "An extension of com.google.android.material.bottomsheet.BottomSheetDialogFragment, as an customized Bottom Sheet Dialog with all the set-up done."
+    },
+    {
+      "title": "BaseDialogFragment",
+      "description": "An extension of androidx.fragment.app.DialogFragment, as an customized Dialog Fragment with all the set-up done."
+    },
+    {
+      "title": "BaseFragment",
+      "description": "An extension of androidx.fragment.app.Fragment, as an customized Fragment with all the set-up done."
+    },
+    {
+      "title": "BaseFragmentListener",
+      "description": "An Interface with common abstract methods required by a BaseFragment."
+    },
+    {
+      "title": "PopUpWindow",
+      "description": "A wrapper class that contains implementation of android.widget.PopupWindow to show a Pop-Up Window in the UI."
+    },
+    {
+      "title": "BaseViewHolder",
+      "description": "An extension of androidx.recyclerview.widget.RecyclerView.ViewHolder with all the set-up done, as well as it is Lifecycle Aware."
+    },
+    {
+      "title": "DefaultMessages.kt",
+      "description": "An extension of androidx.recyclerview.widget.RecyclerView.ViewHolder with all the set-up done, as well as it is Lifecycle Aware."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="sample.ritwik.app.ui.fragment.WelcomeFragment"
+        android:label="Welcome"
+        tools:layout="@layout/fragment_welcome" />
+
+    <fragment
+        android:id="@+id/commonFragment"
+        android:name="sample.ritwik.app.ui.fragment.CommonFragment"
+        android:label="Common"
+        tools:layout="@layout/fragment_common" />
+
+</navigation>

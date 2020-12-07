@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Common ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <color name="colorPrimary">#FF0000</color>
+    <color name="colorPrimaryDark">#00FF00</color>
+    <color name="colorAccent">#0000FF</color>
+    <color name="color_text">#000000</color>
+    <color name="color_background">#FFFFFF</color>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PopUpWindow Colors ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <color name="color_pop_up_background">#FCDF7D</color>
+    <color name="color_pop_up_text">#000</color>
+    <color name="color_pop_up_state_normal">@color/colorPrimaryDark</color>
+    <color name="color_pop_up_state_warning">#FCDF7D</color>
+    <color name="color_pop_up_state_error">#D32F2F</color>
+
+</resources>

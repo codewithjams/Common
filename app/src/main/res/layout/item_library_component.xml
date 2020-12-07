@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="sample.ritwik.app.data.ui.LibraryComponent" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="5dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="5dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="5dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="5dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <TextView
+            android:id="@+id/placeholder_text_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@{item.title}"
+            android:textColor="@color/color_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toEndOf="@id/guideline_divider"
+            app:layout_constraintStart_toStartOf="@id/guideline_left"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/placeholder_text_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@{item.description}"
+            android:textColor="@color/color_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintStart_toStartOf="@id/guideline_divider"
+            app:layout_constraintTop_toTopOf="@id/guideline_top"
+            tools:text="This is an description of the given Title cause it is most descriptive of all." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

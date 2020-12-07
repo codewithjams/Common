@@ -68,7 +68,6 @@ dependencies {
     api 'com.squareup.retrofit2:converter-moshi:2.9.0'
     api 'com.squareup.picasso:picasso:2.71828'
     api 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
-    api 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     api 'com.squareup.retrofit2:retrofit-mock:2.9.0'
     api 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     api 'androidx.cardview:cardview:1.0.0'

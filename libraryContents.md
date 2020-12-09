@@ -5,8 +5,6 @@
  - **app**: Phone and Tablet Module from which APK will be generated.
  - **common**: Android Library consisting of all the common libraries with their code set-up done under the hood.
 
-[Here](acknowledgement.md) is the list of all the Open Source Libraries used under `commmon` Library.
-
 List of classes and resources exist on **common** module:
 
 Package Name: *sample.ritwik.common*

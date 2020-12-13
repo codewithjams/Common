@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+import com.squareup.moshi.JsonDataException
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -178,6 +180,7 @@ abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : V
         is SSLHandshakeException -> ResultWrapper.Error.SSLHandShakeError()
         is IOException -> ResultWrapper.Error.NetworkError()
         is HttpException -> handleHTTPException(throwable, errorResponseClass, handleErrorCode)
+        is JsonDataException -> ResultWrapper.Error.RecoverableError(401, throwable.message ?: repository.getStringFromResource(R.string.default_json_error_message))
         else -> ResultWrapper.Error.Other()
     }
 

@@ -13,6 +13,7 @@
     <string name="default_error_message">Something went wrong. Please try again later.</string>
     <string name="default_failure_message">We are unable to load content. Please check connectivity and retry. If the problem persists, try after sometime.</string>
     <string name="default_ssl_error_message">It seems some issue with SSL Handshake.\nPlease inform the Administrator.</string>
+    <string name="default_json_error_message">There seems to be a mismatch between the Data Received as JSON and the Response Data Class.</string>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Content Descriptions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 

@@ -52,11 +52,11 @@ class CommonFragment : BaseFragment<FragmentCommonBinding, MainModel, MainViewMo
 
     override fun showLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
         shimmer.visibility = View.VISIBLE
-        shimmer.startShimmerAnimation()
+        shimmer.startShimmer()
     } ?: Unit
 
     override fun hideLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
-        shimmer.stopShimmerAnimation()
+        shimmer.stopShimmer()
         shimmer.visibility = View.GONE
     } ?: Unit
 

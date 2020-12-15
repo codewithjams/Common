@@ -76,7 +76,7 @@ dependencies {
     api 'io.supercharge:shimmerlayout:2.1.0'
     api 'com.google.code.gson:gson:2.8.6'
     api 'androidx.datastore:datastore-preferences:1.0.0-alpha04'
-    api 'io.supercharge:shimmerlayout:2.1.0'
+    api 'com.facebook.shimmer:shimmer:0.5.0'
     kapt 'com.google.dagger:dagger-android-processor:2.15'
     kapt 'com.google.dagger:dagger-compiler:2.15'
     kapt 'androidx.databinding:databinding-compiler:4.1.1'

@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@id/placeholder_text_title"
             tools:listitem="@layout/item_library_component" />
 
-        <io.supercharge.shimmerlayout.ShimmerLayout
+        <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/placeholder_shimmer_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -109,7 +109,7 @@
 
             </LinearLayout>
 
-        </io.supercharge.shimmerlayout.ShimmerLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,65 +6,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-import com.squareup.moshi.JsonDataException
-
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
-import retrofit2.HttpException
-
-import sample.ritwik.common.R
-
-import sample.ritwik.common.data.network.BaseErrorResponse
 import sample.ritwik.common.data.network.NetworkType
-import sample.ritwik.common.data.network.ResultWrapper
 
 import sample.ritwik.common.mvvm.model.BaseModel
 
-import sample.ritwik.common.mvvm.repository.BaseRepository
-
 import sample.ritwik.common.utility.constant.*
-
-import sample.ritwik.common.utility.helper.RESTAPIException
-
-import java.io.IOException
-
-import java.net.ConnectException
-
-import javax.net.ssl.SSLHandshakeException
 
 /**
  * Abstract [ViewModel] to contain the common methods related to Controlling View as well as Data.
  *
- * @param Repository [BaseRepository] as the Repository of this [ViewModel].
  * @param Model [BaseModel] as the Model of this [ViewModel].
  * @author Ritwik Jamuar
  */
-abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : ViewModel() {
+abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
 
     /*---------------------------------------- Components ----------------------------------------*/
-
-    /**
-     * Reference of [Repository] to access the methods related to Data Gathering.
-     */
-    protected abstract val repository: Repository
 
     /**
      * Reference of [Model] to access the Data held within this [BaseViewModel].
      */
     protected abstract val model: Model
-
-    /**
-     * [CoroutineScope] with [Dispatchers.IO] for performing any operation under IO Thread.
-     */
-    protected val ioThreadScope: CoroutineScope by lazy { provideIOScope() }
-
-    /**
-     * [CoroutineScope] with [Dispatchers.Main] for performing any operation under Main Thread.
-     */
-    protected val mainThreadScope: CoroutineScope by lazy { provideMainThreadScope() }
 
     /*----------------------------------------- LiveData -----------------------------------------*/
 
@@ -83,13 +46,6 @@ abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : V
 
     init {
         initializeComponents()
-    }
-
-    /*----------------------------------- ViewModel Callbacks ------------------------------------*/
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.onCleared() // Tell the repository to terminate all it's work and clear any allocated resources.
     }
 
     /*-------------------------------------- Public Methods --------------------------------------*/
@@ -123,159 +79,6 @@ abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : V
         _uiLiveData = MutableLiveData()
     }
 
-    /**
-     * Provides the Instance for [mainThreadScope].
-     *
-     * @return New Instance of [CoroutineScope] as [mainThreadScope].
-     */
-    private fun provideMainThreadScope(): CoroutineScope = CoroutineScope(Dispatchers.Main)
-
-    /**
-     * Provides the Instance of [ioThreadScope].
-     *
-     * @return New Instance of [CoroutineScope] as [ioThreadScope].
-     */
-    private fun provideIOScope(): CoroutineScope = CoroutineScope(Dispatchers.IO)
-
-    /**
-     * Performs the RESP API Call in a Thread Safe Manner.
-     *
-     * @param TypeREST Any Class which holds the response of [apiBlock].
-     * @param TypeErrorResponse Any Class which extends [BaseErrorResponse], acts as the
-     *   Error Response Body.
-     * @param apiBlock Lambda Expression that performs the REST API Call.
-     * @param errorResponseClass [Class] of [TypeErrorResponse].
-     * @param handleErrorCode Lambda Expression that processes the Error Code before
-     *   executing 'handleError'.
-     */
-    private fun <TypeREST, TypeErrorResponse : BaseErrorResponse> safeRESTAPICall(
-        apiBlock: suspend () -> TypeREST,
-        errorResponseClass: Class<TypeErrorResponse>,
-        handleErrorCode: (Int, TypeErrorResponse) -> ResultWrapper.Error<TypeREST>
-    ): Flow<ResultWrapper<TypeREST>> = flow<ResultWrapper<TypeREST>> {
-        emit(ResultWrapper.Success(apiBlock.invoke()))
-    }.catch { cause: Throwable ->
-        emit(handleException(cause, errorResponseClass, handleErrorCode))
-    }
-
-    /**
-     * Handles the different types of Exceptions that may have caused during
-     * performing REST API Call.
-     *
-     * @param TypeREST Any Class which holds the response of REST API Call.
-     * @param TypeErrorResponse Any Class which extends [BaseErrorResponse], acts as the
-     *   Error Response Body.
-     * @param throwable Instance of [Throwable] denoting the Exception Super-Class which contains
-     *   more details about the error cause.
-     * @param errorResponseClass [Class] of [TypeErrorResponse].
-     * @param handleErrorCode Lambda Expression that processes the Error Code before
-     *   executing 'handleError'.
-     */
-    private fun <TypeREST, TypeErrorResponse : BaseErrorResponse> handleException(
-        throwable: Throwable,
-        errorResponseClass: Class<TypeErrorResponse>,
-        handleErrorCode: (Int, TypeErrorResponse) -> ResultWrapper.Error<TypeREST>
-    ): ResultWrapper.Error<TypeREST> = when (throwable) {
-        is ConnectException -> ResultWrapper.Error.NetworkConnectionError()
-        is SSLHandshakeException -> ResultWrapper.Error.SSLHandShakeError()
-        is IOException -> ResultWrapper.Error.NetworkError()
-        is HttpException -> handleHTTPException(throwable, errorResponseClass, handleErrorCode)
-        is JsonDataException -> ResultWrapper.Error.RecoverableError(401, throwable.message ?: repository.getStringFromResource(R.string.default_json_error_message))
-        else -> ResultWrapper.Error.Other()
-    }
-
-    /**
-     * Handles the [HttpException] caused by performing REST API Call.
-     *
-     * @param TypeREST Any Class which is the response body of REST API Call.
-     * @param TypeErrorResponse Any Class which extends [BaseErrorResponse], acts as the
-     *   Error Response Body.
-     * @param throwable Instance of [HttpException] containing more details about the error cause
-     *   including Error Body sent from REST API Server.
-     * @param errorResponseClass [Class] of [TypeErrorResponse].
-     * @param handleErrorCode Lambda Expression that processes the Error Code before
-     *   executing 'handleError'.
-     */
-    private fun <TypeREST, TypeErrorResponse : BaseErrorResponse> handleHTTPException(
-        throwable: HttpException,
-        errorResponseClass: Class<TypeErrorResponse>,
-        handleErrorCode: (Int, TypeErrorResponse) -> ResultWrapper.Error<TypeREST>
-    ): ResultWrapper.Error<TypeREST> = handleErrorCode.invoke(
-        throwable.code(),
-        repository.convertToRESTErrorBody(errorResponseClass, throwable)
-    )
-
-    /**
-     * Processes the response of REST API Call.
-     *
-     * @param TypeREST Any Class which is the response body of REST API Call.
-     * @param response Instance of [ResultWrapper] of type [TypeREST] which encapsulates
-     *   the Response Body of REST API Call.
-     * @param processData Lambda Expression that processes that [TypeREST] after successful
-     *   REST API Response.
-     */
-    private suspend fun <TypeREST> processRESTAPIResponse(
-        response: ResultWrapper<TypeREST>,
-        processData: suspend (Flow<TypeREST>) -> Unit
-    ) = processData.invoke(processRESTAPIResponse(response))
-
-    /**
-     * Processes the response returned by the REST API Request by [safeRESTAPICall]
-     * by handling [ResultWrapper.Success] or [ResultWrapper.Error] scenarios
-     * with the help of [Flow]
-     *
-     * @param TypeREST Any Class which is the response body of REST API Call.
-     * @param response Instance of [ResultWrapper] containing the result of REST API Call.
-     * @return [Flow] of [TypeREST].
-     */
-    private fun <TypeREST> processRESTAPIResponse(
-        response: ResultWrapper<TypeREST>
-    ): Flow<TypeREST> = flow {
-
-        when (response) {
-
-            is ResultWrapper.Success -> emit(response.data)
-
-            is ResultWrapper.Error.NetworkConnectionError -> processError(
-                repository.getStringFromResource(
-                    R.string.default_failure_message
-                )
-            )
-
-            is ResultWrapper.Error.SSLHandShakeError -> processError(
-                repository.getStringFromResource(
-                    R.string.default_ssl_error_message
-                )
-            )
-
-            is ResultWrapper.Error.NetworkError -> processError(repository.getStringFromResource(R.string.default_failure_message))
-
-            is ResultWrapper.Error.RecoverableError -> processError(response.message, response.code)
-
-            is ResultWrapper.Error.SessionExpired -> onSessionExpired()
-
-            is ResultWrapper.Error.Other -> processError()
-
-        }
-
-    }.flowOn(Dispatchers.Main)
-
-    /**
-     * Processes Error to be handled by the caller method in this [BaseViewModel].
-     *
-     * @param code [Int] denoting the Error Code.
-     * @param description [String] denoting the description of the Error.
-     * @return [Nothing] so that execution is stopped to handle error.
-     */
-    private fun processError(
-        description: String = repository.getStringFromResource(R.string.default_error_message),
-        code: Int = 0
-    ): Nothing = throw if (code == 0) {
-        Exception(description)
-    } else {
-        RESTAPIException(code, description)
-    }
-
     /*------------------------------------- Protected Methods ------------------------------------*/
 
     /**
@@ -304,7 +107,25 @@ abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : V
      */
     @MainThread
     protected fun notifyActionOnUI(action: Int) {
-        model.action = action
+        with(model) {
+            this.action = action
+        }
+        notifyUpdateOnUIData()
+    }
+
+    /**
+     * Triggers the Update in the UI Data.
+     *
+     *
+     * NOTE: This method should be executed from Main Thread, otherwise this method will throw
+     * [IllegalStateException] caused due to accessing the method [LiveData.setValue] in Background
+     * Thread.
+     */
+    @MainThread
+    protected fun triggerUpdateInUI() {
+        with(model) {
+            action = ACTION_UPDATE_UI
+        }
         notifyUpdateOnUIData()
     }
 
@@ -388,8 +209,8 @@ abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : V
      */
     @MainThread
     protected fun showError(
-        title: String = repository.getStringFromResource(R.string.default_error_tile),
-        message: String = repository.getStringFromResource(R.string.default_error_message)
+        title: String = "Error",
+        message: String = "Something went wrong, Please try again later."
     ) {
 
         // Halt the further execution if the 'title' or 'message' is empty.
@@ -462,58 +283,6 @@ abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : V
 
     }
 
-    /**
-     * Triggers the Update in the UI Data.
-     *
-     *
-     * NOTE: This method should be executed from Main Thread, otherwise this method will throw
-     * [IllegalStateException] caused due to accessing the method [LiveData.setValue] in Background
-     * Thread.
-     */
-    @MainThread
-    protected fun triggerUpdateInUI() {
-        with(model) {
-            action = ACTION_UPDATE_UI
-        }
-        notifyUpdateOnUIData()
-    }
-
-    /**
-     * Performs the Resource Access from Network in the thread-safe manner using [Flow] and
-     * Lambda Expressions for each type of trigger.
-     *
-     * @param TypeREST Any Class which holds the response of [apiBlock].
-     * @param TypeErrorResponse Any Class which extends [BaseErrorResponse], acts as the
-     *   Error Response Body.
-     * @param apiBlock Lambda Expression that performs the REST API Call.
-     * @param handleSuccess Lambda Expression that executes after successful REST API Response.
-     * @param handleError Lambda Expression that executes after an error in REST API Response.
-     * @param processData Lambda Expression that processes that [TypeREST] after successful
-     *   REST API Response and invokes before [handleSuccess].
-     * @param errorResponseClass [Class] of [TypeErrorResponse].
-     * @param handleErrorCode Lambda Expression that processes the Error Code before
-     *   executing [handleError].
-     */
-    protected fun <TypeREST, TypeErrorResponse : BaseErrorResponse> launchNetworkDataLoad(
-        apiBlock: suspend () -> TypeREST,
-        handleSuccess: () -> Unit,
-        handleError: (Throwable) -> Unit,
-        processData: suspend (Flow<TypeREST>) -> Unit,
-        errorResponseClass: Class<TypeErrorResponse>,
-        handleErrorCode: (Int, TypeErrorResponse) -> ResultWrapper.Error<TypeREST>
-    ) {
-        safeRESTAPICall(apiBlock, errorResponseClass, handleErrorCode).onEach { response ->
-            processRESTAPIResponse(response, processData)
-            mainThreadScope.launch {
-                handleSuccess.invoke()
-            }
-        }.catch { throwable ->
-            mainThreadScope.launch {
-                handleError.invoke(throwable)
-            }
-        }.launchIn(ioThreadScope)
-    }
-
     /*------------------------------------- Abstract Methods -------------------------------------*/
 
     /**
@@ -525,10 +294,5 @@ abstract class BaseViewModel<Repository : BaseRepository, Model : BaseModel> : V
      * Tells this [BaseViewModel] to initialize it's Member Variables.
      */
     protected abstract fun initializeVariables()
-
-    /**
-     * Tells this [BaseViewModel] to handle the Session Expiry.
-     */
-    protected abstract fun onSessionExpired()
 
 }

@@ -60,12 +60,12 @@ abstract class BaseRepository {
     /**
      * [CoroutineScope] running on Main Thread on which all subsequent Coroutines on child will run.
      */
-    protected val mainThreadScope: CoroutineScope by lazy { provideMainThreadScope() }
+    protected val mainThreadScope: CoroutineScope by lazy { CoroutineScope(Dispatchers.Main) }
 
     /**
      * [CoroutineScope] running on Background Thread on which all subsequent Coroutines on child will run.
      */
-    protected val ioThreadScope: CoroutineScope by lazy { provideIOScope() }
+    protected val ioThreadScope: CoroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
 
     /*-------------------------------------- Public Methods --------------------------------------*/
 
@@ -94,20 +94,6 @@ abstract class BaseRepository {
         resourceUtils.getString(resourceID, formatArguments)
 
     /*-------------------------------------- Private Methods -------------------------------------*/
-
-    /**
-     * Provides the Instance for [mainThreadScope].
-     *
-     * @return New Instance of [CoroutineScope] as [mainThreadScope].
-     */
-    private fun provideMainThreadScope(): CoroutineScope = CoroutineScope(Dispatchers.Main)
-
-    /**
-     * Provides the Instance of [ioThreadScope].
-     *
-     * @return New Instance of [CoroutineScope] as [ioThreadScope].
-     */
-    private fun provideIOScope(): CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     /**
      * Cancels all the [kotlinx.coroutines.Job] within [mainThreadScope] and [ioThreadScope].
@@ -346,7 +332,9 @@ abstract class BaseRepository {
     protected fun <Type> extractClassInstanceFromAssets(
         classType: Class<Type>,
         fileName: String
-    ): Type? = convertJSONToClassInstance(classType, extractJSONFromAssets(fileName) ?: "")
+    ): Flow<Type?> = flow<Type?> {
+        convertJSONToClassInstance(classType, extractJSONFromAssets(fileName) ?: "")
+    }.flowOn(ioThreadScope.coroutineContext)
 
     /**
      * Performs the Resource Access from Network in the thread-safe manner using [Flow] and

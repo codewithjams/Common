@@ -1,6 +1,9 @@
 package sample.ritwik.app.mvvm.viewModel
 
+import androidx.lifecycle.viewModelScope
+
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 import sample.ritwik.app.data.ui.LibraryComponent
@@ -15,29 +18,25 @@ import sample.ritwik.common.mvvm.viewModel.BaseViewModel
 
 import sample.ritwik.common.utility.constant.ACTION_UPDATE_UI
 
-import java.lang.Exception
-
 import javax.inject.Inject
 
 /**
  * ViewModel of [sample.ritwik.app.ui.activity.MainActivity].
  *
- * @param repository Instance of [MainRepository] for [repository].
+ * @param repository Instance of [MainRepository].
  * @param model Instance of [MainModel] for [model].
  * @author Ritwik Jamuar
  */
 class MainViewModel @Inject constructor(
-    override val repository: MainRepository,
+    private val repository: MainRepository,
     override val model: MainModel
-) : BaseViewModel<MainRepository, MainModel>() {
+) : BaseViewModel<MainModel>() {
 
     /*--------------------------------- BaseViewModel Callbacks ----------------------------------*/
 
     override fun initializeLiveData() = Unit
 
     override fun initializeVariables() = Unit
-
-    override fun onSessionExpired() = Unit
 
     /*-------------------------------------- Public Methods --------------------------------------*/
 
@@ -57,11 +56,10 @@ class MainViewModel @Inject constructor(
         // Load the data only if it is not populated before.
         if (!model.isComponentsPopulated()) {
 
-            // Show the Progress.
-            showProgress(true)
+            viewModelScope.launch {
 
-            // Switch to IO Thread.
-            ioThreadScope.launch {
+                // Show the Progress.
+                showProgress(true)
 
                 // Mark a delay of 5 seconds.
                 delay(5000)
@@ -69,28 +67,21 @@ class MainViewModel @Inject constructor(
                 // Create a new List of LibraryComponent.
                 val list: ArrayList<LibraryComponent> = ArrayList()
 
-                try {
-                    // Populate all the components fulfilled from repository.
-                    list.addAll(repository.provideListOfLibraryComponents())
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                repository.provideListOfLibraryComponents().collect { components ->
+                    list.addAll(components)
                 }
 
-                // Switch back to Main Thread.
-                mainThreadScope.launch {
+                // Hide the Progress.
+                hideProgress()
 
-                    // Hide the Progress.
-                    hideProgress()
+                // Store the fetched list into 'model'.
+                model.libraryComponents = list
 
-                    // Store the fetched list into 'model'.
-                    model.libraryComponents = list
-
-                    // Populate the UI of this fetched list by notifying the action to Update the UI.
-                    notifyActionOnUI(ACTION_UPDATE_UI)
-
-                }
+                // Populate the UI of this fetched list by notifying the action to Update the UI.
+                notifyActionOnUI(ACTION_UPDATE_UI)
 
             }
+
         } else {
 
             // Populate the UI with already fetched list by notifying the action to Update the UI..

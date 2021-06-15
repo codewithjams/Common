@@ -42,7 +42,7 @@ import java.lang.RuntimeException
 abstract class BaseFragment<
         DataBinding: ViewDataBinding,
         Model: BaseModel,
-        ViewModel: BaseViewModel<out BaseRepository, Model>
+        ViewModel: BaseViewModel<Model>
         > : Fragment() {
 
     /*---------------------------------------- Components ----------------------------------------*/

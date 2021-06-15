@@ -3,6 +3,7 @@ package sample.ritwik.common.ui.activity
 import android.Manifest
 
 import android.content.DialogInterface
+
 import android.content.pm.PackageManager
 
 import android.os.Bundle
@@ -18,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 import androidx.lifecycle.Observer
+
 import com.squareup.picasso.Picasso
 
 import sample.ritwik.common.R
@@ -27,8 +29,6 @@ import sample.ritwik.common.data.ui.NetworkData
 import sample.ritwik.common.data.ui.PopUpData
 
 import sample.ritwik.common.mvvm.model.BaseModel
-
-import sample.ritwik.common.mvvm.repository.BaseRepository
 
 import sample.ritwik.common.mvvm.viewModel.BaseViewModel
 
@@ -49,7 +49,7 @@ import sample.ritwik.common.utility.helper.PermissionUtils
  */
 abstract class BaseActivity<
         Model : BaseModel,
-        ViewModel : BaseViewModel<out BaseRepository, Model>,
+        ViewModel : BaseViewModel<Model>,
         DataBinding : ViewDataBinding
         > : AppCompatActivity() {
 

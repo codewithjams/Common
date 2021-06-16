@@ -31,6 +31,8 @@ import java.nio.charset.StandardCharsets
 
 import javax.net.ssl.SSLHandshakeException
 
+import kotlin.coroutines.CoroutineContext
+
 /**
  * Abstract Repository to contain the common set-up required to set-up a Repository.
  *
@@ -60,19 +62,24 @@ abstract class BaseRepository {
     /**
      * [CoroutineScope] running on Main Thread on which all subsequent Coroutines on child will run.
      */
-    protected val mainThreadScope: CoroutineScope by lazy { CoroutineScope(Dispatchers.Main) }
+    protected val mainThreadScope: CoroutineScope by lazy { CoroutineScope(mainDispatcher) }
+
+    /**
+     * [CoroutineContext] denoting the Context for Coroutine on Main Thread.
+     */
+    protected val mainDispatcher: CoroutineContext = Dispatchers.Main
 
     /**
      * [CoroutineScope] running on Background Thread on which all subsequent Coroutines on child will run.
      */
-    protected val ioThreadScope: CoroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
-
-    /*-------------------------------------- Public Methods --------------------------------------*/
+    protected val ioThreadScope: CoroutineScope by lazy { CoroutineScope(ioDispatcher) }
 
     /**
-     * Handles the case when the [sample.ritwik.common.mvvm.viewModel.BaseViewModel] is cleared.
+     * [CoroutineContext] denoting the Context for Coroutine on IO Thread.
      */
-    fun onCleared() = cancelAllJobs()
+    protected val ioDispatcher: CoroutineContext = Dispatchers.IO
+
+    /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
      * Using [resourceUtils], provide the [String] from [StringRes].
@@ -327,14 +334,15 @@ abstract class BaseRepository {
      * @param Type Any Class.
      * @param classType [Class] of [Type].
      * @param fileName [String] as the name of the JSON File.
-     * @return Instance of [Type] if everything went well, else null.
+     * @return [Flow] of [Type] with value as the instance of [Type] ]if everything went well,
+     *   else null.
      */
     protected fun <Type> extractClassInstanceFromAssets(
         classType: Class<Type>,
         fileName: String
-    ): Flow<Type?> = flow<Type?> {
-        convertJSONToClassInstance(classType, extractJSONFromAssets(fileName) ?: "")
-    }.flowOn(ioThreadScope.coroutineContext)
+    ): Flow<Type?> = flow {
+        emit(convertJSONToClassInstance(classType, extractJSONFromAssets(fileName) ?: ""))
+    }.flowOn(ioDispatcher)
 
     /**
      * Performs the Resource Access from Network in the thread-safe manner using [Flow] and

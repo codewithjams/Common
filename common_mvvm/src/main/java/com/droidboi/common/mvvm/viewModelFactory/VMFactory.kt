@@ -1,4 +1,4 @@
-package sample.ritwik.common.mvvm.viewModel
+package com.droidboi.common.mvvm.viewModelFactory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

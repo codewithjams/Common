@@ -1,11 +1,11 @@
-package sample.ritwik.common.di.module
+package com.droidboi.common.mvvm.di.module
 
 import androidx.lifecycle.ViewModel
 
+import com.droidboi.common.mvvm.viewModelFactory.VMFactory
+
 import dagger.Module
 import dagger.Provides
-
-import sample.ritwik.common.mvvm.viewModel.VMFactory
 
 import javax.inject.Provider
 
@@ -18,7 +18,7 @@ import javax.inject.Provider
  *
  *
  * Since, every [android.app.Activity] will have
- * different [sample.ritwik.common.mvvm.viewModel.BaseViewModel], so [VMFactory] will be provided
+ * different [com.droidboi.common.mvvm.viewModel.BaseViewModel], so [VMFactory] will be provided
  * multiple times for every [android.app.Activity]
  * that requests through [dagger.android.ContributesAndroidInjector].
  *
@@ -34,7 +34,7 @@ class ViewModelModule {
      *   [android.app.Activity] [Provides] method
      *   annotated with [dagger.android.ContributesAndroidInjector]
      *   and [ViewModel]'s [Provides] annotated with [dagger.Binds], [dagger.multibindings.IntoMap]
-     *   and [sample.ritwik.common.mvvm.viewModel.ViewModelKey].
+     *   and [com.droidboi.common.mvvm.di.mapKey.ViewModelKey].
      * @return New Instance of [VMFactory].
      */
     @Provides

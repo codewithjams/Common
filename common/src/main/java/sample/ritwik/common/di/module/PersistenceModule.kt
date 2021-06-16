@@ -4,9 +4,10 @@ import android.content.Context
 
 import androidx.datastore.core.DataStore
 
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 
-import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.preferencesDataStoreFile
 
 import dagger.Module
 import dagger.Provides
@@ -58,6 +59,8 @@ class PersistenceModule {
     fun providesDataStore(
         context: Context,
         @Named(DATA_STORE_FILE_NAME) fileName: String
-    ): DataStore<Preferences> = context.createDataStore(fileName)
+    ): DataStore<Preferences> = PreferenceDataStoreFactory.create {
+        context.preferencesDataStoreFile(fileName)
+    }
 
 }

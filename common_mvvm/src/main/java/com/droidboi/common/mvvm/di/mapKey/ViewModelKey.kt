@@ -1,4 +1,4 @@
-package sample.ritwik.common.mvvm.viewModel
+package com.droidboi.common.mvvm.di.mapKey
 
 import androidx.lifecycle.ViewModel
 

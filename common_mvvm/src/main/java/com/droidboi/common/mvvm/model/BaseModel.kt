@@ -1,10 +1,11 @@
-package sample.ritwik.common.mvvm.model
+package com.droidboi.common.mvvm.model
 
-import sample.ritwik.common.data.ui.ErrorData
-import sample.ritwik.common.data.ui.PopUpData
-import sample.ritwik.common.data.ui.ProgressData
+import com.droidboi.common.data.ui.PopUpData
+import com.droidboi.common.data.ui.ProgressData
 
-import sample.ritwik.common.utility.constant.ACTION_NONE
+import com.droidboi.common.mvvm.data.ErrorData
+
+import com.droidboi.common.mvvm.utility.ACTION_NONE
 
 /**
  * Abstract Model to contain common data related to UI.

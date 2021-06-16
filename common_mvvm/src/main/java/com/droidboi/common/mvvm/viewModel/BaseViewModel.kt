@@ -1,4 +1,4 @@
-package sample.ritwik.common.mvvm.viewModel
+package com.droidboi.common.mvvm.viewModel
 
 import androidx.annotation.MainThread
 
@@ -6,13 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-import kotlinx.coroutines.flow.*
+import com.droidboi.common.mvvm.model.BaseModel
 
-import sample.ritwik.common.data.network.NetworkType
-
-import sample.ritwik.common.mvvm.model.BaseModel
-
-import sample.ritwik.common.utility.constant.*
+import com.droidboi.common.mvvm.utility.ACTION_ERROR
+import com.droidboi.common.mvvm.utility.ACTION_POP_UP
+import com.droidboi.common.mvvm.utility.ACTION_PROGRESS_BAR
+import com.droidboi.common.mvvm.utility.ACTION_UPDATE_UI
 
 /**
  * Abstract [ViewModel] to contain the common methods related to Controlling View as well as Data.
@@ -46,19 +45,6 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
 
     init {
         initializeComponents()
-    }
-
-    /*-------------------------------------- Public Methods --------------------------------------*/
-
-    /**
-     * Handles the case when there is a change in the Network Connection.
-     *
-     * @param isNetworkActive [Boolean] flag that tells whether the Network Connection is active
-     *   or not.
-     * @param networkType Instance of [NetworkType] denoting the type of active Network Connection.
-     */
-    fun onNetworkChanged(isNetworkActive: Boolean, networkType: NetworkType) {
-        // TODO : Figure out how to handle change in Network.
     }
 
     /*-------------------------------------- Private Methods -------------------------------------*/
@@ -95,8 +81,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
     }
 
     /**
-     * Notifies the given [action] to the [sample.ritwik.common.ui.activity.BaseActivity]
-     * through [uiLiveData].
+     * Notifies the given [action] to the UI through [uiLiveData].
      *
      *
      * NOTE: This method should be executed from Main Thread, otherwise this method will throw
@@ -133,7 +118,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Shows the Progress Bar in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.ProgressData] is modified and
+     * From [model], the instance of [com.droidboi.common.data.ui.ProgressData] is modified and
      * then notified to the view using [uiLiveData].
      *
      *
@@ -167,7 +152,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Hides the Progress Bar in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.ProgressData] is modified and
+     * From [model], the instance of [com.droidboi.common.data.ui.ProgressData] is modified and
      * then notified to the view using [uiLiveData].
      *
      *
@@ -196,7 +181,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Shows the Error in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.ErrorData] is modified and then
+     * From [model], the instance of [com.droidboi.common.mvvm.data.ErrorData] is modified and then
      * notified to the view using [uiLiveData].
      *
      *
@@ -236,7 +221,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Shows the Pop-Up in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.PopUpData] is modified and then
+     * From [model], the instance of [com.droidboi.common.data.ui.PopUpData] is modified and then
      * notified to the view using [uiLiveData].
      *
      *

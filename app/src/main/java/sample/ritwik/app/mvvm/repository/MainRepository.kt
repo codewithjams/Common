@@ -50,6 +50,6 @@ class MainRepository @Inject constructor(
         "LibraryComponents.json"
     ).map { response ->
         response?.result ?: ArrayList()
-    }.flowOn(ioThreadScope.coroutineContext)
+    }.flowOn(ioDispatcher)
 
 }

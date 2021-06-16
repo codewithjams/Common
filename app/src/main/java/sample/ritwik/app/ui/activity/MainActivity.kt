@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
+import com.droidboi.common.mvvm.data.ErrorData
+
+import com.droidboi.common.mvvm.viewModelFactory.VMFactory
+
 import com.squareup.picasso.Picasso
 
 import dagger.android.AndroidInjection
@@ -20,10 +24,6 @@ import sample.ritwik.app.mvvm.model.MainModel
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
-
-import sample.ritwik.common.data.ui.ErrorData
-
-import sample.ritwik.common.mvvm.viewModel.VMFactory
 
 import sample.ritwik.common.ui.activity.BaseActivity
 
@@ -42,7 +42,7 @@ class MainActivity : BaseActivity<MainModel, MainViewModel, ActivityMainBinding>
 
     /**
      * Reference of [VMFactory] of this [BaseActivity]
-     * injected from [sample.ritwik.common.di.module.ViewModelModule].
+     * injected from [com.droidboi.common.mvvm.di.module.ViewModelModule].
      */
     @Inject
     lateinit var vmFactory: VMFactory

@@ -1,20 +1,17 @@
-package sample.ritwik.common.data.ui
+package com.droidboi.common.data.ui
 
 /**
- * Data Class to represent the Data to render a [android.widget.PopupWindow] in the UI.
+ * Data Class to represent the Data to render a Popup Message in the UI.
  *
- * @param infoText [String]      denoting the Text to be
- *   displayed in the [android.widget.PopupWindow].
- * @param autoClose [Boolean]    denoting the flag
- *   whether the [android.widget.PopupWindow] would auto-close or not.
- * @param timeOutDuration [Long] denoting the Time-Out duration of
- *   dismissing the [android.widget.PopupWindow].
- * @param showAtBottom [Boolean] denoting the flag that decides
- *   whether the [android.widget.PopupWindow] will be shown at the bottom or not.
- * @param isDisplayed [Boolean]  denoting the flag indication
- *   whether the [android.widget.PopupWindow] is currently displayed in the UI or not.
- * @param state                  [State] denoting the
- *   indicator as the type of [android.widget.PopupWindow].
+ * @param infoText [String]      denoting the Text to be displayed in the Popup Message.
+ * @param autoClose [Boolean]    denoting the flag whether the Popup Message would auto-close
+ *   or not.
+ * @param timeOutDuration [Long] denoting the Time-Out duration of dismissing the Popup Message .
+ * @param showAtBottom [Boolean] denoting the flag that decides whether the Popup Message
+ *   will be shown at the bottom or not.
+ * @param isDisplayed [Boolean]  denoting the flag indication whether the Popup Message is
+ *   currently displayed in the UI or not.
+ * @param state                  [State] denoting the indicator as the type of Popup Message.
  * @author Ritwik Jamuar
  */
 data class PopUpData(
@@ -33,10 +30,9 @@ data class PopUpData(
     /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
-     * Checks whether the [android.widget.PopupWindow] is displayable or not
-     * based on the given data.
+     * Checks whether the Popup Message is displayable or not based on the given data.
      *
-     * @return true if the [android.widget.PopupWindow] is displayable, else false.
+     * @return true if the PopupWindow is displayable, else false.
      */
     fun isDisplayable(): Boolean = infoText.isNotEmpty()
 

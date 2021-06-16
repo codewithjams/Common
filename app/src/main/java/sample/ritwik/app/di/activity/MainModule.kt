@@ -21,7 +21,7 @@ import sample.ritwik.common.utility.helper.ResourceUtils
  *
  * The purpose of creating a [Module] for [sample.ritwik.app.ui.activity.MainActivity] is to provide
  * it's dependants, which in our case is these two things:
- * 1. [sample.ritwik.common.mvvm.viewModel.VMFactory].
+ * 1. [com.droidboi.common.mvvm.viewModelFactory.VMFactory].
  * 2. [sample.ritwik.common.utility.helper.NetworkUtils].
  *
  *
@@ -29,18 +29,18 @@ import sample.ritwik.common.utility.helper.ResourceUtils
  * [sample.ritwik.common.di.module.CommonModule].
  *
  *
- * But, [sample.ritwik.common.mvvm.viewModel.VMFactory] is unique for every [android.app.Activity].
+ * But, [com.droidboi.common.mvvm.viewModelFactory.VMFactory] is unique for every [android.app.Activity].
  *
  *
  * From the current architecture, every sub-class of
- * [sample.ritwik.common.mvvm.viewModel.BaseViewModel] needs to have following:
+ * [com.droidboi.common.mvvm.viewModel.BaseViewModel] needs to have following:
  * 1. Instance of sub-class that extends [sample.ritwik.common.mvvm.repository.BaseRepository].
- * 2. Instance of sub-class that extends [sample.ritwik.common.mvvm.model.BaseModel].
+ * 2. Instance of sub-class that extends [com.droidboi.common.mvvm.model.BaseModel].
  *
  *
  * This is why we create [Module] annotated Module Class for every [android.app.Activity].
  * The purpose of this Class is to facilitate the providing of above dependencies of
- * [sample.ritwik.common.mvvm.viewModel.BaseViewModel].
+ * [com.droidboi.common.mvvm.viewModel.BaseViewModel].
  *
  * @author Ritwik Jamuar
  */

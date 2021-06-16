@@ -21,8 +21,6 @@ import sample.ritwik.common.data.network.NetworkType
 
 import sample.ritwik.common.data.ui.NetworkData
 
-import sample.ritwik.common.mvvm.viewModel.BaseViewModel
-
 import sample.ritwik.common.utility.constant.NETWORK_ACTION_CHANGED
 import sample.ritwik.common.utility.constant.NETWORK_PERMISSION_REQUIRED
 
@@ -172,7 +170,7 @@ class NetworkUtils @Inject constructor(
     }
 
     /**
-     * Initializes the [CoroutineScope]s of this [BaseViewModel].
+     * Initializes the [CoroutineScope]s of this [NetworkUtils].
      */
     private fun initializeCoRoutineScope() {
         mainThreadScope = CoroutineScope(Dispatchers.Main)

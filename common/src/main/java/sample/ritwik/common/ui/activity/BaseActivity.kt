@@ -20,17 +20,19 @@ import androidx.databinding.ViewDataBinding
 
 import androidx.lifecycle.Observer
 
+import com.droidboi.common.data.ui.PopUpData
+
+import com.droidboi.common.mvvm.data.ErrorData
+
+import com.droidboi.common.mvvm.model.BaseModel
+
+import com.droidboi.common.mvvm.viewModel.BaseViewModel
+
 import com.squareup.picasso.Picasso
 
 import sample.ritwik.common.R
 
-import sample.ritwik.common.data.ui.ErrorData
 import sample.ritwik.common.data.ui.NetworkData
-import sample.ritwik.common.data.ui.PopUpData
-
-import sample.ritwik.common.mvvm.model.BaseModel
-
-import sample.ritwik.common.mvvm.viewModel.BaseViewModel
 
 import sample.ritwik.common.ui.miscellaneous.PopUpWindow
 
@@ -304,10 +306,10 @@ abstract class BaseActivity<
 
         NETWORK_ACTION_NONE -> Unit
 
-        NETWORK_ACTION_CHANGED -> viewModel.onNetworkChanged(
+        /*NETWORK_ACTION_CHANGED -> viewModel.onNetworkChanged(
             networkData.isNetworkAvailable,
             networkData.networkType
-        )
+        )*/
 
         NETWORK_PERMISSION_REQUIRED -> askPhoneStatePermission()
 

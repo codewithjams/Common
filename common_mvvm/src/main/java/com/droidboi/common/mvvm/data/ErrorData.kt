@@ -1,4 +1,4 @@
-package sample.ritwik.common.data.ui
+package com.droidboi.common.mvvm.data
 
 import android.os.Parcel
 import android.os.Parcelable

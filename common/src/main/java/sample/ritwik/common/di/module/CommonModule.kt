@@ -6,6 +6,8 @@ import android.net.ConnectivityManager
 
 import android.telephony.TelephonyManager
 
+import com.droidboi.common.mvvm.di.module.ViewModelModule
+
 import dagger.Module
 import dagger.Provides
 

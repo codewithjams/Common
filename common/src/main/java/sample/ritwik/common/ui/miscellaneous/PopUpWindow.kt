@@ -19,6 +19,7 @@ import android.widget.PopupWindow
 import androidx.core.content.ContextCompat
 
 import androidx.databinding.DataBindingUtil
+import com.droidboi.common.data.ui.PopUpData
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,8 +27,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 import sample.ritwik.common.R
-
-import sample.ritwik.common.data.ui.PopUpData
 
 import sample.ritwik.common.databinding.ViewPopUpWindowBinding
 

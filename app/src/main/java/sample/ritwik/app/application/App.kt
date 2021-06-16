@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.HasAndroidInjector
 
 import sample.ritwik.app.di.application.DaggerAppComponent
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
  *
  * @author Ritwik Jamuar
  */
-class App : Application(), HasActivityInjector {
+class App : Application(), HasAndroidInjector {
 
     /*---------------------------------------- Components ----------------------------------------*/
 
@@ -26,7 +26,7 @@ class App : Application(), HasActivityInjector {
      * Android Injector for [Activity].
      */
     @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+    lateinit var activityInjector: DispatchingAndroidInjector<Any>
 
     /*------------------------------------ Initializer Block -------------------------------------*/
 
@@ -46,7 +46,7 @@ class App : Application(), HasActivityInjector {
 
     /*------------------------------ HasActivityInjector Callbacks -------------------------------*/
 
-    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+    override fun androidInjector(): AndroidInjector<Any> = activityInjector
 
     /*------------------------------------- Private Methods --------------------------------------*/
 

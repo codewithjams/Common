@@ -1,8 +1,8 @@
 package sample.ritwik.app.mvvm.model
 
-import sample.ritwik.app.data.ui.LibraryComponent
+import com.droidboi.common.mvvm.model.BaseModel
 
-import sample.ritwik.common.mvvm.model.BaseModel
+import sample.ritwik.app.data.ui.LibraryComponent
 
 import javax.inject.Inject
 

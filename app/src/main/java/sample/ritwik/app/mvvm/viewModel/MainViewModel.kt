@@ -2,6 +2,8 @@ package sample.ritwik.app.mvvm.viewModel
 
 import androidx.lifecycle.viewModelScope
 
+import com.droidboi.common.mvvm.viewModel.BaseViewModel
+
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -13,8 +15,6 @@ import sample.ritwik.app.mvvm.model.MainModel
 import sample.ritwik.app.mvvm.repository.MainRepository
 
 import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
-
-import sample.ritwik.common.mvvm.viewModel.BaseViewModel
 
 import sample.ritwik.common.utility.constant.ACTION_UPDATE_UI
 
@@ -59,7 +59,7 @@ class MainViewModel @Inject constructor(
             viewModelScope.launch {
 
                 // Show the Progress.
-                showProgress(true)
+                showProgress()
 
                 // Mark a delay of 5 seconds.
                 delay(5000)

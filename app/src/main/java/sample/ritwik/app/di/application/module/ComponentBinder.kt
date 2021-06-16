@@ -2,6 +2,8 @@ package sample.ritwik.app.di.application.module
 
 import androidx.lifecycle.ViewModel
 
+import com.droidboi.common.mvvm.di.mapKey.ViewModelKey
+
 import dagger.Binds
 import dagger.Module
 
@@ -14,8 +16,6 @@ import sample.ritwik.app.di.activity.MainModule
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.ui.activity.MainActivity
-
-import sample.ritwik.common.mvvm.viewModel.ViewModelKey
 
 /**
  * Abstract [Module] that consists of methods annotated with [ContributesAndroidInjector], [Binds],

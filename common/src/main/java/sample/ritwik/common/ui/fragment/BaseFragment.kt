@@ -17,13 +17,11 @@ import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.Observer
 
+import com.droidboi.common.mvvm.model.BaseModel
+
+import com.droidboi.common.mvvm.viewModel.BaseViewModel
+
 import com.squareup.picasso.Picasso
-
-import sample.ritwik.common.mvvm.model.BaseModel
-
-import sample.ritwik.common.mvvm.repository.BaseRepository
-
-import sample.ritwik.common.mvvm.viewModel.BaseViewModel
 
 import sample.ritwik.common.ui.activity.BaseActivity
 

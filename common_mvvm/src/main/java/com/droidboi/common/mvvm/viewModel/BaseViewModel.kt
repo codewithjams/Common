@@ -81,8 +81,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
     }
 
     /**
-     * Notifies the given [action] to the [sample.ritwik.common.ui.activity.BaseActivity]
-     * through [uiLiveData].
+     * Notifies the given [action] to the UI through [uiLiveData].
      *
      *
      * NOTE: This method should be executed from Main Thread, otherwise this method will throw
@@ -119,7 +118,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Shows the Progress Bar in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.ProgressData] is modified and
+     * From [model], the instance of [com.droidboi.common.data.ui.ProgressData] is modified and
      * then notified to the view using [uiLiveData].
      *
      *
@@ -153,7 +152,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Hides the Progress Bar in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.ProgressData] is modified and
+     * From [model], the instance of [com.droidboi.common.data.ui.ProgressData] is modified and
      * then notified to the view using [uiLiveData].
      *
      *
@@ -182,7 +181,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Shows the Error in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.ErrorData] is modified and then
+     * From [model], the instance of [com.droidboi.common.mvvm.data.ErrorData] is modified and then
      * notified to the view using [uiLiveData].
      *
      *
@@ -222,7 +221,7 @@ abstract class BaseViewModel<Model : BaseModel> : ViewModel() {
      * Shows the Pop-Up in the UI.
      *
      *
-     * From [model], the instance of [sample.ritwik.common.data.ui.PopUpData] is modified and then
+     * From [model], the instance of [com.droidboi.common.data.ui.PopUpData] is modified and then
      * notified to the view using [uiLiveData].
      *
      *

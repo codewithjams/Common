@@ -1,4 +1,4 @@
-package com.droidboi.common.utility.helper
+package com.droidboi.common.utility.resources.helper
 
 import android.content.Context
 

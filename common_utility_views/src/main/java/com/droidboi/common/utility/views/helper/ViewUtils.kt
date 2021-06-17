@@ -1,12 +1,6 @@
-package com.droidboi.common.utility.helper
-
-import android.app.Activity
+package com.droidboi.common.utility.views.helper
 
 import android.content.Context
-
-import android.view.View
-
-import android.view.inputmethod.InputMethodManager
 
 import javax.inject.Inject
 
@@ -40,26 +34,4 @@ class ViewUtils @Inject constructor(private val context: Context) {
         "420"
     }
 
-}
-
-/**
- * Hides the Soft-Input Keyboard from the [Activity].
- *
- * @param view [View] on which the Soft-Input Keyboard resides.
- */
-fun Activity.hideSoftInput(view: View? = null) {
-    try {
-        with(getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager) {
-            hideSoftInputFromWindow(
-                if (view == null) {
-                    currentFocus!!.windowToken
-                } else {
-                    view.windowToken
-                },
-                0
-            )
-        }
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
 }

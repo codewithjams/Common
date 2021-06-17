@@ -46,11 +46,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    api project(path: ':common_utility_network_callback')
-    api project(path: ':common_utility_permissions')
-    api project(path: ':common_utility_resources')
-    api project(path: ':common_utility_views')
-
     implementation 'com.google.dagger:dagger:2.35.1'
     implementation 'com.google.dagger:dagger-android:2.35.1'
 

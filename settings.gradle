@@ -3,3 +3,4 @@ include ':app'
 rootProject.name = "Common"
 include ':common_mvvm'
 include ':common_data_ui'
+include ':common_data_network'

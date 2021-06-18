@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+import javax.inject.Inject
+
 /**
  * Wrapper Class of [DataStore] of type [Preferences] that exposes commonly used methods
  * for Persistence Storage.
@@ -15,7 +17,7 @@ import kotlinx.coroutines.flow.map
  *   Persistence Storage.
  * @author Ritwik Jamuar
  */
-class DataStorePreference(
+class DataStorePreference @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 

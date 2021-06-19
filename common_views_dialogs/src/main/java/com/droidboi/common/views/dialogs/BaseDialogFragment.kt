@@ -1,4 +1,4 @@
-package sample.ritwik.common.ui.dialog
+package com.droidboi.common.views.dialogs
 
 import android.os.Bundle
 
@@ -6,37 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import androidx.annotation.LayoutRes
-
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-
-import sample.ritwik.common.BuildConfig
-
-import sample.ritwik.common.R
 
 /**
  * Abstract [DialogFragment] for handling common set-up required
  * to show a [DialogFragment] in the UI.
  *
- * @param DataBinding [ViewDataBinding] referencing the Data Binding class of this [DialogFragment].
+ * @param Binding Any Class referencing the View/Data Binding class of this [DialogFragment].
  * @author Ritwik Jamuar
  */
-abstract class BaseDialogFragment<DataBinding : ViewDataBinding> : DialogFragment() {
+abstract class BaseDialogFragment<Binding> : DialogFragment() {
 
     /*---------------------------------------- Components ----------------------------------------*/
 
     /**
-     * Reference of [DataBinding] to control the Views under it.
+     * Reference of [Binding] to control the Views under it.
      */
-    protected lateinit var binding: DataBinding
+    protected val binding: Binding by lazy { provideBinding() }
 
     /*--------------------------------- DialogFragment Callbacks ---------------------------------*/
-
-    override fun getTheme(): Int = R.style.DialogFragmentStyle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +43,7 @@ abstract class BaseDialogFragment<DataBinding : ViewDataBinding> : DialogFragmen
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutRes(), container, false)
-        return binding.root
-    }
+    ): View? = provideView()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,11 +60,6 @@ abstract class BaseDialogFragment<DataBinding : ViewDataBinding> : DialogFragmen
         removeListeners()
     }
 
-    override fun show(manager: FragmentManager, tag: String?) {
-        retainInstance = isDialogToRetain()
-        super.show(manager, tag)
-    }
-
     /*-------------------------------------- Public Methods --------------------------------------*/
 
     /**
@@ -91,9 +71,7 @@ abstract class BaseDialogFragment<DataBinding : ViewDataBinding> : DialogFragmen
                 dismiss()
             }
         } catch (e: Exception) {
-            if (BuildConfig.DEBUG) {
-                e.printStackTrace()
-            }
+            e.printStackTrace()
         }
     }
 
@@ -116,20 +94,19 @@ abstract class BaseDialogFragment<DataBinding : ViewDataBinding> : DialogFragmen
     /*------------------------------------- Abstract Methods -------------------------------------*/
 
     /**
-     * Provides the Layout XML of this [DialogFragment].
+     * Tells this [DialogFragment] to provide it's Binding instance which will be used to access the
+     * views under this [DialogFragment].
      *
-     * @return [Int] denoting the [LayoutRes].
+     * @return New Instance of [Binding].
      */
-    @LayoutRes
-    protected abstract fun layoutRes(): Int
+    protected abstract fun provideBinding(): Binding
 
     /**
-     * Asks this [DialogFragment] whether it is to be retained after
-     * configuration change in Activity or not.
+     * Tells this [DialogFragment] to provide the [View] under which this is rendered.
      *
-     * @return true, if the Dialog is to be retained, else false.
+     * @return Instance of [View] under which this [DialogFragment] is rendered.
      */
-    protected abstract fun isDialogToRetain(): Boolean
+    protected abstract fun provideView(): View
 
     /**
      * Tells this [DialogFragment] to extract the arguments from [Bundle].

@@ -2,6 +2,8 @@ package sample.ritwik.app.mvvm.viewModel
 
 import androidx.lifecycle.viewModelScope
 
+import com.droidboi.common.mvvm.utility.ACTION_UPDATE_UI
+
 import com.droidboi.common.mvvm.viewModel.BaseViewModel
 
 import kotlinx.coroutines.delay
@@ -15,8 +17,6 @@ import sample.ritwik.app.mvvm.model.MainModel
 import sample.ritwik.app.mvvm.repository.MainRepository
 
 import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
-
-import sample.ritwik.common.utility.constant.ACTION_UPDATE_UI
 
 import javax.inject.Inject
 

@@ -11,6 +11,8 @@ import com.droidboi.common.mvvm.data.ErrorData
 
 import com.droidboi.common.mvvm.viewModelFactory.VMFactory
 
+import com.droidboi.common.utility.networkCallback.helper.NetworkUtils
+
 import com.squareup.picasso.Picasso
 
 import dagger.android.AndroidInjection
@@ -26,8 +28,6 @@ import sample.ritwik.app.mvvm.viewModel.MainViewModel
 import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
 
 import sample.ritwik.common.ui.activity.BaseActivity
-
-import sample.ritwik.common.utility.helper.NetworkUtils
 
 import javax.inject.Inject
 

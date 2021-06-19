@@ -19,15 +19,15 @@ import androidx.lifecycle.Observer
 
 import com.droidboi.common.mvvm.model.BaseModel
 
+import com.droidboi.common.mvvm.utility.ACTION_NONE
+import com.droidboi.common.mvvm.utility.ACTION_PROGRESS_BAR
+import com.droidboi.common.mvvm.utility.ACTION_UPDATE_UI
+
 import com.droidboi.common.mvvm.viewModel.BaseViewModel
 
 import com.squareup.picasso.Picasso
 
 import sample.ritwik.common.ui.activity.BaseActivity
-
-import sample.ritwik.common.utility.constant.ACTION_NONE
-import sample.ritwik.common.utility.constant.ACTION_PROGRESS_BAR
-import sample.ritwik.common.utility.constant.ACTION_UPDATE_UI
 
 import java.lang.RuntimeException
 

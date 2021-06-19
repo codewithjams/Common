@@ -1,5 +1,9 @@
 package sample.ritwik.app.di.activity
 
+import com.droidboi.common.persistence.dataStore.DataStorePreference
+
+import com.droidboi.common.utility.resources.helper.ResourceUtils
+
 import com.squareup.moshi.Moshi
 
 import dagger.Module
@@ -10,10 +14,6 @@ import sample.ritwik.app.component.network.RESTInterface
 import sample.ritwik.app.mvvm.model.MainModel
 
 import sample.ritwik.app.mvvm.repository.MainRepository
-
-import sample.ritwik.common.component.persistence.DataStorePreference
-
-import sample.ritwik.common.utility.helper.ResourceUtils
 
 /**
  * [Module] of [sample.ritwik.app.ui.activity.MainActivity].

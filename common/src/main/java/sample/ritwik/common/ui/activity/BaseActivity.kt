@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 
 import com.droidboi.common.data.ui.PopUpData
 
@@ -26,20 +27,28 @@ import com.droidboi.common.mvvm.data.ErrorData
 
 import com.droidboi.common.mvvm.model.BaseModel
 
+import com.droidboi.common.mvvm.utility.*
+
 import com.droidboi.common.mvvm.viewModel.BaseViewModel
+
+import com.droidboi.common.utility.networkCallback.constant.NETWORK_ACTION_NONE
+import com.droidboi.common.utility.networkCallback.constant.NETWORK_PERMISSION_REQUIRED
+
+import com.droidboi.common.utility.networkCallback.data.NetworkData
+
+import com.droidboi.common.utility.networkCallback.helper.NetworkUtils
+
+import com.droidboi.common.utility.permissions.constant.GROUP_PERMISSION_CODE
+
+import com.droidboi.common.utility.permissions.helper.PermissionUtils
 
 import com.squareup.picasso.Picasso
 
+import kotlinx.coroutines.flow.collect
+
 import sample.ritwik.common.R
 
-import sample.ritwik.common.data.ui.NetworkData
-
 import sample.ritwik.common.ui.miscellaneous.PopUpWindow
-
-import sample.ritwik.common.utility.constant.*
-
-import sample.ritwik.common.utility.helper.NetworkUtils
-import sample.ritwik.common.utility.helper.PermissionUtils
 
 /**
  * Abstract [AppCompatActivity] to contain all the common methods related to setting up the UI.
@@ -109,7 +118,7 @@ abstract class BaseActivity<
     }
 
     /**
-     * [Observer] of [NetworkUtils.networkLiveData].
+     * [Observer] of [NetworkUtils.networkFlow].
      */
     private val networkObserver = Observer<NetworkData> { data ->
         processUpdateOnNetwork(data)
@@ -163,7 +172,7 @@ abstract class BaseActivity<
                 Manifest.permission.READ_PHONE_STATE -> {
                     if (isGranted) {
                         with(networkUtils) {
-                            isReadingPhoneStatePermitted = true
+                            markReadingPhoneStatePermission(true)
                             registerCallbacks()
                         }
                     } else {
@@ -234,7 +243,11 @@ abstract class BaseActivity<
      * Sets up the [networkUtils].
      */
     private fun setUpNetworkUtils() {
-        networkUtils.networkLiveData.observe(this, networkObserver)
+        lifecycleScope.launchWhenStarted {
+            networkUtils.networkFlow.collect { networkData ->
+                processUpdateOnNetwork(networkData)
+            }
+        }
     }
 
     /**

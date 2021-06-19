@@ -19,7 +19,10 @@ import android.widget.PopupWindow
 import androidx.core.content.ContextCompat
 
 import androidx.databinding.DataBindingUtil
+
 import com.droidboi.common.data.ui.PopUpData
+
+import com.droidboi.common.utility.views.helper.hideSoftInput
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,8 +34,6 @@ import sample.ritwik.common.R
 import sample.ritwik.common.databinding.ViewPopUpWindowBinding
 
 import sample.ritwik.common.ui.activity.BaseActivity
-
-import sample.ritwik.common.utility.helper.hideSoftInput
 
 /**
  * Custom Class that encapsulates a [PopupWindow] along with it's setup to display it in the UI.

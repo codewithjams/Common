@@ -1,5 +1,11 @@
 package sample.ritwik.app.mvvm.repository
 
+import com.droidboi.common.persistence.dataStore.DataStorePreference
+
+import com.droidboi.common.repository.BaseRepository
+
+import com.droidboi.common.utility.resources.helper.ResourceUtils
+
 import com.squareup.moshi.Moshi
 
 import kotlinx.coroutines.flow.Flow
@@ -11,12 +17,6 @@ import sample.ritwik.app.component.network.RESTInterface
 import sample.ritwik.app.data.network.ComponentsResponse
 
 import sample.ritwik.app.data.ui.LibraryComponent
-
-import sample.ritwik.common.component.persistence.DataStorePreference
-
-import sample.ritwik.common.mvvm.repository.BaseRepository
-
-import sample.ritwik.common.utility.helper.ResourceUtils
 
 import javax.inject.Inject
 

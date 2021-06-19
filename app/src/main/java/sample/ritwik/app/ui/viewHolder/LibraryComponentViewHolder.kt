@@ -4,7 +4,7 @@ import sample.ritwik.app.data.ui.LibraryComponent
 
 import sample.ritwik.app.databinding.ItemLibraryComponentBinding
 
-import sample.ritwik.common.ui.viewHolder.BaseViewHolder
+import com.droidboi.common.views.recyclerView.viewHolder.BaseViewHolder
 
 /**
  * [BaseViewHolder] to render an individual [LibraryComponent].
@@ -14,8 +14,8 @@ import sample.ritwik.common.ui.viewHolder.BaseViewHolder
  * @author Ritwik Jamuar
  */
 class LibraryComponentViewHolder(
-     binding: ItemLibraryComponentBinding
-) : BaseViewHolder<ItemLibraryComponentBinding>(binding) {
+     override val binding: ItemLibraryComponentBinding
+) : BaseViewHolder<ItemLibraryComponentBinding>(binding.root) {
 
     /*--------------------------------- BaseViewHolder Callbacks ---------------------------------*/
 

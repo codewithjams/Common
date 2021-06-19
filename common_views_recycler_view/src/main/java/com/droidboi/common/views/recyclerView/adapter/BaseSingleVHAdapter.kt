@@ -1,12 +1,10 @@
-package sample.ritwik.common.ui.adapter
+package com.droidboi.common.views.recyclerView.adapter
 
 import android.view.ViewGroup
 
-import androidx.databinding.ViewDataBinding
-
 import androidx.recyclerview.widget.RecyclerView
 
-import sample.ritwik.common.ui.viewHolder.BaseViewHolder
+import com.droidboi.common.views.recyclerView.viewHolder.BaseViewHolder
 
 /**
  * Abstract [RecyclerView.Adapter] for handling common set-up required for
@@ -19,7 +17,7 @@ import sample.ritwik.common.ui.viewHolder.BaseViewHolder
  */
 abstract class BaseSingleVHAdapter<
         Model,
-        ViewHolder : BaseViewHolder<out ViewDataBinding>
+        ViewHolder : BaseViewHolder<*>
         >: RecyclerView.Adapter<ViewHolder>() {
 
     /*------------------------------------- Member Variables -------------------------------------*/
@@ -109,6 +107,26 @@ abstract class BaseSingleVHAdapter<
 
         // Notify this adapter about deletion in the range.
         notifyItemRangeRemoved(0, positionOfDeletion)
+
+    }
+
+    /**
+     * Updates a given [item] in the [list].
+     *
+     * @param item Instance of [Model] which we want to replace with.
+     * @param position [Int] denoting the Position in the [list] where we want to place this [item].
+     */
+    fun updateItemAtPosition(item: Model, position: Int) {
+
+        // Halt the further execution if the 'position' is out of range,
+        // so that ArrayIndexOutOfBoundsException can be avoided.
+        if (position >= list.size || position < 0) return
+
+        // Replace with the 'item' at the 'position'.
+        list[position] = item
+
+        // Notify this adapter of change in the 'position'.
+        notifyItemChanged(position)
 
     }
 

@@ -1,4 +1,4 @@
-package sample.ritwik.common.ui.fragment
+package com.droidboi.common.views.fragment
 
 import android.content.Context
 
@@ -7,11 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import androidx.annotation.LayoutRes
-
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 
 import androidx.fragment.app.Fragment
 
@@ -25,40 +20,30 @@ import com.droidboi.common.mvvm.utility.ACTION_UPDATE_UI
 
 import com.droidboi.common.mvvm.viewModel.BaseViewModel
 
-import com.squareup.picasso.Picasso
-
-import sample.ritwik.common.ui.activity.BaseActivity
+import com.droidboi.common.views.activity.BaseActivity
 
 import java.lang.RuntimeException
 
 /**
  * Abstract [Fragment] for handling common set-up required to show a [Fragment] in the UI.
  *
- * @param DataBinding [ViewDataBinding] referencing the Data Binding class of this [Fragment].
+ * @param Binding Any Class referencing the View/Data Binding class of this [Fragment].
  * @author Ritwik Jamuar.
  */
-abstract class BaseFragment<
-        DataBinding: ViewDataBinding,
-        Model: BaseModel,
-        ViewModel: BaseViewModel<Model>
-        > : Fragment() {
+abstract class BaseFragment<Model : BaseModel, ViewModel : BaseViewModel<Model>, Binding>
+    : Fragment() {
 
     /*---------------------------------------- Components ----------------------------------------*/
 
     /**
-     * Reference of [DataBinding] to control the Views under it.
+     * Reference of [Binding] to control the Views under it.
      */
-    protected var binding: DataBinding? = null
+    protected var binding: Binding? = null
 
     /**
      * Reference of [ViewModel] as the ViewModel of [BaseActivity].
      */
     protected var viewModel: ViewModel? = null
-
-    /**
-     * Reference of [Picasso] as the Image Loader Library of this Application.
-     */
-    protected var imageLoader: Picasso? = null
 
     /*---------------------------------------- Observers -----------------------------------------*/
 
@@ -75,7 +60,6 @@ abstract class BaseFragment<
         super.onAttach(context)
         if (context is BaseActivity<*, *, *>) {
             viewModel = context.getVM() as ViewModel
-            imageLoader = context.getImageLoader()
         } else {
             throw RuntimeException("$context must be an extension of ${BaseActivity::class.java}")
         }
@@ -93,8 +77,8 @@ abstract class BaseFragment<
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutRes(), container, false)
-        return binding?.root
+        binding = provideBinding(inflater, container)
+        return provideViewRoot(binding!!)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,7 +101,6 @@ abstract class BaseFragment<
     override fun onDetach() {
         super.onDetach()
         viewModel = null
-        imageLoader = null
     }
 
     /*-------------------------------------- Private Methods -------------------------------------*/
@@ -147,12 +130,12 @@ abstract class BaseFragment<
 
     /*------------------------------------- Abstract Methods -------------------------------------*/
 
-    /**
-     * Provides the Layout XML of this [BaseFragment].
-     *
-     * @return [Int] denoting the [LayoutRes].
-     */
-    abstract fun layoutRes(): Int
+    protected abstract fun provideBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): Binding
+
+    protected abstract fun provideViewRoot(binding: Binding): View
 
     /**
      * Tells this [BaseFragment] to extract the arguments from [Bundle].

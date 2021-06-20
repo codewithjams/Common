@@ -1,4 +1,4 @@
-package sample.ritwik.common.ui.activity
+package com.droidboi.common.views.activity
 
 import android.Manifest
 
@@ -8,15 +8,8 @@ import android.content.pm.PackageManager
 
 import android.os.Bundle
 
-import android.view.View
-
-import androidx.annotation.LayoutRes
-
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -31,10 +24,12 @@ import com.droidboi.common.mvvm.utility.*
 
 import com.droidboi.common.mvvm.viewModel.BaseViewModel
 
+import com.droidboi.common.utility.networkCallback.constant.NETWORK_ACTION_CHANGED
 import com.droidboi.common.utility.networkCallback.constant.NETWORK_ACTION_NONE
 import com.droidboi.common.utility.networkCallback.constant.NETWORK_PERMISSION_REQUIRED
 
 import com.droidboi.common.utility.networkCallback.data.NetworkData
+import com.droidboi.common.utility.networkCallback.data.NetworkType
 
 import com.droidboi.common.utility.networkCallback.helper.NetworkUtils
 
@@ -42,44 +37,36 @@ import com.droidboi.common.utility.permissions.constant.GROUP_PERMISSION_CODE
 
 import com.droidboi.common.utility.permissions.helper.PermissionUtils
 
-import com.squareup.picasso.Picasso
+import com.droidboi.common.views.R
 
 import kotlinx.coroutines.flow.collect
-
-import sample.ritwik.common.R
-
-import sample.ritwik.common.ui.miscellaneous.PopUpWindow
 
 /**
  * Abstract [AppCompatActivity] to contain all the common methods related to setting up the UI.
  *
  * @param Model [BaseModel] as the Model/UI Data of this [AppCompatActivity].
  * @param ViewModel [BaseViewModel] as the ViewModel of this [AppCompatActivity].
- * @param DataBinding [ViewDataBinding] representing the Data Binding Class of this [AppCompatActivity].
+ * @param Binding Any Class representing the View/Data Binding Class
+ *   of this [AppCompatActivity].
  * @author Ritwik Jamuar
  */
 abstract class BaseActivity<
         Model : BaseModel,
         ViewModel : BaseViewModel<Model>,
-        DataBinding : ViewDataBinding
+        Binding : Any
         > : AppCompatActivity() {
 
     /*---------------------------------------- Components ----------------------------------------*/
 
     /**
-     * Reference of [DataBinding] to control the Views under it.
+     * Reference of [Binding] to control the Views under it.
      */
-    lateinit var binding: DataBinding
+    protected lateinit var binding: Binding
 
     /**
      * Reference of [ViewModel] to notify any event from here to it as well as observing any changes.
      */
-    protected abstract val viewModel: ViewModel
-
-    /**
-     * Reference of [PopUpWindow] to control showing the Pop-Up in the UI.
-     */
-    private lateinit var popUpWindow: PopUpWindow
+    protected val viewModel: ViewModel by lazy { provideViewModel() }
 
     /**
      * Reference of [NetworkUtils] to get updates on change in Network Connectivity.
@@ -90,11 +77,6 @@ abstract class BaseActivity<
      * Reference of [PermissionUtils] to check and request permissions.
      */
     private lateinit var permissionUtils: PermissionUtils
-
-    /**
-     * Reference of [Picasso] to load the images from a Web URL.
-     */
-    protected abstract val picasso: Picasso
 
     /*-------------------------------------- View Listeners --------------------------------------*/
 
@@ -115,13 +97,6 @@ abstract class BaseActivity<
      */
     private val uiObserver = Observer<Model> { data ->
         processUpdateOnUIData(data)
-    }
-
-    /**
-     * [Observer] of [NetworkUtils.networkFlow].
-     */
-    private val networkObserver = Observer<NetworkData> { data ->
-        processUpdateOnNetwork(data)
     }
 
     /*------------------------------------ Activity Callbacks ------------------------------------*/
@@ -199,13 +174,6 @@ abstract class BaseActivity<
      */
     fun getVM(): ViewModel = viewModel
 
-    /**
-     * Provides the Image Loading Library of this Application.
-     *
-     * @return Current Instance of [picasso].
-     */
-    fun getImageLoader(): Picasso = picasso
-
     /*-------------------------------------- Private Methods -------------------------------------*/
 
     /**
@@ -222,7 +190,7 @@ abstract class BaseActivity<
      * Sets up the [binding].
      */
     private fun setUpView() {
-        binding = DataBindingUtil.setContentView(this, layoutRes())
+        binding = provideBinding()
     }
 
     /**
@@ -278,39 +246,6 @@ abstract class BaseActivity<
     }
 
     /**
-     * Shows the [android.widget.PopupWindow] using [popUpWindow].
-     *
-     * @param popUpData Instance of [PopUpData] denoting the data of [PopUpWindow].
-     */
-    private fun showPopUpDialog(popUpData: PopUpData) {
-
-        // Initializes the PopUpWindow if not.
-        if (!::popUpWindow.isInitialized) {
-            popUpWindow = PopUpWindow(this)
-        }
-
-        // Show the PopUpWindow.
-        popUpWindow.show(popUpData, toolbarView())
-
-        // Reset all the data once the PopUpWindow is shown in the UI.
-        popUpData.resetAllData()
-
-    }
-
-    /**
-     * Hides the [android.widget.PopupWindow] using [popUpWindow].
-     */
-    private fun dismissPopUpDialog() {
-
-        // Halt the further execution if the popUpWindow is null.
-        if (!::popUpWindow.isInitialized) return
-
-        // Dismiss the PopUpWindow.
-        popUpWindow.dismiss()
-
-    }
-
-    /**
      * Handles the changes in [NetworkData] propagated from [networkUtils].
      *
      * @param networkData Modified [NetworkData].
@@ -319,10 +254,10 @@ abstract class BaseActivity<
 
         NETWORK_ACTION_NONE -> Unit
 
-        /*NETWORK_ACTION_CHANGED -> viewModel.onNetworkChanged(
+        NETWORK_ACTION_CHANGED -> onNetworkChanged(
             networkData.isNetworkAvailable,
             networkData.networkType
-        )*/
+        )
 
         NETWORK_PERMISSION_REQUIRED -> askPhoneStatePermission()
 
@@ -342,21 +277,24 @@ abstract class BaseActivity<
             .create()
     }
 
-    /*------------------------------------- Protected Methods ------------------------------------*/
-
     /*------------------------------------- Abstract Methods -------------------------------------*/
 
     /**
-     * Gets the [Int] denoting the layout of this [BaseActivity].
+     * Provides the [ViewModel] of this [AppCompatActivity].
      *
-     * @return [Int] as [LayoutRes].
+     * @return New Instance of [ViewModel].
      */
-    @LayoutRes
-    protected abstract fun layoutRes(): Int
+    protected abstract fun provideViewModel(): ViewModel
 
     /**
-     * Use [dagger.android.AndroidInjection] to inject the required dependencies
-     * into this [BaseActivity].
+     * Provides the [Binding] for the [binding].
+     *
+     * @return New Instance of [Binding].
+     */
+    protected abstract fun provideBinding(): Binding
+
+    /**
+     * Use Dependency Injection to inject the required dependencies into this [BaseActivity].
      */
     protected abstract fun inject()
 
@@ -371,16 +309,21 @@ abstract class BaseActivity<
     protected abstract fun hideLoading()
 
     /**
+     * Shows the Pop-up Dialog.
+     *
+     * @param popUpData Instance of [PopUpData] denoting the data for the Pop-up Window.
+     */
+    protected abstract fun showPopUpDialog(popUpData: PopUpData)
+
+    /**
+     * Hides the Pop-up Dialog.
+     */
+    protected abstract fun dismissPopUpDialog()
+
+    /**
      * Tells this [BaseActivity] to show the Error.
      */
     protected abstract fun showError(errorData: ErrorData)
-
-    /**
-     * Provides the Toolbar [View] of this [BaseActivity].
-     *
-     * @return [View] representing the Toolbar.
-     */
-    protected abstract fun toolbarView(): View?
 
     /**
      * Tells this [BaseActivity] to perform extracting Data from it's [Bundle] arguments
@@ -397,6 +340,15 @@ abstract class BaseActivity<
      * Tells this [BaseActivity] to attach [Observer] of any [androidx.lifecycle.LiveData].
      */
     protected abstract fun attachObservers()
+
+    /**
+     * Notifies this [BaseActivity] of any change in the State of the Network.
+     *
+     * @param isNetworkAvailable [Boolean] Flag marking whether the Network is available or not.
+     * @param networkType Instance of [NetworkType] denoting the Type of Network connectivity
+     *   based on the Network Connection.
+     */
+    protected abstract fun onNetworkChanged(isNetworkAvailable: Boolean, networkType: NetworkType)
 
     /**
      * Tells this [BaseActivity] that there is a change in UI Data.

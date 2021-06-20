@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Common</string>
+
+    <string name="ok">OK</string>
+
+    <string name="no_phone_state_permission">
+        Permission to read Phone State is required in order to determine whether the application is
+        connected over internet or not.
+    </string>
+
+</resources>

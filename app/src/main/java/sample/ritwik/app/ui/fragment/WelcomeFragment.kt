@@ -2,9 +2,9 @@ package sample.ritwik.app.ui.fragment
 
 import android.os.Bundle
 
+import android.view.LayoutInflater
 import android.view.View
-
-import sample.ritwik.app.R
+import android.view.ViewGroup
 
 import sample.ritwik.app.databinding.FragmentWelcomeBinding
 
@@ -12,14 +12,14 @@ import sample.ritwik.app.mvvm.model.MainModel
 
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
-import sample.ritwik.common.ui.fragment.BaseFragment
+import com.droidboi.common.views.fragment.BaseFragment
 
 /**
  * [BaseFragment] to showcase the Welcome screen.
  *
  * @author Ritwik Jamuar
  */
-class WelcomeFragment : BaseFragment<FragmentWelcomeBinding, MainModel, MainViewModel>() {
+class WelcomeFragment : BaseFragment<MainModel, MainViewModel, FragmentWelcomeBinding>() {
 
     /*-------------------------------------- View Listeners --------------------------------------*/
 
@@ -32,7 +32,13 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding, MainModel, MainView
 
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-    override fun layoutRes(): Int = R.layout.fragment_welcome
+    override fun provideBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWelcomeBinding =
+        FragmentWelcomeBinding.inflate(inflater, container, false)
+
+    override fun provideViewRoot(binding: FragmentWelcomeBinding): View = binding.root
 
     override fun extractArguments(arguments: Bundle) = Unit
 

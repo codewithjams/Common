@@ -133,34 +133,40 @@ abstract class BaseActivity<
         grantResults: IntArray
     ) {
 
+        // Halt the further execution and execute this method from super class.
+        // when the request code does not match the code found from PermissionUtils.
         if (requestCode != GROUP_PERMISSION_CODE) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
             return
         }
 
+        // At this stage, the request code equals the 'GROUP_PERMISSION_CODE'.
+
+        // Now check whether the Permissions Granted is empty or not.
         if (grantResults.isNotEmpty() && permissions.isNotEmpty()) {
 
+            // At this stage, Permission is granted/declined by the User on Runtime.
+
+            // So check whether the Permission is granted or denied and handle accordingly.
             val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
 
-            when(permissions[0]) {
+            when (permissions[0]) {
 
-                Manifest.permission.READ_PHONE_STATE -> {
-                    if (isGranted) {
-                        with(networkUtils) {
-                            markReadingPhoneStatePermission(true)
-                            registerCallbacks()
-                        }
-                    } else {
-                        askPhoneStatePermission()
-                    }
-                }
+                // This is a required permission to be granted by User for getting update on
+                // Network Connectivity through NetworkUtils.
+                Manifest.permission.READ_PHONE_STATE -> onReadPhoneStatePermission(isGranted)
 
+                // Since it's any other Permission, so let it be handled by the super class.
                 else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
             }
 
         } else {
+
+            // At this stage, either the Grant Results or Permissions are not populated.
+            // So execute this method from super class.
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         }
 
     }
@@ -275,6 +281,32 @@ abstract class BaseActivity<
             .setMessage(R.string.no_phone_state_permission)
             .setPositiveButton(R.string.ok, dialogClickListener)
             .create()
+    }
+
+    /*------------------------------------- Protected Methods ------------------------------------*/
+
+    /**
+     * Handles the permission [Manifest.permission.READ_PHONE_STATE].
+     *
+     * @param isGranted [Boolean] Flag marking whether user has granted or denied the permission.
+     */
+    protected fun onReadPhoneStatePermission(isGranted: Boolean) {
+
+        // If the permission to Read Phone State is not granted by the User, prompt User
+        // for the Permission again and halt the further execution.
+        if (!isGranted) {
+            askPhoneStatePermission()
+            return
+        }
+
+        // At this stage, the Permission to Read Phone State is granted by the User.
+        // So, notify the NetworkUtils that Permission is granted and tell it to
+        // register the callbacks.
+        with(networkUtils) {
+            markReadingPhoneStatePermission(true)
+            registerCallbacks()
+        }
+
     }
 
     /*------------------------------------- Abstract Methods -------------------------------------*/

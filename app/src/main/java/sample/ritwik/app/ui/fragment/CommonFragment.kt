@@ -2,9 +2,9 @@ package sample.ritwik.app.ui.fragment
 
 import android.os.Bundle
 
+import android.view.LayoutInflater
 import android.view.View
-
-import sample.ritwik.app.R
+import android.view.ViewGroup
 
 import sample.ritwik.app.databinding.FragmentCommonBinding
 
@@ -14,14 +14,14 @@ import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.ui.adapter.LibraryComponentAdapter
 
-import sample.ritwik.common.ui.fragment.BaseFragment
+import com.droidboi.common.views.fragment.BaseFragment
 
 /**
  * [BaseFragment] to showcase the components used in Common Library.
  *
  * @author Ritwik Jamuar
  */
-class CommonFragment : BaseFragment<FragmentCommonBinding, MainModel, MainViewModel>() {
+class CommonFragment : BaseFragment<MainModel, MainViewModel, FragmentCommonBinding>() {
 
     /*---------------------------------------- Components ----------------------------------------*/
 
@@ -33,7 +33,12 @@ class CommonFragment : BaseFragment<FragmentCommonBinding, MainModel, MainViewMo
 
     /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-    override fun layoutRes(): Int = R.layout.fragment_common
+    override fun provideBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCommonBinding = FragmentCommonBinding.inflate(inflater, container, false)
+
+    override fun provideViewRoot(binding: FragmentCommonBinding): View = binding.root
 
     override fun extractArguments(arguments: Bundle) = Unit
 

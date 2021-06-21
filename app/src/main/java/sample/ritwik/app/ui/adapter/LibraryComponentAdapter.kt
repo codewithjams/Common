@@ -3,13 +3,13 @@ package sample.ritwik.app.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
+import com.droidboi.common.views.recyclerView.adapter.BaseSingleVHAdapter
+
 import sample.ritwik.app.data.ui.LibraryComponent
 
 import sample.ritwik.app.databinding.ItemLibraryComponentBinding
 
 import sample.ritwik.app.ui.viewHolder.LibraryComponentViewHolder
-
-import sample.ritwik.common.ui.adapter.BaseSingleVHAdapter
 
 /**
  * [BaseSingleVHAdapter] to render [LibraryComponentViewHolder]

@@ -1,18 +1,22 @@
 package sample.ritwik.app.mvvm.repository
 
+import com.droidboi.common.persistence.dataStore.DataStorePreference
+
+import com.droidboi.common.repository.BaseRepository
+
+import com.droidboi.common.utility.resources.helper.ResourceUtils
+
 import com.squareup.moshi.Moshi
+
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 import sample.ritwik.app.component.network.RESTInterface
 
 import sample.ritwik.app.data.network.ComponentsResponse
 
 import sample.ritwik.app.data.ui.LibraryComponent
-
-import sample.ritwik.common.component.persistence.DataStorePreference
-
-import sample.ritwik.common.mvvm.repository.BaseRepository
-
-import sample.ritwik.common.utility.helper.ResourceUtils
 
 import javax.inject.Inject
 
@@ -41,32 +45,11 @@ class MainRepository @Inject constructor(
      *
      * @return [List] of [LibraryComponent].
      */
-    fun provideListOfLibraryComponents(): List<LibraryComponent> =
-
-        // Use 'resourceUtils' to get the JSON File.
-        with(resourceUtils.getAsset("LibraryComponents.json")) {
-
-            // Initialize the ByteArray as buffer on which contents of JSON will be stored.
-            val buffer = ByteArray(available())
-
-            // Read the 'buffer' using  the given InputStream.
-            read(buffer)
-
-            // Close the InputStream after 'buffer' is read.
-            close()
-
-            // Instantiate a new List of LibraryComponent.
-            ArrayList<LibraryComponent>().apply {
-
-                // Using Moshi, Convert the JSON to an instance of ComponentResponse.
-                moshi.adapter(ComponentsResponse::class.java).fromJson(String(buffer))
-                    ?.let { response ->
-                        // Add all the Library Components from response to this new List.
-                        addAll(response.result)
-                    }
-
-            }
-
-        }
+    fun provideListOfLibraryComponents(): Flow<List<LibraryComponent>> = extractClassInstanceFromAssets(
+        ComponentsResponse::class.java,
+        "LibraryComponents.json"
+    ).map { response ->
+        response?.result ?: ArrayList()
+    }.flowOn(ioDispatcher)
 
 }

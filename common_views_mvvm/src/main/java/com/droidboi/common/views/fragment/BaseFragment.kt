@@ -58,7 +58,7 @@ abstract class BaseFragment<Model : BaseModel, ViewModel : BaseViewModel<Model>,
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is BaseActivity<*, *, *>) {
+        if (context is BaseActivity<out BaseModel, out BaseViewModel<out BaseModel>, *>) {
             viewModel = context.getVM() as ViewModel
         } else {
             throw RuntimeException("$context must be an extension of ${BaseActivity::class.java}")

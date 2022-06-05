@@ -28,6 +28,6 @@ object Configuration {
     /**
      * Java Version for compilation.
      */
-    const val javaVersion = "1.8"
+    const val javaVersion = "11"
 
 }

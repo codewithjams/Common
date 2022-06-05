@@ -5,7 +5,7 @@
  */
 object Versions {
 
-    const val gradle = "7.0.2"
+    const val gradle = "7.2.1"
 
     const val kotlin = "1.5.30"
     const val kotlinCoRoutines = "1.4.3"

@@ -19,7 +19,7 @@ object Versions {
     const val constraintLayout = "2.1.0"
     const val facebookShimmer = "0.5.0"
     const val superChargeShimmer = "2.1.0"
-    const val dagger = "2.35.1"
+    const val dagger = "2.42"
     const val coreKTX = "1.6.0"
     const val lifecycleViewModel = "2.3.1"
     const val lifecycleCommon = "2.4.0-alpha03"

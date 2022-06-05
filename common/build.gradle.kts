@@ -48,7 +48,6 @@ dependencies {
     kapt(DependencyInjection.daggerAndroidProcessor)
     kapt(DependencyInjection.daggerCompiler)
     kapt(JetpackLifecycle.extension)
-    kapt(UI.dataBindingCompiler)
 
     testImplementation(UnitTesting.jUnit)
 

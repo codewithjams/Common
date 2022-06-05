@@ -1,7 +1,6 @@
 plugins {
     id(Plugins.commonApplicationModulePlugin)
     id(Plugins.kotlinAnnotationProcessor)
-    id(Plugins.kotlinAndroidExtension)
 }
 
 android {
@@ -31,7 +30,6 @@ dependencies {
     kapt(DependencyInjection.daggerAndroidProcessor)
     kapt(DependencyInjection.daggerCompiler)
     kapt(JetpackLifecycle.extension)
-    kapt(UI.dataBindingCompiler)
 
     testImplementation(UnitTesting.jUnit)
 

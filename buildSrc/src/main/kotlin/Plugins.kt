@@ -21,11 +21,6 @@ object Plugins {
     val kotlinAndroid by lazy { "kotlin-android" }
 
     /**
-     * Gradle Plugin for facilitating extension functions around Android.
-     */
-    val kotlinAndroidExtension by lazy { "kotlin-android-extensions" }
-
-    /**
      * Gradle Plugin for facilitating Annotation Processing in kotlin.
      */
     val kotlinAnnotationProcessor by lazy { "kotlin-kapt" }

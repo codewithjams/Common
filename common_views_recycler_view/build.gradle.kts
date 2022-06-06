@@ -4,11 +4,11 @@ plugins {
 
 dependencies {
 
-    implementation(UI.recyclerView)
+    implementation(Dependencies.JetPack.RecyclerView.standardLibrary)
 
-    testImplementation(UnitTesting.jUnit)
+    testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(InstrumentationTesting.androidXJunit)
-    androidTestImplementation(InstrumentationTesting.androidXEspresso)
+    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

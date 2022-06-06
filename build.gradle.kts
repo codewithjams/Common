@@ -4,13 +4,13 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
 
-        classpath(AndroidCommon.gradlePlugin)
-        classpath(Kotlin.gradlePlugin)
+        classpath(Dependencies.Android.gradlePlugin)
+        classpath(Dependencies.Kotlin.gradlePlugin)
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
@@ -23,7 +23,7 @@ allprojects {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
 }

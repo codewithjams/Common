@@ -4,12 +4,12 @@ plugins {
 
 dependencies {
 
-    implementation(AndroidCommon.appCompat)
-    implementation(UI.materialDesign)
+    implementation(Dependencies.JetPack.AppCompat.standardLibrary)
+    implementation(Dependencies.Google.MaterialDesign.standardLibrary)
 
-    testImplementation(UnitTesting.jUnit)
+    testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(InstrumentationTesting.androidXJunit)
-    androidTestImplementation(InstrumentationTesting.androidXEspresso)
+    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

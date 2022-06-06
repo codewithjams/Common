@@ -8,14 +8,14 @@ dependencies {
     implementation(project(":common_mvvm"))
     implementation(project(":common_utility"))
 
-    implementation(AndroidCommon.appCompat)
-    implementation(AndroidCommon.coreKTX)
+    implementation(Dependencies.JetPack.AppCompat.standardLibrary)
+    implementation(Dependencies.JetPack.Core.standardLibraryKTX)
 
-    kapt(JetpackLifecycle.extension)
+    kapt(Dependencies.JetPack.Lifecycle.compiler)
 
-    testImplementation(UnitTesting.jUnit)
+    testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(InstrumentationTesting.androidXJunit)
-    androidTestImplementation(InstrumentationTesting.androidXEspresso)
+    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

@@ -25,15 +25,15 @@ android {
 dependencies {
 
     implementation(project(":common"))
-    implementation(AndroidCommon.legacySupportV4)
+    implementation(Dependencies.JetPack.Legacy.v4Support)
 
-    kapt(DependencyInjection.daggerAndroidProcessor)
-    kapt(DependencyInjection.daggerCompiler)
-    kapt(JetpackLifecycle.extension)
+    kapt(Dependencies.Google.Dagger.androidProcessor)
+    kapt(Dependencies.Google.Dagger.compiler)
+    kapt(Dependencies.JetPack.Lifecycle.compiler)
 
-    testImplementation(UnitTesting.jUnit)
+    testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(InstrumentationTesting.androidXJunit)
-    androidTestImplementation(InstrumentationTesting.androidXEspresso)
+    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

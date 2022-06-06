@@ -38,7 +38,8 @@ class ApplicationModulePlugin : Plugin<Project> {
                     targetSdk = Configuration.targetSDKVersion // Target SDK Version.
                     minSdk = Configuration.minimumSDKVersion // Minimum SDK Version.
 
-                    testInstrumentationRunner = InstrumentationTesting.runner // Instrumentation Runner.
+                    // Instrumentation Runner.
+                    testInstrumentationRunner = Dependencies.JetPack.Test.instrumentationRunner
 
                 }
 

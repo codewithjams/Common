@@ -7,22 +7,21 @@ dependencies {
 
     api(project(":common_data_ui"))
 
-    api(JetpackLifecycle.viewModel)
-    api(JetpackLifecycle.liveDataCore)
-    api(JetpackLifecycle.runtime)
-    api(JetpackLifecycle.commonJava8)
-    api(JetpackLifecycle.common)
+    api(Dependencies.JetPack.Lifecycle.viewModel)
+    api(Dependencies.JetPack.Lifecycle.liveData)
+    api(Dependencies.JetPack.Lifecycle.runTime)
 
-    implementation(DependencyInjection.daggerCore)
-    implementation(DependencyInjection.daggerAndroid)
+    implementation(Dependencies.Kotlin.standardLibrary)
+    implementation(Dependencies.Google.Dagger.standardLibrary)
+    implementation(Dependencies.Google.Dagger.android)
 
-    kapt(DependencyInjection.daggerAndroidProcessor)
-    kapt(DependencyInjection.daggerCompiler)
-    kapt(JetpackLifecycle.extension)
+    kapt(Dependencies.Google.Dagger.androidProcessor)
+    kapt(Dependencies.Google.Dagger.compiler)
+    kapt(Dependencies.JetPack.Lifecycle.compiler)
 
-    testImplementation(UnitTesting.jUnit)
+    testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(InstrumentationTesting.androidXJunit)
-    androidTestImplementation(InstrumentationTesting.androidXEspresso)
+    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

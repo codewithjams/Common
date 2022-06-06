@@ -10,15 +10,15 @@ dependencies {
     api(project(":common_utility_resources"))
     api(project(":common_utility_views"))
 
-    implementation(DependencyInjection.daggerCore)
-    implementation(DependencyInjection.daggerAndroid)
+    implementation(Dependencies.Google.Dagger.standardLibrary)
+    implementation(Dependencies.Google.Dagger.android)
 
-    kapt(DependencyInjection.daggerAndroidProcessor)
-    kapt(DependencyInjection.daggerCompiler)
+    kapt(Dependencies.Google.Dagger.androidProcessor)
+    kapt(Dependencies.Google.Dagger.compiler)
 
-    testImplementation(UnitTesting.jUnit)
+    testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(InstrumentationTesting.androidXJunit)
-    androidTestImplementation(InstrumentationTesting.androidXEspresso)
+    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

@@ -9,14 +9,14 @@ dependencies {
     api(project(":common_utility_resources"))
     api(project(":common_persistence"))
 
-    api(Network.retrofit)
-    api(Network.retrofitMoshiConverter)
+    api(Dependencies.Square.Retrofit.standardLibrary)
+    api(Dependencies.Square.Retrofit.moshiConverter)
 
-    implementation(Kotlin.coRoutines)
+    implementation(Dependencies.Kotlin.coRoutines)
 
-    testImplementation(UnitTesting.jUnit)
+    testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(InstrumentationTesting.androidXJunit)
-    androidTestImplementation(InstrumentationTesting.androidXEspresso)
+    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

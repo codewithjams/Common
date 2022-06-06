@@ -1,6 +1,6 @@
 package sample.ritwik.common.di.module
 
-import com.droidboi.common.mvvm.di.module.ViewModelModule
+import com.droidboi.common.lifecycle.di.module.ViewModelModule
 
 import com.droidboi.common.persistence.di.PersistenceModule
 
@@ -21,7 +21,7 @@ import dagger.Module
  * [com.droidboi.common.persistence.dataStore.DataStorePreference].
  * 3. [PicassoModule]: To provide the [com.squareup.picasso.Picasso].
  * 4. [RetrofitModule]: To provide the [retrofit2.Retrofit].
- * 5. [ViewModelModule]: To provide the [com.droidboi.common.mvvm.viewModelFactory.VMFactory].
+ * 5. [ViewModelModule]: To provide the [com.droidboi.common.lifecycle.VMFactory].
  *
  *
  * Along with the dependencies on the above, this [Module] also provides following:

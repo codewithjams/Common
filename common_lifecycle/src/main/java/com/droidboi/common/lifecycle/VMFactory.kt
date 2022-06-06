@@ -1,4 +1,4 @@
-package com.droidboi.common.mvvm.viewModelFactory
+package com.droidboi.common.lifecycle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

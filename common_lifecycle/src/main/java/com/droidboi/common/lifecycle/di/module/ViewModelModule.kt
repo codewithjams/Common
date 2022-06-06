@@ -1,8 +1,8 @@
-package com.droidboi.common.mvvm.di.module
+package com.droidboi.common.lifecycle.di.module
 
 import androidx.lifecycle.ViewModel
 
-import com.droidboi.common.mvvm.viewModelFactory.VMFactory
+import com.droidboi.common.lifecycle.VMFactory
 
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ import javax.inject.Provider
  *
  *
  * Since, every [android.app.Activity] will have
- * different [com.droidboi.common.mvvm.viewModel.BaseViewModel], so [VMFactory] will be provided
+ * different [ViewModel], so [VMFactory] will be provided
  * multiple times for every [android.app.Activity]
  * that requests through [dagger.android.ContributesAndroidInjector].
  *
@@ -34,7 +34,7 @@ class ViewModelModule {
      *   [android.app.Activity] [Provides] method
      *   annotated with [dagger.android.ContributesAndroidInjector]
      *   and [ViewModel]'s [Provides] annotated with [dagger.Binds], [dagger.multibindings.IntoMap]
-     *   and [com.droidboi.common.mvvm.di.mapKey.ViewModelKey].
+     *   and [com.droidboi.common.lifecycle.di.mapKey.ViewModelKey].
      * @return New Instance of [VMFactory].
      */
     @Provides

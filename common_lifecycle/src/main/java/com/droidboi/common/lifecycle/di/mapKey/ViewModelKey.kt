@@ -1,4 +1,4 @@
-package com.droidboi.common.mvvm.di.mapKey
+package com.droidboi.common.lifecycle.di.mapKey
 
 import androidx.lifecycle.ViewModel
 

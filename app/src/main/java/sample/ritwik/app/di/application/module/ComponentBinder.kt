@@ -2,7 +2,7 @@ package sample.ritwik.app.di.application.module
 
 import androidx.lifecycle.ViewModel
 
-import com.droidboi.common.mvvm.di.mapKey.ViewModelKey
+import com.droidboi.common.lifecycle.di.mapKey.ViewModelKey
 
 import dagger.Binds
 import dagger.Module

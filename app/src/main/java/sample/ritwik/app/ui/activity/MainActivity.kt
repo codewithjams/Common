@@ -1,21 +1,11 @@
 package sample.ritwik.app.ui.activity
 
-import androidx.databinding.DataBindingUtil
-
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
-import com.droidboi.common.data.ui.PopUpData
-
-import com.droidboi.common.mvvm.data.ErrorData
-
-import com.droidboi.common.mvvm.viewModelFactory.VMFactory
-
-import com.droidboi.common.utility.networkCallback.data.NetworkType
-
-import com.droidboi.common.utility.networkCallback.helper.NetworkUtils
+import com.droidboi.common.lifecycle.VMFactory
 
 import com.squareup.picasso.Picasso
 
@@ -25,37 +15,29 @@ import sample.ritwik.app.R
 
 import sample.ritwik.app.databinding.ActivityMainBinding
 
-import sample.ritwik.app.mvvm.model.MainModel
-
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
 
-import com.droidboi.common.views.activity.BaseActivity
+import com.droidboi.common.views.activity.BaseMVVMActivity
 
 import javax.inject.Inject
 
 /**
- * [BaseActivity] for demonstration of 'common' Library.
+ * [BaseMVVMActivity] for demonstration of 'common' Library.
  *
  * @author Ritwik Jamuar
  */
-class MainActivity : BaseActivity<MainModel, MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseMVVMActivity<MainViewModel, ActivityMainBinding>() {
 
     /*---------------------------------------- Components ----------------------------------------*/
 
     /**
-     * Reference of [VMFactory] of this [BaseActivity]
-     * injected from [com.droidboi.common.mvvm.di.module.ViewModelModule].
+     * Reference of [VMFactory] of this [BaseMVVMActivity]
+     * injected from [com.droidboi.common.lifecycle.di.module.ViewModelModule].
      */
     @Inject
     lateinit var vmFactory: VMFactory
-
-    /**
-     * Reference of [NetworkUtils], injected from [sample.ritwik.common.di.module.CommonModule].
-     */
-    @Inject
-    lateinit var networkUtility: NetworkUtils
 
     /**
      * Reference of [Picasso] injected from [sample.ritwik.common.di.module.PicassoModule].
@@ -72,45 +54,19 @@ class MainActivity : BaseActivity<MainModel, MainViewModel, ActivityMainBinding>
 
     /*---------------------------------- BaseActivity Callbacks ----------------------------------*/
 
-    override fun provideViewModel(): MainViewModel =
-        ViewModelProvider(this, vmFactory).get(MainViewModel::class.java)
-
-    override fun provideBinding(): ActivityMainBinding =
-        DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-    override val networkUtils: NetworkUtils
-        get() = networkUtility
+    override val layoutRes: Int
+        get() = R.layout.activity_main
 
     override fun inject() = AndroidInjection.inject(this)
 
-    override fun showLoading() = Unit
+    /*-------------------------------- BaseMVVMActivity Callbacks --------------------------------*/
 
-    override fun hideLoading() = Unit
+    override val viewModel: MainViewModel
+        get() = ViewModelProvider(this, vmFactory)[MainViewModel::class.java]
 
-    override fun showPopUpDialog(popUpData: PopUpData) = Unit
-
-    override fun dismissPopUpDialog() = Unit
-
-    override fun showError(errorData: ErrorData) = Unit
-
-    override fun extractArguments() = Unit
-
-    override fun initialize() = Unit
-
-    override fun attachObservers() = Unit
-
-    override fun onNetworkChanged(isNetworkAvailable: Boolean, networkType: NetworkType) = Unit
-
-    override fun onUIDataChanged(uiData: MainModel) = Unit
-
-    override fun onAction(uiData: MainModel) = when(uiData.action) {
-
+    override fun onAction(action: Int) = when(action) {
         NAVIGATE_TO_COMMON_FRAGMENT -> navigationController.navigate(R.id.commonFragment)
-
         else -> Unit
-
     }
-
-    override fun cleanUp() = Unit
 
 }

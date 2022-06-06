@@ -18,30 +18,6 @@ import sample.ritwik.app.mvvm.repository.MainRepository
 /**
  * [Module] of [sample.ritwik.app.ui.activity.MainActivity].
  *
- *
- * The purpose of creating a [Module] for [sample.ritwik.app.ui.activity.MainActivity] is to provide
- * it's dependants, which in our case is these two things:
- * 1. [com.droidboi.common.mvvm.viewModelFactory.VMFactory].
- * 2. [sample.ritwik.common.utility.helper.NetworkUtils].
- *
- *
- * Now out of these two, [sample.ritwik.common.utility.helper.NetworkUtils] is provided from
- * [sample.ritwik.common.di.module.CommonModule].
- *
- *
- * But, [com.droidboi.common.mvvm.viewModelFactory.VMFactory] is unique for every [android.app.Activity].
- *
- *
- * From the current architecture, every sub-class of
- * [com.droidboi.common.mvvm.viewModel.BaseViewModel] needs to have following:
- * 1. Instance of sub-class that extends [sample.ritwik.common.mvvm.repository.BaseRepository].
- * 2. Instance of sub-class that extends [com.droidboi.common.mvvm.model.BaseModel].
- *
- *
- * This is why we create [Module] annotated Module Class for every [android.app.Activity].
- * The purpose of this Class is to facilitate the providing of above dependencies of
- * [com.droidboi.common.mvvm.viewModel.BaseViewModel].
- *
  * @author Ritwik Jamuar
  */
 @Module
@@ -53,7 +29,7 @@ class MainModule {
      * @param restInterface Instance of [RESTInterface] fulfilled from
      *   [sample.ritwik.app.di.application.module.RESTInterfaceModule].
      * @param dataStorePreference Instance of [DataStorePreference] fulfilled from
-     *   [sample.ritwik.common.di.module.PersistenceModule].
+     *   [com.droidboi.common.persistence.di.PersistenceModule].
      * @param moshi Instance of [Moshi] fulfilled from
      *   [sample.ritwik.common.di.module.MoshiModule].
      * @param resourceUtils Instance of [ResourceUtils] fulfilled from

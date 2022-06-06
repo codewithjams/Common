@@ -1,72 +1,86 @@
 package sample.ritwik.app.ui.fragment
 
-import android.os.Bundle
-
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+
+import com.droidboi.common.views.fragment.BaseMVVMFragment
+
+import sample.ritwik.app.R
 
 import sample.ritwik.app.databinding.FragmentCommonBinding
-
-import sample.ritwik.app.mvvm.model.MainModel
 
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.ui.adapter.LibraryComponentAdapter
 
-import com.droidboi.common.views.fragment.BaseFragment
+import sample.ritwik.app.utility.constant.ACTION_HIDE_PROGRESS
+import sample.ritwik.app.utility.constant.ACTION_SHOW_PROGRESS
 
 /**
- * [BaseFragment] to showcase the components used in Common Library.
+ * [BaseMVVMFragment] to showcase the components used in Common Library.
  *
  * @author Ritwik Jamuar
  */
-class CommonFragment : BaseFragment<MainModel, MainViewModel, FragmentCommonBinding>() {
+class CommonFragment : BaseMVVMFragment<MainViewModel, FragmentCommonBinding>() {
 
-    /*---------------------------------------- Components ----------------------------------------*/
+	/*---------------------------------------- Components ----------------------------------------*/
+
+	/**
+	 * Nullable Reference of [LibraryComponentAdapter] that shall be used to manually clear
+     * it's instance in the event of Fragment [cleanUp] so that Memory Leaks can be avoided.
+	 */
+	private var _adapter: LibraryComponentAdapter? = null
 
     /**
-     * Reference of [LibraryComponentAdapter] as the [androidx.recyclerview.widget.RecyclerView]'s
-     * Adapter in [binding].
+     * Reference of [LibraryComponentAdapter] to update the List of Libraries in the view.
      */
-    private var adapter: LibraryComponentAdapter? = null
+	private val adapter: LibraryComponentAdapter
+		get() = _adapter!!
 
-    /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
+	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-    override fun provideBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentCommonBinding = FragmentCommonBinding.inflate(inflater, container, false)
+    override val layoutRes: Int
+        get() = R.layout.fragment_common
 
-    override fun provideViewRoot(binding: FragmentCommonBinding): View = binding.root
-
-    override fun extractArguments(arguments: Bundle) = Unit
-
-    override fun initializeViews() {
-        adapter = LibraryComponentAdapter()
-        binding?.listComponents?.adapter = adapter
-        viewModel?.fetchLibraryComponents()
-    }
-
-    override fun onAction(uiData: MainModel) = Unit
+	override fun initializeViews() {
+		_adapter = LibraryComponentAdapter()
+		binding.listComponents.adapter = _adapter
+		viewModel.fetchLibraryComponents()
+	}
 
     override fun cleanUp() {
-        adapter = null
-        binding?.listComponents?.adapter = null
+        _adapter = null
+        binding.listComponents.adapter = null
+        super.cleanUp()
     }
 
-    override fun showLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    /*-------------------------------- BaseMVVMFragment Callbacks --------------------------------*/
+
+    override fun updateUI() {
+        adapter.replaceList(viewModel.model.libraryComponents)
+    }
+
+	override fun onAction(action: Int) = when (action) {
+		ACTION_SHOW_PROGRESS -> showLoading()
+		ACTION_HIDE_PROGRESS -> hideLoading()
+		else -> Unit
+	}
+
+    /*------------------------------------- Private Methods --------------------------------------*/
+
+    /**
+     * Shows the Loading Animation.
+     */
+    private fun showLoading() = binding.placeholderShimmerContainer.let { shimmer ->
         shimmer.visibility = View.VISIBLE
         shimmer.startShimmer()
-    } ?: Unit
+    }
 
-    override fun hideLoading() = binding?.placeholderShimmerContainer?.let { shimmer ->
+    /**
+     * Hides the Loading Animation.
+     */
+    private fun hideLoading() = binding.placeholderShimmerContainer.let { shimmer ->
         shimmer.stopShimmer()
         shimmer.visibility = View.GONE
-    } ?: Unit
-
-    override fun onUIDataChanged(uiData: MainModel) = with(uiData) {
-        adapter?.replaceList(libraryComponents) ?: Unit
     }
 
 }

@@ -2,12 +2,9 @@ package sample.ritwik.app.mvvm.viewModel
 
 import androidx.lifecycle.viewModelScope
 
-import com.droidboi.common.mvvm.utility.ACTION_UPDATE_UI
-
-import com.droidboi.common.mvvm.viewModel.BaseViewModel
+import com.droidboi.common.mvvm.viewModel.BaseMVVMViewModel
 
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 import sample.ritwik.app.data.ui.LibraryComponent
@@ -16,6 +13,8 @@ import sample.ritwik.app.mvvm.model.MainModel
 
 import sample.ritwik.app.mvvm.repository.MainRepository
 
+import sample.ritwik.app.utility.constant.ACTION_HIDE_PROGRESS
+import sample.ritwik.app.utility.constant.ACTION_SHOW_PROGRESS
 import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
 
 import javax.inject.Inject
@@ -30,13 +29,9 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repository: MainRepository,
     override val model: MainModel
-) : BaseViewModel<MainModel>() {
+) : BaseMVVMViewModel<MainModel>() {
 
     /*--------------------------------- BaseViewModel Callbacks ----------------------------------*/
-
-    override fun initializeLiveData() = Unit
-
-    override fun initializeVariables() = Unit
 
     /*-------------------------------------- Public Methods --------------------------------------*/
 
@@ -45,7 +40,7 @@ class MainViewModel @Inject constructor(
      * from [sample.ritwik.app.ui.fragment.WelcomeFragment].
      */
     fun onCommonClicked() {
-        notifyActionOnUI(NAVIGATE_TO_COMMON_FRAGMENT)
+        navigateToCommon()
     }
 
     /**
@@ -55,40 +50,54 @@ class MainViewModel @Inject constructor(
 
         // Load the data only if it is not populated before.
         if (!model.isComponentsPopulated()) {
-
-            viewModelScope.launch {
-
-                // Show the Progress.
-                showProgress()
-
-                // Mark a delay of 5 seconds.
-                delay(5000)
-
-                // Create a new List of LibraryComponent.
-                val list: ArrayList<LibraryComponent> = ArrayList()
-
-                repository.provideListOfLibraryComponents().collect { components ->
-                    list.addAll(components)
-                }
-
-                // Hide the Progress.
-                hideProgress()
-
-                // Store the fetched list into 'model'.
-                model.libraryComponents = list
-
-                // Populate the UI of this fetched list by notifying the action to Update the UI.
-                notifyActionOnUI(ACTION_UPDATE_UI)
-
-            }
-
-        } else {
-
-            // Populate the UI with already fetched list by notifying the action to Update the UI..
-            notifyActionOnUI(ACTION_UPDATE_UI)
-
+            populate()
+            return
         }
 
+        updateUI() // Populate the UI with already fetched list.
+
+    }
+
+    /*------------------------------------- Private Methods --------------------------------------*/
+
+    /**
+     * Triggers UI to show progress.
+     */
+    private fun showProgress() {
+        notifyAction(ACTION_SHOW_PROGRESS)
+    }
+
+    /**
+     * Triggers UI to hide progress.
+     */
+    private fun hideProgress() {
+        notifyAction(ACTION_HIDE_PROGRESS)
+    }
+
+    /**
+     * Tells the UI to navigate to Common view.
+     */
+    private fun navigateToCommon() {
+        notifyAction(NAVIGATE_TO_COMMON_FRAGMENT)
+    }
+
+    private fun populate() {
+        viewModelScope.launch {
+            showProgress() // Show the Progress.
+
+            delay(5000) // Simulate REST API Call by delaying for 5 seconds.
+
+            val list: ArrayList<LibraryComponent> = ArrayList()
+            repository.provideListOfLibraryComponents().collect { components ->
+                list.addAll(components)
+            }
+
+            hideProgress() // Hide the Progress.
+
+            model.libraryComponents = list // Store the fetched list into 'model'.
+
+            updateUI()
+        }
     }
 
 }

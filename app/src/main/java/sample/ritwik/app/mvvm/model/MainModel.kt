@@ -11,7 +11,7 @@ import javax.inject.Inject
  *
  * @author Ritwik Jamuar
  */
-class MainModel @Inject constructor() : BaseModel() {
+class MainModel @Inject constructor() : BaseModel {
 
     /*------------------------------------- Member Variables -------------------------------------*/
 

@@ -31,7 +31,7 @@ class ApplicationModulePlugin : Plugin<Project> {
             androidExtensions.apply {
 
                 compileSdkVersion(Configuration.compileSDKVersion) // Compile SDK Version.
-                buildToolsVersion = Configuration.buildToolsVersion // Build Tools Version.
+                //buildToolsVersion = Configuration.buildToolsVersion // Build Tools Version.
 
                 defaultConfig {
 

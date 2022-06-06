@@ -11,11 +11,6 @@ object Configuration {
     const val compileSDKVersion = 30
 
     /**
-     * Android Build Tools Version.
-     */
-    const val buildToolsVersion = "30.0.3"
-
-    /**
      * Minimum SDK Version.
      */
     const val minimumSDKVersion = 21

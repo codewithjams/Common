@@ -5,7 +5,11 @@ plugins {
 
 dependencies {
 
-	implementation(Dependencies.JetPack.AppCompat.standardLibrary)
+	api(Dependencies.JetPack.Core.standardLibraryKTX)
+	api(Dependencies.JetPack.AppCompat.standardLibrary)
+
+	implementation(Dependencies.Kotlin.coRoutines)
+	implementation(Dependencies.JetPack.Lifecycle.runTime)
 
 	testImplementation(Dependencies.JUnit.standardLibrary)
 

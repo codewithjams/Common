@@ -2,7 +2,7 @@ package sample.ritwik.app.ui.fragment
 
 import android.view.View
 
-import com.droidboi.common.views.fragment.BaseMVVMFragment
+import com.droidboi.common.views.mvvm.fragment.BaseMVVMFragment
 
 import sample.ritwik.app.R
 

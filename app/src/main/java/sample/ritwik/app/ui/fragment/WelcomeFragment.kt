@@ -4,7 +4,7 @@ import sample.ritwik.app.databinding.FragmentWelcomeBinding
 
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
-import com.droidboi.common.views.fragment.BaseMVVMFragment
+import com.droidboi.common.views.mvvm.fragment.BaseMVVMFragment
 
 import sample.ritwik.app.R
 

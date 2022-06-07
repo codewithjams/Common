@@ -1,27 +1,27 @@
 plugins {
-    id(Plugins.commonLibraryModulePlugin)
-    id(Plugins.kotlinAnnotationProcessor)
+	id(Plugins.commonLibraryModulePlugin)
+	id(Plugins.kotlinAnnotationProcessor)
 }
 
 android {
-    buildFeatures {
-        dataBinding = true
-    }
+	buildFeatures {
+		dataBinding = true
+	}
 }
 
 dependencies {
 
-    api(project(":common_views_core"))
-    api(project(":common_mvvm"))
+	api(project(":common_views_core"))
+	api(project(":common_mvvm"))
 
-    implementation(Dependencies.JetPack.AppCompat.standardLibrary)
-    implementation(Dependencies.JetPack.Core.standardLibraryKTX)
+	implementation(Dependencies.JetPack.AppCompat.standardLibrary)
+	implementation(Dependencies.JetPack.Core.standardLibraryKTX)
 
-    kapt(Dependencies.JetPack.Lifecycle.compiler)
+	kapt(Dependencies.JetPack.Lifecycle.compiler)
 
-    testImplementation(Dependencies.JUnit.standardLibrary)
+	testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
-    androidTestImplementation(Dependencies.JetPack.Test.espresso)
+	androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+	androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

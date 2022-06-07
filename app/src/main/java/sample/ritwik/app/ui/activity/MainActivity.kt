@@ -19,7 +19,7 @@ import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
 
-import com.droidboi.common.views.activity.BaseMVVMActivity
+import com.droidboi.common.views.mvvm.activity.BaseMVVMActivity
 
 import javax.inject.Inject
 

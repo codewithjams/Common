@@ -26,7 +26,6 @@ import dagger.Module
  *
  * Along with the dependencies on the above, this [Module] also provides following:
  * 1. Instance of [com.droidboi.common.utility.networkCallback.helper.NetworkUtils].
- * 2. Instance of Application's [com.droidboi.common.utility.views.helper.ViewUtils].
  *
  * @author Ritwik Jamuar
  */

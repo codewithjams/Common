@@ -102,6 +102,21 @@ abstract class BaseFragment<Binding : ViewDataBinding> : Fragment() {
 
 	/**
 	 * Performs Clean-Up procedure for avoiding Memory Leaks.
+	 *
+	 *
+	 * Make sure to perform call to super method after performing all clean-up procedures
+	 * to ensure clean-up of [binding] from Memory.
+	 * If `super.cleanUp()` is called before, then this method will throw [NullPointerException]
+	 * due to [binding] being `null`.
+	 *
+	 *
+	 * Example usage: -
+	 * ```
+	 * override fun cleanUp() {
+	 *     // Perform clean-up operations.
+	 *     super.cleanUp()
+	 * }
+	 * ```
 	 */
 	protected open fun cleanUp() {
 		_binding = null

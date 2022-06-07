@@ -6,6 +6,7 @@ rootProject.apply {
 include(":app")
 include(":common")
 include(":common_mvvm")
+include(":common_mvi")
 include(":common_data_ui")
 include(":common_data_network")
 include(":common_utility_permissions")

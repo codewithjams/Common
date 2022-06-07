@@ -2,9 +2,7 @@ package com.droidboi.common.views.recyclerView.utility
 
 import androidx.recyclerview.widget.RecyclerView
 
-import com.droidboi.common.views.recyclerView.adapter.BaseMultipleVHAdapter
-
-import com.droidboi.common.views.recyclerView.adapter.BaseSingleVHAdapter
+import com.droidboi.common.views.recyclerView.adapter.RecyclerAdapter
 
 /**
  * Type-Alias as a General Purpose event notifier from [RecyclerView.ViewHolder]
@@ -27,12 +25,10 @@ typealias AdapterListener<Model> = (Model) -> Unit
  * on UI are lost to provide a smooth addition of Items.
  *
  *
- * NOTE: This method works only if the [RecyclerView.Adapter] in this [RecyclerView] is either an
- * extension of [BaseSingleVHAdapter] or [BaseMultipleVHAdapter],
- * otherwise this method would not do anything.
+ * NOTE: This method works only if the [RecyclerView.Adapter] in this [RecyclerView] is an
+ * implementation of [RecyclerAdapter], otherwise this method would not do anything.
  *
- * @param Model Any Data Class that is in use with either [BaseSingleVHAdapter]
- *   or [BaseMultipleVHAdapter].
+ * @param Model Any Data Class that is in use with [RecyclerAdapter].
  * @param list [List] of [Model] as the Collection we want to add.
  * @param isReplace [Boolean] Flag to mark whether the Addition of [list] in this [RecyclerView]
  *   is going to replace the existing items, or add items on the top of the existing items.
@@ -41,90 +37,44 @@ typealias AdapterListener<Model> = (Model) -> Unit
 @Suppress("UNCHECKED_CAST")
 fun <Model> RecyclerView.addItems(list: List<Model>, isReplace: Boolean) = adapter?.let { a ->
 
-	// Check whether the Adapter is an instance of BaseSingleVHAdapter or not.
-	if (a is BaseSingleVHAdapter<*, *>) {
-
-		// At this stage, the adapter is indeed an instance of BaseSingleVHAdapter.
-		(a as? BaseSingleVHAdapter<Model, *>)?.let { ad ->
+	if (a is RecyclerAdapter<*>) {
+		(a as? RecyclerAdapter<Model>)?.let { ad ->
 
 			// Switch to a Runnable so that the below actions are posted on the next UI Frame
 			// for smoother experience.
 			post {
-
-				// Using this adapter, try to Add/Replace the items based on 'isReplace'.
 				if (isReplace) {
 					ad.replaceList(list)
 				} else {
 					ad.addToList(list)
 				}
-
 			}
 
 		}
 
 	}
 
-	// Check whether the Adapter is an instance of BaseMultipleVHAdapter or not.
-	if (a is BaseMultipleVHAdapter<*>) {
-
-		// At this stage, the adapter is indeed an instance of BaseMultipleVHAdapter.
-		(a as? BaseMultipleVHAdapter<Model>)?.let { ad ->
-
-			// Switch to a Runnable so that the below actions are posted on the next UI Frame
-			// for smoother experience.
-			post {
-
-				// Using this adapter, try to Add/Replace the items based on 'isReplace'.
-				if (isReplace) {
-					ad.replaceList(list)
-				} else {
-					ad.addToList(list)
-				}
-
-			}
-
-		}
-
-	}
-
-} ?: Unit
+}
 
 /**
  * Clears all the items from the [RecyclerView] through the [RecyclerView.Adapter] in such a way
  * that no frames on UI are lost to provide a smooth removal of items.
  *
  *
- * NOTE: This method works only if the [RecyclerView.Adapter] in this [RecyclerView] is either an
- * extension of the [BaseSingleVHAdapter] or [BaseMultipleVHAdapter],
- * otherwise this method would not do anything.
+ * NOTE: This method works only if the [RecyclerView.Adapter] in this [RecyclerView] is an
+ * implementation of [RecyclerAdapter], otherwise this method would not do anything.
  *
  * @author Ritwik Jamuar
  */
-fun RecyclerView.clearItems() = adapter?.let { a ->
+fun RecyclerView.clearItems() = adapter?.let { adapter ->
 
-	// Check whether the Adapter is an instance of BaseSingleVHAdapter or not.
-	if (a is BaseSingleVHAdapter<*, *>) {
-
-		// Switch to a Runnable so that the below actions are posted on the next UI Frame
-		// for smoother experience.
+	if (adapter is RecyclerAdapter<*>) {
 		post {
-			a.clearAllItems() // Clear all the items in the RecyclerView using this adapter.
+			adapter.clearAllItems()
 		}
-
 	}
 
-	// Check whether the Adapter is an instance of BaseMultipleVHAdapter or not.
-	if (a is BaseMultipleVHAdapter<*>) {
-
-		// Switch to a Runnable so that the below actions are posted on the next UI Frame
-		// for smoother experience.
-		post {
-			a.clearAllItems() // Clear all the items in the RecyclerView using this adapter.
-		}
-
-	}
-
-} ?: Unit
+}
 
 /**
  * Initializes this [RecyclerView] with components you need to set in order for it to be rendered
@@ -139,7 +89,7 @@ fun RecyclerView.clearItems() = adapter?.let { a ->
  *   on this [RecyclerView].
  * @author Ritwik Jamuar
  */
-fun <Adapter : RecyclerView.Adapter<*>, LayoutManager : RecyclerView.LayoutManager> RecyclerView.initialize(
+fun <Adapter : RecyclerView.Adapter<out RecyclerView.ViewHolder>, LayoutManager : RecyclerView.LayoutManager> RecyclerView.initialize(
 	rvAdapter: Adapter,
 	rvLayoutManager: LayoutManager,
 	scrollListener: RecyclerView.OnScrollListener? = null
@@ -172,11 +122,7 @@ fun <Adapter : RecyclerView.Adapter<*>, LayoutManager : RecyclerView.LayoutManag
  *   on this [RecyclerView].
  * @author Ritwik Jamuar
  */
-fun <
-		Adapter : RecyclerView.Adapter<*>,
-		LayoutManager : RecyclerView.LayoutManager,
-		Decoration : RecyclerView.ItemDecoration
-		> RecyclerView.initialize(
+fun <Adapter : RecyclerView.Adapter<out RecyclerView.ViewHolder>, LayoutManager : RecyclerView.LayoutManager, Decoration : RecyclerView.ItemDecoration> RecyclerView.initialize(
 	rvAdapter: Adapter,
 	rvLayoutManager: LayoutManager,
 	decoration: Decoration,
@@ -202,9 +148,8 @@ fun RecyclerView.cleanUp() {
  * Notifies an update in [item] at the given [position].
  *
  *
- * NOTE: This method works only if the [RecyclerView.Adapter] in this [RecyclerView] is either an
- * extension of the [BaseSingleVHAdapter] or [BaseMultipleVHAdapter],
- * otherwise this method would not do anything.
+ * NOTE: This method works only if the [RecyclerView.Adapter] in this [RecyclerView] is an
+ * implementation of [RecyclerAdapter], otherwise this method would not do anything.
  *
  * @param T Any Data Class.
  * @param item Instance of [T] we want to update.
@@ -213,19 +158,8 @@ fun RecyclerView.cleanUp() {
 @Suppress("UNCHECKED_CAST")
 fun <T> RecyclerView.notifyUpdateInAnItem(item: T, position: Int) = adapter?.let { adapter ->
 
-	// Check the instance of this RecyclerView.Adapter.
-	when(adapter) {
-
-		is BaseSingleVHAdapter<*, *> -> post {
-			(adapter as? BaseSingleVHAdapter<T, *>)?.updateItemAtPosition(item, position)
-		}
-
-		is BaseMultipleVHAdapter<*> -> post {
-			(adapter as? BaseMultipleVHAdapter<T>)?.updateItemAtPosition(item, position)
-		}
-
-		else -> Unit
-
+	if (adapter is RecyclerAdapter<*>) {
+		(adapter as? RecyclerAdapter<T>)?.updateItemAtPosition(item, position)
 	}
 
-} ?: Unit
+}

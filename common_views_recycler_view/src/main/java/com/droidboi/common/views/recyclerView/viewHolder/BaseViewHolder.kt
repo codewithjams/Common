@@ -2,6 +2,8 @@ package com.droidboi.common.views.recyclerView.viewHolder
 
 import android.view.View
 
+import androidx.databinding.ViewDataBinding
+
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -13,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
  *   this individual [RecyclerView.ViewHolder].
  * @author Ritwik Jamuar
  */
-abstract class BaseViewHolder<Binding>(rootView: View) : RecyclerView.ViewHolder(rootView) {
+abstract class BaseViewHolder<Binding : ViewDataBinding>(rootView: View) :
+	RecyclerView.ViewHolder(rootView) {
 
 	/*---------------------------------------- Components ----------------------------------------*/
 
@@ -43,11 +46,11 @@ abstract class BaseViewHolder<Binding>(rootView: View) : RecyclerView.ViewHolder
 	/**
 	 * Tells this [BaseViewHolder] to initialize it's components.
 	 */
-	protected abstract fun initializeComponents()
+	protected open fun initializeComponents() = Unit
 
 	/**
 	 * Tells this [BaseViewHolder] to perform Clean-Up procedures for avoiding Memory Leak.
 	 */
-	protected abstract fun cleanUp()
+	protected open fun cleanUp() = Unit
 
 }

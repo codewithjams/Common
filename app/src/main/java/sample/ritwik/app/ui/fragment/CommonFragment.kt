@@ -2,7 +2,13 @@ package sample.ritwik.app.ui.fragment
 
 import android.view.View
 
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.droidboi.common.views.mvvm.fragment.BaseMVVMFragment
+
+import com.droidboi.common.views.recyclerView.utility.addItems
+import com.droidboi.common.views.recyclerView.utility.cleanUp
+import com.droidboi.common.views.recyclerView.utility.initialize
 
 import sample.ritwik.app.R
 
@@ -22,41 +28,28 @@ import sample.ritwik.app.utility.constant.ACTION_SHOW_PROGRESS
  */
 class CommonFragment : BaseMVVMFragment<MainViewModel, FragmentCommonBinding>() {
 
-	/*---------------------------------------- Components ----------------------------------------*/
-
-	/**
-	 * Nullable Reference of [LibraryComponentAdapter] that shall be used to manually clear
-     * it's instance in the event of Fragment [cleanUp] so that Memory Leaks can be avoided.
-	 */
-	private var _adapter: LibraryComponentAdapter? = null
-
-    /**
-     * Reference of [LibraryComponentAdapter] to update the List of Libraries in the view.
-     */
-	private val adapter: LibraryComponentAdapter
-		get() = _adapter!!
-
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
     override val layoutRes: Int
         get() = R.layout.fragment_common
 
 	override fun initializeViews() {
-		_adapter = LibraryComponentAdapter()
-		binding.listComponents.adapter = _adapter
+		binding.listComponents.initialize(
+			LibraryComponentAdapter(),
+			LinearLayoutManager(context)
+		)
 		viewModel.fetchLibraryComponents()
 	}
 
     override fun cleanUp() {
-        _adapter = null
-        binding.listComponents.adapter = null
+        binding.listComponents.cleanUp()
         super.cleanUp()
     }
 
     /*-------------------------------- BaseMVVMFragment Callbacks --------------------------------*/
 
     override fun updateUI() {
-        adapter.replaceList(viewModel.model.libraryComponents)
+		binding.listComponents.addItems(viewModel.model.libraryComponents, true)
     }
 
 	override fun onAction(action: Int) = when (action) {

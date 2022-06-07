@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -16,14 +19,27 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  *   of this [BottomSheetDialogFragment].
  * @author Ritwik Jamuar
  */
-abstract class BaseBottomSheetDialog<Binding> : BottomSheetDialogFragment() {
+abstract class BaseBottomSheetDialog<Binding : ViewDataBinding> : BottomSheetDialogFragment() {
 
 	/*---------------------------------------- Components ----------------------------------------*/
 
 	/**
+	 * Nullable Reference of [Binding] which can be used to configure instance
+	 * safe from Memory Leak.
+	 */
+	private var _binding: Binding? = null
+
+	/**
 	 * Reference of [Binding] to control the Views under it.
 	 */
-	protected val binding: Binding by lazy { provideBinding() }
+	protected val binding: Binding
+		get() = _binding!!
+
+	/**
+	 * [Int] as thhe [androidx.annotation.LayoutRes] denoting the Layout ID
+	 * of this [BottomSheetDialogFragment].
+	 */
+	protected abstract val layoutRes: Int
 
 	/*--------------------------------- DialogFragment Callbacks ---------------------------------*/
 
@@ -44,7 +60,10 @@ abstract class BaseBottomSheetDialog<Binding> : BottomSheetDialogFragment() {
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? = provideView()
+	): View? {
+		_binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
+		return binding.root
+	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
@@ -66,57 +85,55 @@ abstract class BaseBottomSheetDialog<Binding> : BottomSheetDialogFragment() {
 	/**
 	 * Sets the dimensions of [android.view.Window] of this [BottomSheetDialogFragment].
 	 */
-	protected fun setUpWindowDimension() = Unit
+	protected open fun setUpWindowDimension() = Unit
 
 	/**
 	 * Sets the background of [android.view.Window] of this [BottomSheetDialogFragment].
 	 */
-	protected fun setUpWindowBackground() = Unit
-
-	/*------------------------------------- Abstract Methods -------------------------------------*/
+	protected open fun setUpWindowBackground() = Unit
 
 	/**
-	 * Tells this [BottomSheetDialogFragment] to provide it's Binding instance which will be used
-	 * to access the views under this [BottomSheetDialogFragment].
-	 *
-	 * @return New Instance of [Binding].
-	 */
-	protected abstract fun provideBinding(): Binding
-
-	/**
-	 * Tells this [BottomSheetDialogFragment] to provide the [View] under which this is rendered.
-	 *
-	 * @return Instance of [View] under which this [BottomSheetDialogFragment] is rendered.
-	 */
-	protected abstract fun provideView(): View
-
-	/**
-	 * Tells this [BottomSheetDialogFragment] to extract the arguments from [Bundle].
+	 * Extract the arguments from [Bundle] present in [arguments].
 	 *
 	 *
-	 * This method will be executed only if the [Bundle] argument was set during the instantiation
+	 * This method will be executed only if the [arguments] was set during the instantiation
 	 * of this [BottomSheetDialogFragment].
 	 *
 	 * @param arguments [Bundle] that contains the arguments.
 	 */
-	protected abstract fun extractArguments(arguments: Bundle)
+	protected open fun extractArguments(arguments: Bundle) = Unit
 
 	/**
-	 * Tells this [BottomSheetDialogFragment] to perform initialization of it's [View]s
-	 * through [binding].
+	 * Perform initialization of Views through [binding].
 	 */
-	protected abstract fun initializeViews()
+	protected open fun initializeViews() = Unit
 
 	/**
-	 * Tells this [BottomSheetDialogFragment] to perform Clean-Up procedures
-	 * for avoiding Memory Leaks.
+	 * Performs Clean-Up procedure for avoiding Memory Leaks.
+	 *
+	 *
+	 * Make sure to perform call to super method after performing all clean-up procedures
+	 * to ensure clean-up of [binding] from Memory.
+	 * If `super.cleanUp()` is called before, then this method will throw [NullPointerException]
+	 * due to [binding] being `null`.
+	 *
+	 *
+	 * Example usage: -
+	 * ```
+	 * override fun cleanUp() {
+	 *     // Perform clean-up operations.
+	 *     super.cleanUp()
+	 * }
+	 * ```
 	 */
-	protected abstract fun cleanUp()
+	protected open fun cleanUp() {
+		_binding = null
+	}
 
 	/**
-	 * Tells the extending [BottomSheetDialogFragment] to remove it's listeners
-	 * for preventing any [NullPointerException] when the parent [View] is destroyed.
+	 * Remove it's listeners for preventing any [NullPointerException]
+	 * when the parent [View] is destroyed.
 	 */
-	protected abstract fun removeListeners()
+	protected open fun removeListeners() = Unit
 
 }

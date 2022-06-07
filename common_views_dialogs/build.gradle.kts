@@ -2,6 +2,12 @@ plugins {
 	id(Plugins.commonLibraryModulePlugin)
 }
 
+android {
+	buildFeatures {
+		dataBinding = true
+	}
+}
+
 dependencies {
 
 	implementation(Dependencies.JetPack.AppCompat.standardLibrary)

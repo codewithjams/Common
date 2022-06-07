@@ -1,31 +1,43 @@
 package com.droidboi.common.data.ui
 
 /**
- * Data Class to represent the Data to render a Popup Message in the UI.
+ * Interface that marks an implementation to hold data related to Pop-Up Window.
  *
- * @param infoText [String]      denoting the Text to be displayed in the Popup Message.
- * @param autoClose [Boolean]    denoting the flag whether the Popup Message would auto-close
- *   or not.
- * @param timeOutDuration [Long] denoting the Time-Out duration of dismissing the Popup Message .
- * @param showAtBottom [Boolean] denoting the flag that decides whether the Popup Message
- *   will be shown at the bottom or not.
- * @param isDisplayed [Boolean]  denoting the flag indication whether the Popup Message is
- *   currently displayed in the UI or not.
- * @param state                  [State] denoting the indicator as the type of Popup Message.
  * @author Ritwik Jamuar
  */
-data class PopUpData(
-    var infoText: String = "",
-    var autoClose: Boolean = false,
-    var timeOutDuration: Long = 0L,
-    var showAtBottom: Boolean = false,
-    var isDisplayed: Boolean = false,
-    var state: State = State.NORMAL
-) {
+interface PopUpData {
 
-    /*------------------------------------- Object Callbacks -------------------------------------*/
+    /**
+     * [String] denoting the Text to be displayed in the Popup Message.
+     */
+    var infoText: String
 
-    override fun toString(): String = infoText
+    /**
+     * [Boolean] denoting the flag whether the Popup Message would auto-close or not.
+     */
+    var autoClose: Boolean
+
+    /**
+     * [Long] denoting the Time-Out duration of dismissing the Popup Message.
+     */
+    var timeOutDuration: Long
+
+    /**
+     * [Boolean] denoting the flag that decides whether the Popup Message will be shown
+     * at the bottom or not.
+     */
+    var showAtBottom: Boolean
+
+    /**
+     * [Boolean] denoting the flag indication whether the Popup Message is currently displayed
+     * in the UI or not.
+     */
+    var isDisplayed: Boolean
+
+    /**
+     * [State] denoting the indicator as the type of Popup Message.
+     */
+    var state: State
 
     /*-------------------------------------- Public Methods --------------------------------------*/
 
@@ -34,18 +46,34 @@ data class PopUpData(
      *
      * @return true if the PopupWindow is displayable, else false.
      */
-    fun isDisplayable(): Boolean = infoText.isNotEmpty()
+    fun isPopUpDisplayable(): Boolean = infoText.isNotEmpty()
 
     /**
      * Resets the value of all the members of [PopUpData].
      */
-    fun resetAllData() {
+    fun resetPopUpData() {
         infoText = ""
         autoClose = false
         timeOutDuration = 0L
         showAtBottom = false
         isDisplayed = true
         state = State.NORMAL
+    }
+
+    fun setValues(
+        message: String,
+        isAutoClose: Boolean = false,
+        isShowAtBottom: Boolean = false,
+        timeOutBeforeClosing: Long = 0L,
+        displayed: Boolean = true,
+        newState: State = State.NORMAL
+    ) {
+        infoText = message
+        autoClose = isAutoClose
+        showAtBottom = isShowAtBottom
+        timeOutDuration = timeOutBeforeClosing
+        isDisplayed = displayed
+        state = newState
     }
 
     /*-------------------------------------- Inner Classes ---------------------------------------*/

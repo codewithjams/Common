@@ -14,24 +14,24 @@ import com.droidboi.common.views.recyclerView.viewHolder.BaseViewHolder
  * @author Ritwik Jamuar
  */
 class LibraryComponentViewHolder(
-     override val binding: ItemLibraryComponentBinding
+	override val binding: ItemLibraryComponentBinding
 ) : BaseViewHolder<ItemLibraryComponentBinding>(binding.root) {
 
-    /*--------------------------------- BaseViewHolder Callbacks ---------------------------------*/
+	/*--------------------------------- BaseViewHolder Callbacks ---------------------------------*/
 
-    override fun initializeComponents() = Unit
+	override fun initializeComponents() = Unit
 
-    override fun cleanUp() = Unit
+	override fun cleanUp() = Unit
 
-    /*-------------------------------------- Public Methods --------------------------------------*/
+	/*-------------------------------------- Public Methods --------------------------------------*/
 
-    /**
-     * Sets the [libraryComponent] to the [binding].
-     *
-     * @param libraryComponent Instance of [LibraryComponent].
-     */
-    fun setItem(libraryComponent: LibraryComponent) {
-        binding.item = libraryComponent
-    }
+	/**
+	 * Sets the [libraryComponent] to the [binding].
+	 *
+	 * @param libraryComponent Instance of [LibraryComponent].
+	 */
+	fun setItem(libraryComponent: LibraryComponent) {
+		binding.item = libraryComponent
+	}
 
 }

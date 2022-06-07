@@ -14,69 +14,69 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  */
 class LibraryModulePlugin : Plugin<Project> {
 
-    override fun apply(target: Project) {
+	override fun apply(target: Project) {
 
-        // Adding this Plugin configures the build-process of an Android Library.
-        target.plugins.apply(Plugins.library)
+		// Adding this Plugin configures the build-process of an Android Library.
+		target.plugins.apply(Plugins.library)
 
-        // Add this Plugin for supporting Kotlin with Android.
-        target.plugins.apply(Plugins.kotlinAndroid)
+		// Add this Plugin for supporting Kotlin with Android.
+		target.plugins.apply(Plugins.kotlinAndroid)
 
-        // Get the Android Extension from this project.
-        val androidExtension = target.extensions.getByName("android")
+		// Get the Android Extension from this project.
+		val androidExtension = target.extensions.getByName("android")
 
-        if (androidExtension is BaseExtension && androidExtension is LibraryExtension) {
+		if (androidExtension is BaseExtension && androidExtension is LibraryExtension) {
 
-            // Set all the build configurations for this Library Module.
-            androidExtension.apply {
+			// Set all the build configurations for this Library Module.
+			androidExtension.apply {
 
-                compileSdk = Configuration.compileSDKVersion // Compile SDK Version.
-                //buildToolsVersion = Configuration.buildToolsVersion // Build Tools Version.
+				compileSdk = Configuration.compileSDKVersion // Compile SDK Version.
+				//buildToolsVersion = Configuration.buildToolsVersion // Build Tools Version.
 
-                defaultConfig {
+				defaultConfig {
 
-                    targetSdk = Configuration.targetSDKVersion // Target SDK Version.
-                    minSdk = Configuration.minimumSDKVersion // Minimum SDK Version.
+					targetSdk = Configuration.targetSDKVersion // Target SDK Version.
+					minSdk = Configuration.minimumSDKVersion // Minimum SDK Version.
 
-                    // Instrumentation Runner.
-                    testInstrumentationRunner = Dependencies.JetPack.Test.instrumentationRunner
+					// Instrumentation Runner.
+					testInstrumentationRunner = Dependencies.JetPack.Test.instrumentationRunner
 
-                    consumerProguardFiles(ProguardFiles.consumer) // Consumer Proguard File.
+					consumerProguardFiles(ProguardFiles.consumer) // Consumer Proguard File.
 
-                }
+				}
 
-                buildTypes {
+				buildTypes {
 
-                    getByName(BuildTypes.release) {
+					getByName(BuildTypes.release) {
 
-                        proguardFiles(
-                            getDefaultProguardFile(ProguardFiles.optimize),
-                            ProguardFiles.default
-                        )
+						proguardFiles(
+								getDefaultProguardFile(ProguardFiles.optimize),
+								ProguardFiles.default
+						)
 
-                    }
+					}
 
-                }
+				}
 
-                // Configure Java Version throughout the compilation.
-                compileOptions {
+				// Configure Java Version throughout the compilation.
+				compileOptions {
 
-                    sourceCompatibility = JavaVersion.VERSION_11
-                    targetCompatibility = JavaVersion.VERSION_11
+					sourceCompatibility = JavaVersion.VERSION_11
+					targetCompatibility = JavaVersion.VERSION_11
 
-                }
+				}
 
-                // Configure Java Version for Kotlin.
-                target.tasks.withType(KotlinCompile::class.java).configureEach {
-                    kotlinOptions {
-                        jvmTarget = Configuration.javaVersion
-                    }
-                }
+				// Configure Java Version for Kotlin.
+				target.tasks.withType(KotlinCompile::class.java).configureEach {
+					kotlinOptions {
+						jvmTarget = Configuration.javaVersion
+					}
+				}
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
 }

@@ -15,20 +15,20 @@ import sample.ritwik.app.R
  */
 class WelcomeFragment : BaseMVVMFragment<MainViewModel, FragmentWelcomeBinding>() {
 
-    /*---------------------------------- BaseFragment Callbacks ----------------------------------*/
+	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-    override val layoutRes: Int
-        get() = R.layout.fragment_welcome
+	override val layoutRes: Int
+		get() = R.layout.fragment_welcome
 
-    override fun initializeViews() {
-        binding.buttonCommon.setOnClickListener {
-            viewModel.onCommonClicked()
-        }
-    }
+	override fun initializeViews() {
+		binding.buttonCommon.setOnClickListener {
+			viewModel.onCommonClicked()
+		}
+	}
 
-    override fun cleanUp() {
-        binding.buttonCommon.setOnClickListener(null)
-        super.cleanUp()
-    }
+	override fun cleanUp() {
+		binding.buttonCommon.setOnClickListener(null)
+		super.cleanUp()
+	}
 
 }

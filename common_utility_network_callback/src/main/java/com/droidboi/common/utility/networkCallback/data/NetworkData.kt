@@ -13,7 +13,7 @@ import com.droidboi.common.utility.networkCallback.constant.NETWORK_ACTION_NONE
  * @author Ritwik Jamuar
  */
 data class NetworkData(
-    var action: Int = NETWORK_ACTION_NONE,
-    var isNetworkAvailable: Boolean = false,
-    var networkType: NetworkType = NetworkType.None()
+	var action: Int = NETWORK_ACTION_NONE,
+	var isNetworkAvailable: Boolean = false,
+	var networkType: NetworkType = NetworkType.None()
 )

@@ -15,39 +15,39 @@ import androidx.recyclerview.widget.RecyclerView
  */
 abstract class BaseViewHolder<Binding>(rootView: View) : RecyclerView.ViewHolder(rootView) {
 
-    /*---------------------------------------- Components ----------------------------------------*/
+	/*---------------------------------------- Components ----------------------------------------*/
 
-    /**
-     * Reference of [Binding] as the Data/View Binding Class to access all the views under it.
-     */
-    protected abstract val binding: Binding
+	/**
+	 * Reference of [Binding] as the Data/View Binding Class to access all the views under it.
+	 */
+	protected abstract val binding: Binding
 
-    /*-------------------------------------- Public Methods --------------------------------------*/
+	/*-------------------------------------- Public Methods --------------------------------------*/
 
-    /**
-     * Notifies that this [BaseViewHolder] is attached to the Window.
-     */
-    fun markAttach() {
-        initializeComponents()
-    }
+	/**
+	 * Notifies that this [BaseViewHolder] is attached to the Window.
+	 */
+	fun markAttach() {
+		initializeComponents()
+	}
 
-    /**
-     * Notifies that this [BaseViewHolder] is detached from the Window.
-     */
-    fun markDetach() {
-        cleanUp()
-    }
+	/**
+	 * Notifies that this [BaseViewHolder] is detached from the Window.
+	 */
+	fun markDetach() {
+		cleanUp()
+	}
 
-    /*------------------------------------- Abstract Methods -------------------------------------*/
+	/*------------------------------------- Abstract Methods -------------------------------------*/
 
-    /**
-     * Tells this [BaseViewHolder] to initialize it's components.
-     */
-    protected abstract fun initializeComponents()
+	/**
+	 * Tells this [BaseViewHolder] to initialize it's components.
+	 */
+	protected abstract fun initializeComponents()
 
-    /**
-     * Tells this [BaseViewHolder] to perform Clean-Up procedures for avoiding Memory Leak.
-     */
-    protected abstract fun cleanUp()
+	/**
+	 * Tells this [BaseViewHolder] to perform Clean-Up procedures for avoiding Memory Leak.
+	 */
+	protected abstract fun cleanUp()
 
 }

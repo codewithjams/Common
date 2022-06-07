@@ -9,79 +9,79 @@ import com.droidboi.common.utility.networkCallback.constant.*
  */
 open class NetworkType {
 
-    /**
-     * Class to identify itself as [NetworkType] of WiFi.
-     *
-     * @author Ritwik Jamuar
-     */
-    class WiFi: NetworkType() {
+	/**
+	 * Class to identify itself as [NetworkType] of WiFi.
+	 *
+	 * @author Ritwik Jamuar
+	 */
+	class WiFi: NetworkType() {
 
-        override fun toString(): String = NETWORK_WiFi
+		override fun toString(): String = NETWORK_WiFi
 
-    }
+	}
 
-    /**
-     * Class to identify itself as [NetworkType] of Mobile.
-     *
-     * @author Ritwik Jamuar
-     */
-    open class Mobile: NetworkType() {
+	/**
+	 * Class to identify itself as [NetworkType] of Mobile.
+	 *
+	 * @author Ritwik Jamuar
+	 */
+	open class Mobile: NetworkType() {
 
-        /**
-         * Class to identify itself as [Mobile] Network with 2G Connection.
-         *
-         * @author Ritwik Jamuar
-         */
-        class Generation2: Mobile() {
+		/**
+		 * Class to identify itself as [Mobile] Network with 2G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		class Generation2: Mobile() {
 
-            override fun toString(): String = NETWORK_GENERATION_2
+			override fun toString(): String = NETWORK_GENERATION_2
 
-        }
+		}
 
-        /**
-         * Class to identify itself as [Mobile] Network with 3G Connection.
-         *
-         * @author Ritwik Jamuar
-         */
-        class Generation3: Mobile() {
+		/**
+		 * Class to identify itself as [Mobile] Network with 3G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		class Generation3: Mobile() {
 
-            override fun toString(): String = NETWORK_GENERATION_3
+			override fun toString(): String = NETWORK_GENERATION_3
 
-        }
+		}
 
-        /**
-         * Class to identify itself as [Mobile] Network with 4G Connection.
-         *
-         * @author Ritwik Jamuar
-         */
-        class Generation4: Mobile() {
+		/**
+		 * Class to identify itself as [Mobile] Network with 4G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		class Generation4: Mobile() {
 
-            override fun toString(): String = NETWORK_GENERATION_4
+			override fun toString(): String = NETWORK_GENERATION_4
 
-        }
+		}
 
-        /**
-         * Class to identify itself as [Mobile] Network with 5G Connection.
-         *
-         * @author Ritwik Jamuar
-         */
-        class Generation5: Mobile() {
+		/**
+		 * Class to identify itself as [Mobile] Network with 5G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		class Generation5: Mobile() {
 
-            override fun toString(): String = NETWORK_GENERATION_5
+			override fun toString(): String = NETWORK_GENERATION_5
 
-        }
+		}
 
-    }
+	}
 
-    /**
-     * Class to identify itself as No [NetworkType].
-     *
-     * @author Ritwik Jamuar
-     */
-    class None: NetworkType() {
+	/**
+	 * Class to identify itself as No [NetworkType].
+	 *
+	 * @author Ritwik Jamuar
+	 */
+	class None: NetworkType() {
 
-        override fun toString(): String = ""
+		override fun toString(): String = ""
 
-    }
+	}
 
 }

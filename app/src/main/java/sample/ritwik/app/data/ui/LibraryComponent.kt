@@ -10,6 +10,6 @@ import com.squareup.moshi.Json
  * @author Ritwik Jamuar
  */
 data class LibraryComponent(
-    @field: Json(name = "title") val title: String,
-    @field: Json(name = "description") val description: String
+	@field: Json(name = "title") val title: String,
+	@field: Json(name = "description") val description: String
 )

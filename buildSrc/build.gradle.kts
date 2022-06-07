@@ -1,38 +1,38 @@
 import org.gradle.kotlin.dsl.`kotlin-dsl`
 
 plugins {
-    `kotlin-dsl`
+	`kotlin-dsl`
 }
 
 gradlePlugin {
 
-    plugins {
+	plugins {
 
-        register("library-module-plugin") {
-            id = "library-module-plugin"
-            implementationClass = "LibraryModulePlugin"
-        }
+		register("library-module-plugin") {
+			id = "library-module-plugin"
+			implementationClass = "LibraryModulePlugin"
+		}
 
-        register("application-module-plugin") {
-            id = "application-module-plugin"
-            implementationClass = "ApplicationModulePlugin"
-        }
+		register("application-module-plugin") {
+			id = "application-module-plugin"
+			implementationClass = "ApplicationModulePlugin"
+		}
 
-    }
+	}
 
 }
 
 repositories {
-    google()
-    mavenCentral()
+	google()
+	mavenCentral()
 }
 
 dependencies {
 
-    compileOnly(gradleApi())
+	compileOnly(gradleApi())
 
-    implementation("com.android.tools.build:gradle:7.2.1")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
-    implementation(kotlin("android-extensions"))
+	implementation("com.android.tools.build:gradle:7.2.1")
+	implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
+	implementation(kotlin("android-extensions"))
 
 }

@@ -18,105 +18,105 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  */
 abstract class BaseBottomSheetDialog<Binding> : BottomSheetDialogFragment() {
 
-    /*---------------------------------------- Components ----------------------------------------*/
+	/*---------------------------------------- Components ----------------------------------------*/
 
-    /**
-     * Reference of [Binding] to control the Views under it.
-     */
-    protected val binding: Binding by lazy { provideBinding() }
+	/**
+	 * Reference of [Binding] to control the Views under it.
+	 */
+	protected val binding: Binding by lazy { provideBinding() }
 
-    /*--------------------------------- DialogFragment Callbacks ---------------------------------*/
+	/*--------------------------------- DialogFragment Callbacks ---------------------------------*/
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            extractArguments(it)
-        }
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		arguments?.let {
+			extractArguments(it)
+		}
+	}
 
-    override fun onStart() {
-        super.onStart()
-        setUpWindowDimension()
-        setUpWindowBackground()
-    }
+	override fun onStart() {
+		super.onStart()
+		setUpWindowDimension()
+		setUpWindowBackground()
+	}
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = provideView()
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? = provideView()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initializeViews()
-    }
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		initializeViews()
+	}
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        cleanUp()
-    }
+	override fun onDestroyView() {
+		super.onDestroyView()
+		cleanUp()
+	}
 
-    override fun onDestroy() {
-        super.onDestroy()
-        removeListeners()
-    }
+	override fun onDestroy() {
+		super.onDestroy()
+		removeListeners()
+	}
 
-    /*------------------------------------- Protected Methods ------------------------------------*/
+	/*------------------------------------- Protected Methods ------------------------------------*/
 
-    /**
-     * Sets the dimensions of [android.view.Window] of this [BottomSheetDialogFragment].
-     */
-    protected fun setUpWindowDimension() = Unit
+	/**
+	 * Sets the dimensions of [android.view.Window] of this [BottomSheetDialogFragment].
+	 */
+	protected fun setUpWindowDimension() = Unit
 
-    /**
-     * Sets the background of [android.view.Window] of this [BottomSheetDialogFragment].
-     */
-    protected fun setUpWindowBackground() = Unit
+	/**
+	 * Sets the background of [android.view.Window] of this [BottomSheetDialogFragment].
+	 */
+	protected fun setUpWindowBackground() = Unit
 
-    /*------------------------------------- Abstract Methods -------------------------------------*/
+	/*------------------------------------- Abstract Methods -------------------------------------*/
 
-    /**
-     * Tells this [BottomSheetDialogFragment] to provide it's Binding instance which will be used
-     * to access the views under this [BottomSheetDialogFragment].
-     *
-     * @return New Instance of [Binding].
-     */
-    protected abstract fun provideBinding(): Binding
+	/**
+	 * Tells this [BottomSheetDialogFragment] to provide it's Binding instance which will be used
+	 * to access the views under this [BottomSheetDialogFragment].
+	 *
+	 * @return New Instance of [Binding].
+	 */
+	protected abstract fun provideBinding(): Binding
 
-    /**
-     * Tells this [BottomSheetDialogFragment] to provide the [View] under which this is rendered.
-     *
-     * @return Instance of [View] under which this [BottomSheetDialogFragment] is rendered.
-     */
-    protected abstract fun provideView(): View
+	/**
+	 * Tells this [BottomSheetDialogFragment] to provide the [View] under which this is rendered.
+	 *
+	 * @return Instance of [View] under which this [BottomSheetDialogFragment] is rendered.
+	 */
+	protected abstract fun provideView(): View
 
-    /**
-     * Tells this [BottomSheetDialogFragment] to extract the arguments from [Bundle].
-     *
-     *
-     * This method will be executed only if the [Bundle] argument was set during the instantiation
-     * of this [BottomSheetDialogFragment].
-     *
-     * @param arguments [Bundle] that contains the arguments.
-     */
-    protected abstract fun extractArguments(arguments: Bundle)
+	/**
+	 * Tells this [BottomSheetDialogFragment] to extract the arguments from [Bundle].
+	 *
+	 *
+	 * This method will be executed only if the [Bundle] argument was set during the instantiation
+	 * of this [BottomSheetDialogFragment].
+	 *
+	 * @param arguments [Bundle] that contains the arguments.
+	 */
+	protected abstract fun extractArguments(arguments: Bundle)
 
-    /**
-     * Tells this [BottomSheetDialogFragment] to perform initialization of it's [View]s
-     * through [binding].
-     */
-    protected abstract fun initializeViews()
+	/**
+	 * Tells this [BottomSheetDialogFragment] to perform initialization of it's [View]s
+	 * through [binding].
+	 */
+	protected abstract fun initializeViews()
 
-    /**
-     * Tells this [BottomSheetDialogFragment] to perform Clean-Up procedures
-     * for avoiding Memory Leaks.
-     */
-    protected abstract fun cleanUp()
+	/**
+	 * Tells this [BottomSheetDialogFragment] to perform Clean-Up procedures
+	 * for avoiding Memory Leaks.
+	 */
+	protected abstract fun cleanUp()
 
-    /**
-     * Tells the extending [BottomSheetDialogFragment] to remove it's listeners
-     * for preventing any [NullPointerException] when the parent [View] is destroyed.
-     */
-    protected abstract fun removeListeners()
+	/**
+	 * Tells the extending [BottomSheetDialogFragment] to remove it's listeners
+	 * for preventing any [NullPointerException] when the parent [View] is destroyed.
+	 */
+	protected abstract fun removeListeners()
 
 }

@@ -12,19 +12,19 @@ import java.io.IOException
  */
 abstract class BaseInterceptor : Interceptor {
 
-    /*---------------------------------- Interceptor Callbacks -----------------------------------*/
+	/*---------------------------------- Interceptor Callbacks -----------------------------------*/
 
-    override fun intercept(chain: Interceptor.Chain): Response = processRequest(chain)
+	override fun intercept(chain: Interceptor.Chain): Response = processRequest(chain)
 
-    /*------------------------------------- Abstract Methods -------------------------------------*/
+	/*------------------------------------- Abstract Methods -------------------------------------*/
 
-    /**
-     * Tells this [BaseInterceptor] to process it's request from the [chain].
-     *
-     * @param chain [Interceptor.Chain] intercepted from [Interceptor].
-     * @return Processed [Response].
-     */
-    @Throws(IOException::class)
-    protected abstract fun processRequest(chain: Interceptor.Chain): Response
+	/**
+	 * Tells this [BaseInterceptor] to process it's request from the [chain].
+	 *
+	 * @param chain [Interceptor.Chain] intercepted from [Interceptor].
+	 * @return Processed [Response].
+	 */
+	@Throws(IOException::class)
+	protected abstract fun processRequest(chain: Interceptor.Chain): Response
 
 }

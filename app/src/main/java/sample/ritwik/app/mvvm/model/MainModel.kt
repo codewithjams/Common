@@ -13,19 +13,19 @@ import javax.inject.Inject
  */
 class MainModel @Inject constructor() : BaseModel {
 
-    /*------------------------------------- Member Variables -------------------------------------*/
+	/*------------------------------------- Member Variables -------------------------------------*/
 
-    lateinit var libraryComponents: List<LibraryComponent>
+	lateinit var libraryComponents: List<LibraryComponent>
 
-    /*-------------------------------------- Public Methods --------------------------------------*/
+	/*-------------------------------------- Public Methods --------------------------------------*/
 
-    /**
-     * Checks whether [libraryComponents] is populated or not,
-     * by checking whether it is initialized as well as it is not empty.
-     *
-     * @return true, if [libraryComponents] is initialized and is not empty, else false.
-     */
-    fun isComponentsPopulated(): Boolean =
-        this::libraryComponents.isInitialized && libraryComponents.isNotEmpty()
+	/**
+	 * Checks whether [libraryComponents] is populated or not,
+	 * by checking whether it is initialized as well as it is not empty.
+	 *
+	 * @return true, if [libraryComponents] is initialized and is not empty, else false.
+	 */
+	fun isComponentsPopulated(): Boolean =
+		this::libraryComponents.isInitialized && libraryComponents.isNotEmpty()
 
 }

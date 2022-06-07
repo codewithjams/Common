@@ -32,24 +32,24 @@ import javax.inject.Inject
  * @author Ritwik Jamuar
  */
 class MainRepository @Inject constructor(
-    private val restInterface: RESTInterface,
-    override val dataStorePreference: DataStorePreference,
-    override val moshi: Moshi,
-    override val resourceUtils: ResourceUtils
+	private val restInterface: RESTInterface,
+	override val dataStorePreference: DataStorePreference,
+	override val moshi: Moshi,
+	override val resourceUtils: ResourceUtils
 ) : BaseRepository() {
 
-    /*-------------------------------------- Public Methods --------------------------------------*/
+	/*-------------------------------------- Public Methods --------------------------------------*/
 
-    /**
-     * Provides the [List] of [LibraryComponent] from the JSON in the Assets.
-     *
-     * @return [List] of [LibraryComponent].
-     */
-    fun provideListOfLibraryComponents(): Flow<List<LibraryComponent>> = extractClassInstanceFromAssets(
-        ComponentsResponse::class.java,
-        "LibraryComponents.json"
-    ).map { response ->
-        response?.result ?: ArrayList()
-    }.flowOn(ioDispatcher)
+	/**
+	 * Provides the [List] of [LibraryComponent] from the JSON in the Assets.
+	 *
+	 * @return [List] of [LibraryComponent].
+	 */
+	fun provideListOfLibraryComponents(): Flow<List<LibraryComponent>> = extractClassInstanceFromAssets(
+		ComponentsResponse::class.java,
+		"LibraryComponents.json"
+	).map { response ->
+		response?.result ?: ArrayList()
+	}.flowOn(ioDispatcher)
 
 }

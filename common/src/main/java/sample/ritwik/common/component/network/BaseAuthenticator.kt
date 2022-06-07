@@ -12,19 +12,19 @@ import okhttp3.Route
  */
 abstract class BaseAuthenticator: Authenticator {
 
-    /*--------------------------------- Authenticator Callbacks ----------------------------------*/
+	/*--------------------------------- Authenticator Callbacks ----------------------------------*/
 
-    override fun authenticate(route: Route?, response: Response): Request? =
-            authenticateResponse(response)
+	override fun authenticate(route: Route?, response: Response): Request? =
+		authenticateResponse(response)
 
-    /*------------------------------------- Abstract Methods -------------------------------------*/
+	/*------------------------------------- Abstract Methods -------------------------------------*/
 
-    /**
-     * Tells this [BaseAuthenticator] to process it's [response] from [Authenticator].
-     *
-     * @param response [Response] of Network from [Authenticator].
-     * @return Processed [Request].
-     */
-    protected abstract fun authenticateResponse(response: Response): Request?
+	/**
+	 * Tells this [BaseAuthenticator] to process it's [response] from [Authenticator].
+	 *
+	 * @param response [Response] of Network from [Authenticator].
+	 * @return Processed [Request].
+	 */
+	protected abstract fun authenticateResponse(response: Response): Request?
 
 }

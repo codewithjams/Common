@@ -12,6 +12,6 @@ import sample.ritwik.app.data.ui.LibraryComponent
  * @author Ritwik Jamuar
  */
 data class ComponentsResponse(
-    @field: Json(name = "status") val status: String,
-    @field: Json(name = "result") val result: List<LibraryComponent>
+	@field: Json(name = "status") val status: String,
+	@field: Json(name = "result") val result: List<LibraryComponent>
 )

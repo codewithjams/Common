@@ -1,39 +1,35 @@
 plugins {
-    id(Plugins.commonApplicationModulePlugin)
-    id(Plugins.kotlinAnnotationProcessor)
+	id(Plugins.commonApplicationModulePlugin)
+	id(Plugins.kotlinAnnotationProcessor)
 }
 
 android {
 
-    defaultConfig {
+	defaultConfig {
+		applicationId = "sample.ritwik.app"
 
-        applicationId = "sample.ritwik.app"
+		versionCode = 1
+		versionName = "1.0"
+	}
 
-        versionCode = 1
-        versionName = "1.0"
-
-    }
-
-    buildFeatures {
-
-        dataBinding = true
-
-    }
+	buildFeatures {
+		dataBinding = true
+	}
 
 }
 
 dependencies {
 
-    implementation(project(":common"))
-    implementation(Dependencies.JetPack.Legacy.v4Support)
+	implementation(project(":common"))
+	implementation(Dependencies.JetPack.Legacy.v4Support)
 
-    kapt(Dependencies.Google.Dagger.androidProcessor)
-    kapt(Dependencies.Google.Dagger.compiler)
-    kapt(Dependencies.JetPack.Lifecycle.compiler)
+	kapt(Dependencies.Google.Dagger.androidProcessor)
+	kapt(Dependencies.Google.Dagger.compiler)
+	kapt(Dependencies.JetPack.Lifecycle.compiler)
 
-    testImplementation(Dependencies.JUnit.standardLibrary)
+	testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
-    androidTestImplementation(Dependencies.JetPack.Test.espresso)
+	androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+	androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

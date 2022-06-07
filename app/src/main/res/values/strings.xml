@@ -1,22 +1,22 @@
 <resources>
 
-    <string name="app_name">Common</string>
+	<string name="app_name">Common</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Content Descriptions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Content Descriptions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-    <string name="imcd_shimmer_view">Loading</string>
+	<string name="imcd_shimmer_view">Loading</string>
 
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ WelcomeFragment Strings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ WelcomeFragment Strings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-    <string name="button_common">More about Common Library</string>
-    <string name="welcome">Welcome to this Application</string>
-    <string name="description">This application has been composed of multiple modules</string>
+	<string name="button_common">More about Common Library</string>
+	<string name="welcome">Welcome to this Application</string>
+	<string name="description">This application has been composed of multiple modules</string>
 
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CommonFragment Strings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CommonFragment Strings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-    <string name="fragment_common_tile">Contents of common Library</string>
+	<string name="fragment_common_tile">Contents of common Library</string>
 
 </resources>

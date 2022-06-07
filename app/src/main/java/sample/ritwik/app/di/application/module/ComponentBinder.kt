@@ -26,27 +26,27 @@ import sample.ritwik.app.ui.activity.MainActivity
 @Module
 abstract class ComponentBinder {
 
-    /*--------------------------------- Activity Binding Methods ---------------------------------*/
+	/*--------------------------------- Activity Binding Methods ---------------------------------*/
 
-    /**
-     * Provides the instance of [MainActivity].
-     *
-     * @return Instance of [MainActivity].
-     */
-    @ContributesAndroidInjector(modules = [MainModule::class])
-    abstract fun contributesMainActivity(): MainActivity
+	/**
+	 * Provides the instance of [MainActivity].
+	 *
+	 * @return Instance of [MainActivity].
+	 */
+	@ContributesAndroidInjector(modules = [MainModule::class])
+	abstract fun contributesMainActivity(): MainActivity
 
-    /*-------------------------------- ViewModel Binding Methods ---------------------------------*/
+	/*-------------------------------- ViewModel Binding Methods ---------------------------------*/
 
-    /**
-     * Provides the [ViewModel] from [MainViewModel].
-     *
-     * @param viewModel Instance of [MainViewModel].
-     * @return Instance of [ViewModel].
-     */
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    abstract fun providesMainViewModel(viewModel: MainViewModel): ViewModel
+	/**
+	 * Provides the [ViewModel] from [MainViewModel].
+	 *
+	 * @param viewModel Instance of [MainViewModel].
+	 * @return Instance of [ViewModel].
+	 */
+	@Binds
+	@IntoMap
+	@ViewModelKey(MainViewModel::class)
+	abstract fun providesMainViewModel(viewModel: MainViewModel): ViewModel
 
 }

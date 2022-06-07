@@ -20,48 +20,48 @@ import javax.inject.Inject
  */
 class App : Application(), HasAndroidInjector {
 
-    /*---------------------------------------- Components ----------------------------------------*/
+	/*---------------------------------------- Components ----------------------------------------*/
 
-    /**
-     * Android Injector for [Activity].
-     */
-    @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Any>
+	/**
+	 * Android Injector for [Activity].
+	 */
+	@Inject
+	lateinit var activityInjector: DispatchingAndroidInjector<Any>
 
-    /*------------------------------------ Initializer Block -------------------------------------*/
+	/*------------------------------------ Initializer Block -------------------------------------*/
 
-    init {
+	init {
 
-        // Enable Vector Resources Globally.
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+		// Enable Vector Resources Globally.
+		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
-    }
+	}
 
-    /*---------------------------------- Application Callbacks -----------------------------------*/
+	/*---------------------------------- Application Callbacks -----------------------------------*/
 
-    override fun onCreate() {
-        super.onCreate()
-        initialize()
-    }
+	override fun onCreate() {
+		super.onCreate()
+		initialize()
+	}
 
-    /*------------------------------ HasActivityInjector Callbacks -------------------------------*/
+	/*------------------------------ HasActivityInjector Callbacks -------------------------------*/
 
-    override fun androidInjector(): AndroidInjector<Any> = activityInjector
+	override fun androidInjector(): AndroidInjector<Any> = activityInjector
 
-    /*------------------------------------- Private Methods --------------------------------------*/
+	/*------------------------------------- Private Methods --------------------------------------*/
 
-    /**
-     * Takes care of initialization of this [Application].
-     */
-    private fun initialize() {
-        initializeComponents()
-    }
+	/**
+	 * Takes care of initialization of this [Application].
+	 */
+	private fun initialize() {
+		initializeComponents()
+	}
 
-    /**
-     * Initializes the component of the [App].
-     */
-    private fun initializeComponents() {
-        DaggerAppComponent.builder().application(this).build().inject(this)
-    }
+	/**
+	 * Initializes the component of the [App].
+	 */
+	private fun initializeComponents() {
+		DaggerAppComponent.builder().application(this).build().inject(this)
+	}
 
 }

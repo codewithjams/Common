@@ -17,15 +17,15 @@ import sample.ritwik.common.di.AppScope
 @Module
 class RESTInterfaceModule {
 
-    /**
-     * Provides the instance of [RESTInterface].
-     *
-     * @param retrofit Instance of [Retrofit] from [sample.ritwik.common.di.module.RetrofitModule].
-     * @return New Instance of [RESTInterface].
-     */
-    @AppScope
-    @Provides
-    fun providesRESTInterface(retrofit: Retrofit): RESTInterface =
-        retrofit.create(RESTInterface::class.java)
+	/**
+	 * Provides the instance of [RESTInterface].
+	 *
+	 * @param retrofit Instance of [Retrofit] from [sample.ritwik.common.di.module.RetrofitModule].
+	 * @return New Instance of [RESTInterface].
+	 */
+	@AppScope
+	@Provides
+	fun providesRESTInterface(retrofit: Retrofit): RESTInterface =
+		retrofit.create(RESTInterface::class.java)
 
 }

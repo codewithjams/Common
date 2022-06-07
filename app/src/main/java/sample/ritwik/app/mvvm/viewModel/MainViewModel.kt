@@ -27,77 +27,77 @@ import javax.inject.Inject
  * @author Ritwik Jamuar
  */
 class MainViewModel @Inject constructor(
-    private val repository: MainRepository,
-    override val model: MainModel
+	private val repository: MainRepository,
+	override val model: MainModel
 ) : BaseMVVMViewModel<MainModel>() {
 
-    /*--------------------------------- BaseViewModel Callbacks ----------------------------------*/
+	/*--------------------------------- BaseViewModel Callbacks ----------------------------------*/
 
-    /*-------------------------------------- Public Methods --------------------------------------*/
+	/*-------------------------------------- Public Methods --------------------------------------*/
 
-    /**
-     * Handles the click of button 'More about Common Library'
-     * from [sample.ritwik.app.ui.fragment.WelcomeFragment].
-     */
-    fun onCommonClicked() {
-        navigateToCommon()
-    }
+	/**
+	 * Handles the click of button 'More about Common Library'
+	 * from [sample.ritwik.app.ui.fragment.WelcomeFragment].
+	 */
+	fun onCommonClicked() {
+		navigateToCommon()
+	}
 
-    /**
-     * Fetches the [List] of [LibraryComponent] from [repository] and publish the result to
-     */
-    fun fetchLibraryComponents() {
+	/**
+	 * Fetches the [List] of [LibraryComponent] from [repository] and publish the result to
+	 */
+	fun fetchLibraryComponents() {
 
-        // Load the data only if it is not populated before.
-        if (!model.isComponentsPopulated()) {
-            populate()
-            return
-        }
+		// Load the data only if it is not populated before.
+		if (!model.isComponentsPopulated()) {
+			populate()
+			return
+		}
 
-        updateUI() // Populate the UI with already fetched list.
+		updateUI() // Populate the UI with already fetched list.
 
-    }
+	}
 
-    /*------------------------------------- Private Methods --------------------------------------*/
+	/*------------------------------------- Private Methods --------------------------------------*/
 
-    /**
-     * Triggers UI to show progress.
-     */
-    private fun showProgress() {
-        notifyAction(ACTION_SHOW_PROGRESS)
-    }
+	/**
+	 * Triggers UI to show progress.
+	 */
+	private fun showProgress() {
+		notifyAction(ACTION_SHOW_PROGRESS)
+	}
 
-    /**
-     * Triggers UI to hide progress.
-     */
-    private fun hideProgress() {
-        notifyAction(ACTION_HIDE_PROGRESS)
-    }
+	/**
+	 * Triggers UI to hide progress.
+	 */
+	private fun hideProgress() {
+		notifyAction(ACTION_HIDE_PROGRESS)
+	}
 
-    /**
-     * Tells the UI to navigate to Common view.
-     */
-    private fun navigateToCommon() {
-        notifyAction(NAVIGATE_TO_COMMON_FRAGMENT)
-    }
+	/**
+	 * Tells the UI to navigate to Common view.
+	 */
+	private fun navigateToCommon() {
+		notifyAction(NAVIGATE_TO_COMMON_FRAGMENT)
+	}
 
-    private fun populate() {
-        viewModelScope.launch {
-            showProgress() // Show the Progress.
+	private fun populate() {
+		viewModelScope.launch {
+			showProgress() // Show the Progress.
 
-            delay(5000) // Simulate REST API Call by delaying for 5 seconds.
+			delay(5000) // Simulate REST API Call by delaying for 5 seconds.
 
-            val list: ArrayList<LibraryComponent> = ArrayList()
-            repository.provideListOfLibraryComponents().collect { components ->
-                list.addAll(components)
-            }
+			val list: ArrayList<LibraryComponent> = ArrayList()
+			repository.provideListOfLibraryComponents().collect { components ->
+				list.addAll(components)
+			}
 
-            hideProgress() // Hide the Progress.
+			hideProgress() // Hide the Progress.
 
-            model.libraryComponents = list // Store the fetched list into 'model'.
+			model.libraryComponents = list // Store the fetched list into 'model'.
 
-            updateUI()
-        }
-    }
+			updateUI()
+		}
+	}
 
 }

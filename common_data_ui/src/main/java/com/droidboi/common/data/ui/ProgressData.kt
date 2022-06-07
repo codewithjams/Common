@@ -1,20 +1,20 @@
 package com.droidboi.common.data.ui
 
 /**
- * Data Class to represent the data of Progress Dialog.
+ * Interface that marks an implementation to hold data related to Progress Dialog.
  *
- * @param showProgress [Boolean] to denote whether the Progress Dialog should be shown or not.
- * @param isCancelable [Boolean] to denote whether the Progress Dialog is cancelable in nature
- *   or not.
  * @author Ritwik Jamuar
  */
-data class ProgressData(
-    var showProgress: Boolean = false,
-    var isCancelable: Boolean = false
-) {
+interface ProgressData : UIData {
 
-    /*------------------------------------- Object Callbacks -------------------------------------*/
+    /**
+     * [Boolean] Flag to tell whether Progress should be shown or not.
+     */
+    var showProgress: Boolean
 
-    override fun toString(): String = "$showProgress"
+    /**
+     * [Boolean] Flag indicating whether display of Progress is cancelable in any way or not.
+     */
+    var isCancelable: Boolean
 
 }

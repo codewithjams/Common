@@ -17,122 +17,122 @@ import androidx.fragment.app.DialogFragment
  */
 abstract class BaseDialogFragment<Binding> : DialogFragment() {
 
-    /*---------------------------------------- Components ----------------------------------------*/
+	/*---------------------------------------- Components ----------------------------------------*/
 
-    /**
-     * Reference of [Binding] to control the Views under it.
-     */
-    protected val binding: Binding by lazy { provideBinding() }
+	/**
+	 * Reference of [Binding] to control the Views under it.
+	 */
+	protected val binding: Binding by lazy { provideBinding() }
 
-    /*--------------------------------- DialogFragment Callbacks ---------------------------------*/
+	/*--------------------------------- DialogFragment Callbacks ---------------------------------*/
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            extractArguments(it)
-        }
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		arguments?.let {
+			extractArguments(it)
+		}
+	}
 
-    override fun onStart() {
-        super.onStart()
-        setUpWindowDimension()
-        setUpWindowBackground()
-    }
+	override fun onStart() {
+		super.onStart()
+		setUpWindowDimension()
+		setUpWindowBackground()
+	}
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = provideView()
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? = provideView()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initializeViews()
-    }
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		initializeViews()
+	}
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        cleanUp()
-    }
+	override fun onDestroyView() {
+		super.onDestroyView()
+		cleanUp()
+	}
 
-    override fun onDestroy() {
-        super.onDestroy()
-        removeListeners()
-    }
+	override fun onDestroy() {
+		super.onDestroy()
+		removeListeners()
+	}
 
-    /*-------------------------------------- Public Methods --------------------------------------*/
+	/*-------------------------------------- Public Methods --------------------------------------*/
 
-    /**
-     * Closes this [BaseDialogFragment].
-     */
-    fun close() {
-        try {
-            if (!isRemoving) {
-                dismiss()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+	/**
+	 * Closes this [BaseDialogFragment].
+	 */
+	fun close() {
+		try {
+			if (!isRemoving) {
+				dismiss()
+			}
+		} catch (e: Exception) {
+			e.printStackTrace()
+		}
+	}
 
-    /*------------------------------------- Protected Methods ------------------------------------*/
+	/*------------------------------------- Protected Methods ------------------------------------*/
 
-    /**
-     * Sets the dimensions of [android.view.Window] of this [DialogFragment].
-     */
-    protected fun setUpWindowDimension() {
-        val metrics = resources.displayMetrics
-        val width = metrics.widthPixels * 0.9f
-        dialog?.window?.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-    }
+	/**
+	 * Sets the dimensions of [android.view.Window] of this [DialogFragment].
+	 */
+	protected fun setUpWindowDimension() {
+		val metrics = resources.displayMetrics
+		val width = metrics.widthPixels * 0.9f
+		dialog?.window?.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+	}
 
-    /**
-     * Sets the background of [android.view.Window] of this [DialogFragment].
-     */
-    protected fun setUpWindowBackground() = Unit
+	/**
+	 * Sets the background of [android.view.Window] of this [DialogFragment].
+	 */
+	protected fun setUpWindowBackground() = Unit
 
-    /*------------------------------------- Abstract Methods -------------------------------------*/
+	/*------------------------------------- Abstract Methods -------------------------------------*/
 
-    /**
-     * Tells this [DialogFragment] to provide it's Binding instance which will be used to access the
-     * views under this [DialogFragment].
-     *
-     * @return New Instance of [Binding].
-     */
-    protected abstract fun provideBinding(): Binding
+	/**
+	 * Tells this [DialogFragment] to provide it's Binding instance which will be used to access the
+	 * views under this [DialogFragment].
+	 *
+	 * @return New Instance of [Binding].
+	 */
+	protected abstract fun provideBinding(): Binding
 
-    /**
-     * Tells this [DialogFragment] to provide the [View] under which this is rendered.
-     *
-     * @return Instance of [View] under which this [DialogFragment] is rendered.
-     */
-    protected abstract fun provideView(): View
+	/**
+	 * Tells this [DialogFragment] to provide the [View] under which this is rendered.
+	 *
+	 * @return Instance of [View] under which this [DialogFragment] is rendered.
+	 */
+	protected abstract fun provideView(): View
 
-    /**
-     * Tells this [DialogFragment] to extract the arguments from [Bundle].
-     *
-     *
-     * This method will be executed only if the [Bundle] argument was set during the instantiation
-     * of this [DialogFragment].
-     *
-     * @param arguments [Bundle] that contains the arguments.
-     */
-    protected abstract fun extractArguments(arguments: Bundle)
+	/**
+	 * Tells this [DialogFragment] to extract the arguments from [Bundle].
+	 *
+	 *
+	 * This method will be executed only if the [Bundle] argument was set during the instantiation
+	 * of this [DialogFragment].
+	 *
+	 * @param arguments [Bundle] that contains the arguments.
+	 */
+	protected abstract fun extractArguments(arguments: Bundle)
 
-    /**
-     * Tells this [DialogFragment] to perform initialization of it's [View]s through [binding].
-     */
-    protected abstract fun initializeViews()
+	/**
+	 * Tells this [DialogFragment] to perform initialization of it's [View]s through [binding].
+	 */
+	protected abstract fun initializeViews()
 
-    /**
-     * Tells this [DialogFragment] to perform Clean-Up procedures for avoiding Memory Leaks.
-     */
-    protected abstract fun cleanUp()
+	/**
+	 * Tells this [DialogFragment] to perform Clean-Up procedures for avoiding Memory Leaks.
+	 */
+	protected abstract fun cleanUp()
 
-    /**
-     * Tells this [DialogFragment] to remove it's listeners
-     * for preventing any [NullPointerException] when the parent [View] is destroyed.
-     */
-    protected abstract fun removeListeners()
+	/**
+	 * Tells this [DialogFragment] to remove it's listeners
+	 * for preventing any [NullPointerException] when the parent [View] is destroyed.
+	 */
+	protected abstract fun removeListeners()
 
 }

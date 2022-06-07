@@ -15,13 +15,13 @@ import dagger.Provides
 @Module
 class ResourceModule {
 
-    /**
-     * Provides the instance of [ResourceUtils].
-     *
-     * @param context Instance of Application's [Context].
-     * @return New Instance of [ResourceUtils].
-     */
-    @Provides
-    fun providesResourceUtils(context: Context): ResourceUtils = ResourceUtils(context)
+	/**
+	 * Provides the instance of [ResourceUtils].
+	 *
+	 * @param context Instance of Application's [Context].
+	 * @return New Instance of [ResourceUtils].
+	 */
+	@Provides
+	fun providesResourceUtils(context: Context): ResourceUtils = ResourceUtils(context)
 
 }

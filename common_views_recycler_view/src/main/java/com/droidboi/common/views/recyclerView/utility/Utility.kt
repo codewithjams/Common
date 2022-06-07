@@ -41,51 +41,51 @@ typealias AdapterListener<Model> = (Model) -> Unit
 @Suppress("UNCHECKED_CAST")
 fun <Model> RecyclerView.addItems(list: List<Model>, isReplace: Boolean) = adapter?.let { a ->
 
-    // Check whether the Adapter is an instance of BaseSingleVHAdapter or not.
-    if (a is BaseSingleVHAdapter<*, *>) {
+	// Check whether the Adapter is an instance of BaseSingleVHAdapter or not.
+	if (a is BaseSingleVHAdapter<*, *>) {
 
-        // At this stage, the adapter is indeed an instance of BaseSingleVHAdapter.
-        (a as? BaseSingleVHAdapter<Model, *>)?.let { ad ->
+		// At this stage, the adapter is indeed an instance of BaseSingleVHAdapter.
+		(a as? BaseSingleVHAdapter<Model, *>)?.let { ad ->
 
-            // Switch to a Runnable so that the below actions are posted on the next UI Frame
-            // for smoother experience.
-            post {
+			// Switch to a Runnable so that the below actions are posted on the next UI Frame
+			// for smoother experience.
+			post {
 
-                // Using this adapter, try to Add/Replace the items based on 'isReplace'.
-                if (isReplace) {
-                    ad.replaceList(list)
-                } else {
-                    ad.addToList(list)
-                }
+				// Using this adapter, try to Add/Replace the items based on 'isReplace'.
+				if (isReplace) {
+					ad.replaceList(list)
+				} else {
+					ad.addToList(list)
+				}
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
-    // Check whether the Adapter is an instance of BaseMultipleVHAdapter or not.
-    if (a is BaseMultipleVHAdapter<*>) {
+	// Check whether the Adapter is an instance of BaseMultipleVHAdapter or not.
+	if (a is BaseMultipleVHAdapter<*>) {
 
-        // At this stage, the adapter is indeed an instance of BaseMultipleVHAdapter.
-        (a as? BaseMultipleVHAdapter<Model>)?.let { ad ->
+		// At this stage, the adapter is indeed an instance of BaseMultipleVHAdapter.
+		(a as? BaseMultipleVHAdapter<Model>)?.let { ad ->
 
-            // Switch to a Runnable so that the below actions are posted on the next UI Frame
-            // for smoother experience.
-            post {
+			// Switch to a Runnable so that the below actions are posted on the next UI Frame
+			// for smoother experience.
+			post {
 
-                // Using this adapter, try to Add/Replace the items based on 'isReplace'.
-                if (isReplace) {
-                    ad.replaceList(list)
-                } else {
-                    ad.addToList(list)
-                }
+				// Using this adapter, try to Add/Replace the items based on 'isReplace'.
+				if (isReplace) {
+					ad.replaceList(list)
+				} else {
+					ad.addToList(list)
+				}
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
 } ?: Unit
 
@@ -102,27 +102,27 @@ fun <Model> RecyclerView.addItems(list: List<Model>, isReplace: Boolean) = adapt
  */
 fun RecyclerView.clearItems() = adapter?.let { a ->
 
-    // Check whether the Adapter is an instance of BaseSingleVHAdapter or not.
-    if (a is BaseSingleVHAdapter<*, *>) {
+	// Check whether the Adapter is an instance of BaseSingleVHAdapter or not.
+	if (a is BaseSingleVHAdapter<*, *>) {
 
-        // Switch to a Runnable so that the below actions are posted on the next UI Frame
-        // for smoother experience.
-        post {
-            a.clearAllItems() // Clear all the items in the RecyclerView using this adapter.
-        }
+		// Switch to a Runnable so that the below actions are posted on the next UI Frame
+		// for smoother experience.
+		post {
+			a.clearAllItems() // Clear all the items in the RecyclerView using this adapter.
+		}
 
-    }
+	}
 
-    // Check whether the Adapter is an instance of BaseMultipleVHAdapter or not.
-    if (a is BaseMultipleVHAdapter<*>) {
+	// Check whether the Adapter is an instance of BaseMultipleVHAdapter or not.
+	if (a is BaseMultipleVHAdapter<*>) {
 
-        // Switch to a Runnable so that the below actions are posted on the next UI Frame
-        // for smoother experience.
-        post {
-            a.clearAllItems() // Clear all the items in the RecyclerView using this adapter.
-        }
+		// Switch to a Runnable so that the below actions are posted on the next UI Frame
+		// for smoother experience.
+		post {
+			a.clearAllItems() // Clear all the items in the RecyclerView using this adapter.
+		}
 
-    }
+	}
 
 } ?: Unit
 
@@ -140,19 +140,19 @@ fun RecyclerView.clearItems() = adapter?.let { a ->
  * @author Ritwik Jamuar
  */
 fun <Adapter : RecyclerView.Adapter<*>, LayoutManager : RecyclerView.LayoutManager> RecyclerView.initialize(
-    rvAdapter: Adapter,
-    rvLayoutManager: LayoutManager,
-    scrollListener: RecyclerView.OnScrollListener? = null
+	rvAdapter: Adapter,
+	rvLayoutManager: LayoutManager,
+	scrollListener: RecyclerView.OnScrollListener? = null
 ) {
 
-    adapter = rvAdapter // Set the Adapter.
+	adapter = rvAdapter // Set the Adapter.
 
-    layoutManager = rvLayoutManager // Set the Layout Manager.
+	layoutManager = rvLayoutManager // Set the Layout Manager.
 
-    // Set the Scroll Listener only if it is provided.
-    scrollListener?.let { listener ->
-        addOnScrollListener(listener)
-    }
+	// Set the Scroll Listener only if it is provided.
+	scrollListener?.let { listener ->
+		addOnScrollListener(listener)
+	}
 
 }
 
@@ -173,17 +173,17 @@ fun <Adapter : RecyclerView.Adapter<*>, LayoutManager : RecyclerView.LayoutManag
  * @author Ritwik Jamuar
  */
 fun <
-        Adapter : RecyclerView.Adapter<*>,
-        LayoutManager : RecyclerView.LayoutManager,
-        Decoration : RecyclerView.ItemDecoration
-        > RecyclerView.initialize(
-    rvAdapter: Adapter,
-    rvLayoutManager: LayoutManager,
-    decoration: Decoration,
-    scrollListener: RecyclerView.OnScrollListener? = null
+		Adapter : RecyclerView.Adapter<*>,
+		LayoutManager : RecyclerView.LayoutManager,
+		Decoration : RecyclerView.ItemDecoration
+		> RecyclerView.initialize(
+	rvAdapter: Adapter,
+	rvLayoutManager: LayoutManager,
+	decoration: Decoration,
+	scrollListener: RecyclerView.OnScrollListener? = null
 ) {
-    initialize(rvAdapter, rvLayoutManager, scrollListener) // Use the method above.
-    addItemDecoration(decoration) // Add the Item Decoration.
+	initialize(rvAdapter, rvLayoutManager, scrollListener) // Use the method above.
+	addItemDecoration(decoration) // Add the Item Decoration.
 }
 
 /**
@@ -193,9 +193,9 @@ fun <
  * @author Ritwik Jamuar
  */
 fun RecyclerView.cleanUp() {
-    adapter = null // De-Reference the Adapter.
-    layoutManager = null // De-Reference the Layout Manager.
-    clearOnScrollListeners() // Clear all the Scroll Listeners.
+	adapter = null // De-Reference the Adapter.
+	layoutManager = null // De-Reference the Layout Manager.
+	clearOnScrollListeners() // Clear all the Scroll Listeners.
 }
 
 /**
@@ -213,19 +213,19 @@ fun RecyclerView.cleanUp() {
 @Suppress("UNCHECKED_CAST")
 fun <T> RecyclerView.notifyUpdateInAnItem(item: T, position: Int) = adapter?.let { adapter ->
 
-    // Check the instance of this RecyclerView.Adapter.
-    when(adapter) {
+	// Check the instance of this RecyclerView.Adapter.
+	when(adapter) {
 
-        is BaseSingleVHAdapter<*, *> -> post {
-            (adapter as? BaseSingleVHAdapter<T, *>)?.updateItemAtPosition(item, position)
-        }
+		is BaseSingleVHAdapter<*, *> -> post {
+			(adapter as? BaseSingleVHAdapter<T, *>)?.updateItemAtPosition(item, position)
+		}
 
-        is BaseMultipleVHAdapter<*> -> post {
-            (adapter as? BaseMultipleVHAdapter<T>)?.updateItemAtPosition(item, position)
-        }
+		is BaseMultipleVHAdapter<*> -> post {
+			(adapter as? BaseMultipleVHAdapter<T>)?.updateItemAtPosition(item, position)
+		}
 
-        else -> Unit
+		else -> Unit
 
-    }
+	}
 
 } ?: Unit

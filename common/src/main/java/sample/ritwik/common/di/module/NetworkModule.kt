@@ -24,31 +24,31 @@ import sample.ritwik.common.di.AppScope
  * @author Ritwik Jamuar
  */
 @Module(
-    includes = [
-        CacheModule::class,
-        InterceptorModule::class
-    ]
+	includes = [
+		CacheModule::class,
+		InterceptorModule::class
+	]
 )
 class NetworkModule {
 
-    /**
-     * Provides the instance of [OkHttpClient].
-     *
-     * @param cache Instance of [Cache] from [CacheModule].
-     * @param loggingInterceptor Instance of [HttpLoggingInterceptor] from [InterceptorModule].
-     * @param cacheInterceptor Instance of [CacheInterceptor] from [InterceptorModule].
-     * @return New Instance of [OkHttpClient].
-     */
-    @AppScope
-    @Provides
-    fun providesOkHttpClient(
-        cache: Cache,
-        loggingInterceptor: HttpLoggingInterceptor,
-        cacheInterceptor: CacheInterceptor
-    ): OkHttpClient = OkHttpClient.Builder().apply {
-        cache(cache)
-        addInterceptor(loggingInterceptor)
-        addInterceptor(cacheInterceptor)
-    }.build()
+	/**
+	 * Provides the instance of [OkHttpClient].
+	 *
+	 * @param cache Instance of [Cache] from [CacheModule].
+	 * @param loggingInterceptor Instance of [HttpLoggingInterceptor] from [InterceptorModule].
+	 * @param cacheInterceptor Instance of [CacheInterceptor] from [InterceptorModule].
+	 * @return New Instance of [OkHttpClient].
+	 */
+	@AppScope
+	@Provides
+	fun providesOkHttpClient(
+		cache: Cache,
+		loggingInterceptor: HttpLoggingInterceptor,
+		cacheInterceptor: CacheInterceptor
+	): OkHttpClient = OkHttpClient.Builder().apply {
+		cache(cache)
+		addInterceptor(loggingInterceptor)
+		addInterceptor(cacheInterceptor)
+	}.build()
 
 }

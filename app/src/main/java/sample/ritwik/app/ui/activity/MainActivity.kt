@@ -30,43 +30,43 @@ import javax.inject.Inject
  */
 class MainActivity : BaseMVVMActivity<MainViewModel, ActivityMainBinding>() {
 
-    /*---------------------------------------- Components ----------------------------------------*/
+	/*---------------------------------------- Components ----------------------------------------*/
 
-    /**
-     * Reference of [VMFactory] of this [BaseMVVMActivity]
-     * injected from [com.droidboi.common.lifecycle.di.module.ViewModelModule].
-     */
-    @Inject
-    lateinit var vmFactory: VMFactory
+	/**
+	 * Reference of [VMFactory] of this [BaseMVVMActivity]
+	 * injected from [com.droidboi.common.lifecycle.di.module.ViewModelModule].
+	 */
+	@Inject
+	lateinit var vmFactory: VMFactory
 
-    /**
-     * Reference of [Picasso] injected from [sample.ritwik.common.di.module.PicassoModule].
-     */
-    @Inject
-    lateinit var picassoLibrary: Picasso
+	/**
+	 * Reference of [Picasso] injected from [sample.ritwik.common.di.module.PicassoModule].
+	 */
+	@Inject
+	lateinit var picassoLibrary: Picasso
 
-    /**
-     * Reference of [NavController] to perform navigation between [androidx.fragment.app.Fragment]s.
-     */
-    private val navigationController: NavController by lazy {
-        Navigation.findNavController(this, R.id.fragment_container)
-    }
+	/**
+	 * Reference of [NavController] to perform navigation between [androidx.fragment.app.Fragment]s.
+	 */
+	private val navigationController: NavController by lazy {
+		Navigation.findNavController(this, R.id.fragment_container)
+	}
 
-    /*---------------------------------- BaseActivity Callbacks ----------------------------------*/
+	/*---------------------------------- BaseActivity Callbacks ----------------------------------*/
 
-    override val layoutRes: Int
-        get() = R.layout.activity_main
+	override val layoutRes: Int
+		get() = R.layout.activity_main
 
-    override fun inject() = AndroidInjection.inject(this)
+	override fun inject() = AndroidInjection.inject(this)
 
-    /*-------------------------------- BaseMVVMActivity Callbacks --------------------------------*/
+	/*-------------------------------- BaseMVVMActivity Callbacks --------------------------------*/
 
-    override val viewModel: MainViewModel
-        get() = ViewModelProvider(this, vmFactory)[MainViewModel::class.java]
+	override val viewModel: MainViewModel
+		get() = ViewModelProvider(this, vmFactory)[MainViewModel::class.java]
 
-    override fun onAction(action: Int) = when(action) {
-        NAVIGATE_TO_COMMON_FRAGMENT -> navigationController.navigate(R.id.commonFragment)
-        else -> Unit
-    }
+	override fun onAction(action: Int) = when(action) {
+		NAVIGATE_TO_COMMON_FRAGMENT -> navigationController.navigate(R.id.commonFragment)
+		else -> Unit
+	}
 
 }

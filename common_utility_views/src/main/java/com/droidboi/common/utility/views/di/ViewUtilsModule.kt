@@ -15,13 +15,13 @@ import dagger.Provides
 @Module
 class ViewUtilsModule {
 
-    /**
-     * Provides the instance of [ViewUtils].
-     *
-     * @param context Instance of Application's [Context].
-     * @return New Instance of [ViewUtils].
-     */
-    @Provides
-    fun providesViewUtils(context: Context): ViewUtils = ViewUtils(context)
+	/**
+	 * Provides the instance of [ViewUtils].
+	 *
+	 * @param context Instance of Application's [Context].
+	 * @return New Instance of [ViewUtils].
+	 */
+	@Provides
+	fun providesViewUtils(context: Context): ViewUtils = ViewUtils(context)
 
 }

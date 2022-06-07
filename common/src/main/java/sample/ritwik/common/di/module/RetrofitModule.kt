@@ -41,31 +41,31 @@ import javax.inject.Named
  * @author Ritwik Jamuar
  */
 @Module(
-    includes = [
-        MoshiModule::class,
-        NetworkModule::class
-    ]
+	includes = [
+		MoshiModule::class,
+		NetworkModule::class
+	]
 )
 class RetrofitModule {
 
-    /**
-     * Provides the instance of [Retrofit].
-     *
-     * @param client Instance of [OkHttpClient] from [NetworkModule].
-     * @param moshiConverterFactory Instance of [MoshiConverterFactory] from [MoshiModule].
-     * @param baseURL [String] denoting the Base URL End-Point.
-     * @return New Instance of [Retrofit].
-     */
-    @AppScope
-    @Provides
-    fun providesRetrofit(
-        client: OkHttpClient,
-        moshiConverterFactory: MoshiConverterFactory,
-        @Named(BASE_URL) baseURL: String
-    ): Retrofit = Retrofit.Builder().apply {
-        client(client)
-        addConverterFactory(moshiConverterFactory)
-        baseUrl(baseURL)
-    }.build()
+	/**
+	 * Provides the instance of [Retrofit].
+	 *
+	 * @param client Instance of [OkHttpClient] from [NetworkModule].
+	 * @param moshiConverterFactory Instance of [MoshiConverterFactory] from [MoshiModule].
+	 * @param baseURL [String] denoting the Base URL End-Point.
+	 * @return New Instance of [Retrofit].
+	 */
+	@AppScope
+	@Provides
+	fun providesRetrofit(
+		client: OkHttpClient,
+		moshiConverterFactory: MoshiConverterFactory,
+		@Named(BASE_URL) baseURL: String
+	): Retrofit = Retrofit.Builder().apply {
+		client(client)
+		addConverterFactory(moshiConverterFactory)
+		baseUrl(baseURL)
+	}.build()
 
 }

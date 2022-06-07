@@ -1,6 +1,6 @@
 rootProject.apply {
-    name = "Common"
-    buildFileName = "build.gradle.kts"
+	name = "Common"
+	buildFileName = "build.gradle.kts"
 }
 
 include(":app")

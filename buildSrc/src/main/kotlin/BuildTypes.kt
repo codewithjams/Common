@@ -5,9 +5,9 @@
  */
 object BuildTypes {
 
-    /**
-     * Release variant.
-     */
-    val release by lazy { "release" }
+	/**
+	 * Release variant.
+	 */
+	val release by lazy { "release" }
 
 }

@@ -19,16 +19,16 @@ import dagger.Provides
 @Module
 class NetworkCallbackModule {
 
-    /**
-     * Provides the instance of [NetworkUtils].
-     *
-     * @param context Instance of Application's [Context].
-     * @return New Instance of [NetworkUtils].
-     */
-    @Provides
-    fun providesNetworkUtils(context: Context): NetworkUtils = NetworkUtils(
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager,
-        context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    )
+	/**
+	 * Provides the instance of [NetworkUtils].
+	 *
+	 * @param context Instance of Application's [Context].
+	 * @return New Instance of [NetworkUtils].
+	 */
+	@Provides
+	fun providesNetworkUtils(context: Context): NetworkUtils = NetworkUtils(
+		context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager,
+		context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+	)
 
 }

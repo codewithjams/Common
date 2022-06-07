@@ -10,6 +10,6 @@ import java.lang.Exception
  * @author Ritwik Jamuar
  */
 class RESTAPIException(
-    val code: Int = 0,
-    val description: String
+	val code: Int = 0,
+	val description: String
 ) : Exception(description)

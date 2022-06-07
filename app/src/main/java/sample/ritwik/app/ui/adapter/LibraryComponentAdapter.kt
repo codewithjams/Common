@@ -18,20 +18,20 @@ import sample.ritwik.app.ui.viewHolder.LibraryComponentViewHolder
  * @author Ritwik Jamuar
  */
 class LibraryComponentAdapter :
-    BaseSingleVHAdapter<LibraryComponent, LibraryComponentViewHolder>() {
+	BaseSingleVHAdapter<LibraryComponent, LibraryComponentViewHolder>() {
 
-    /*------------------------------- BaseSingleVHAdapter Callbacks ------------------------------*/
+	/*------------------------------- BaseSingleVHAdapter Callbacks ------------------------------*/
 
-    override fun provideViewHolder(parent: ViewGroup): LibraryComponentViewHolder =
-        LibraryComponentViewHolder(
-            ItemLibraryComponentBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+	override fun provideViewHolder(parent: ViewGroup): LibraryComponentViewHolder =
+		LibraryComponentViewHolder(
+			ItemLibraryComponentBinding.inflate(
+				LayoutInflater.from(parent.context),
+				parent,
+				false
+			)
+		)
 
-    override fun onBind(viewHolder: LibraryComponentViewHolder, position: Int) =
-        viewHolder.setItem(list[position])
+	override fun onBind(viewHolder: LibraryComponentViewHolder, position: Int) =
+		viewHolder.setItem(list[position])
 
 }

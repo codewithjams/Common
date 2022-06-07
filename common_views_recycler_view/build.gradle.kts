@@ -1,14 +1,14 @@
 plugins {
-    id(Plugins.commonLibraryModulePlugin)
+	id(Plugins.commonLibraryModulePlugin)
 }
 
 dependencies {
 
-    implementation(Dependencies.JetPack.RecyclerView.standardLibrary)
+	implementation(Dependencies.JetPack.RecyclerView.standardLibrary)
 
-    testImplementation(Dependencies.JUnit.standardLibrary)
+	testImplementation(Dependencies.JUnit.standardLibrary)
 
-    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
-    androidTestImplementation(Dependencies.JetPack.Test.espresso)
+	androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
+	androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

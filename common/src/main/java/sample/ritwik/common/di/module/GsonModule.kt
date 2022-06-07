@@ -14,13 +14,13 @@ import sample.ritwik.common.di.AppScope
 @Module
 class GsonModule {
 
-    /**
-     * Provides the [Gson].
-     *
-     * @return New Instance of [Gson].
-     */
-    @AppScope
-    @Provides
-    fun providesGson(): Gson = GsonBuilder().setPrettyPrinting().create()
+	/**
+	 * Provides the [Gson].
+	 *
+	 * @return New Instance of [Gson].
+	 */
+	@AppScope
+	@Provides
+	fun providesGson(): Gson = GsonBuilder().setPrettyPrinting().create()
 
 }

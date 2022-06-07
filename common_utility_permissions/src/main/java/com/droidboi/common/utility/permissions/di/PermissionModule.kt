@@ -15,13 +15,13 @@ import dagger.Provides
 @Module
 class PermissionModule {
 
-    /**
-     * Provides the instance of [PermissionUtils].
-     *
-     * @param context Instance of Application's [Context].
-     * @return New Instance of [PermissionUtils].
-     */
-    @Provides
-    fun providesPermissionUtils(context: Context): PermissionUtils = PermissionUtils(context)
+	/**
+	 * Provides the instance of [PermissionUtils].
+	 *
+	 * @param context Instance of Application's [Context].
+	 * @return New Instance of [PermissionUtils].
+	 */
+	@Provides
+	fun providesPermissionUtils(context: Context): PermissionUtils = PermissionUtils(context)
 
 }

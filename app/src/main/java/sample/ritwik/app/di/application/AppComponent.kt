@@ -26,46 +26,46 @@ import sample.ritwik.common.di.AppScope
  */
 @AppScope
 @Component(
-    modules = [
-        AppModule::class,
-        ComponentBinder::class,
-        AndroidInjectionModule::class
-    ]
+	modules = [
+		AppModule::class,
+		ComponentBinder::class,
+		AndroidInjectionModule::class
+	]
 )
 interface AppComponent {
 
-    /**
-     * Provides the instance of [App] to facilitate the Dependency Injection.
-     *
-     * @param application Instance of [App].
-     */
-    fun inject(application: App)
+	/**
+	 * Provides the instance of [App] to facilitate the Dependency Injection.
+	 *
+	 * @param application Instance of [App].
+	 */
+	fun inject(application: App)
 
-    /**
-     * [ComponentBinder] for [AppComponent] to facilitate building of [AppComponent]
-     * from the supplied [dagger.Module].
-     *
-     * @author Ritwik Jamuar
-     */
-    @Component.Builder
-    interface Builder {
+	/**
+	 * [ComponentBinder] for [AppComponent] to facilitate building of [AppComponent]
+	 * from the supplied [dagger.Module].
+	 *
+	 * @author Ritwik Jamuar
+	 */
+	@Component.Builder
+	interface Builder {
 
-        /**
-         * Builds the [AppComponent] from the supplied arguments in [Builder].
-         *
-         * @return New Instance of [AppComponent].
-         */
-        fun build(): AppComponent
+		/**
+		 * Builds the [AppComponent] from the supplied arguments in [Builder].
+		 *
+		 * @return New Instance of [AppComponent].
+		 */
+		fun build(): AppComponent
 
-        /**
-         * Binds the instance of [App] into [AppComponent].
-         *
-         * @param application Instance of [App].
-         * @return Current Instance of [Builder].
-         */
-        @BindsInstance
-        fun application(application: App): Builder
+		/**
+		 * Binds the instance of [App] into [AppComponent].
+		 *
+		 * @param application Instance of [App].
+		 * @return Current Instance of [Builder].
+		 */
+		@BindsInstance
+		fun application(application: App): Builder
 
-    }
+	}
 
 }

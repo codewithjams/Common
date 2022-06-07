@@ -31,13 +31,13 @@ import dagger.Module
  * @author Ritwik Jamuar
  */
 @Module(
-    includes = [
-        GsonModule::class,
-        PersistenceModule::class,
-        PicassoModule::class,
-        RetrofitModule::class,
-        UtilityModule::class,
-        ViewModelModule::class
-    ]
+	includes = [
+		GsonModule::class,
+		PersistenceModule::class,
+		PicassoModule::class,
+		RetrofitModule::class,
+		UtilityModule::class,
+		ViewModelModule::class
+	]
 )
 class CommonModule

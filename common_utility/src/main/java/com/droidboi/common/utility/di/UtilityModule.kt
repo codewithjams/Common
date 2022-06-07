@@ -27,11 +27,11 @@ import dagger.Module
  * @author Ritwik Jamuar
  */
 @Module(
-    includes = [
-        NetworkCallbackModule::class,
-        PermissionModule::class,
-        ResourceModule::class,
-        ViewUtilsModule::class
-    ]
+	includes = [
+		NetworkCallbackModule::class,
+		PermissionModule::class,
+		ResourceModule::class,
+		ViewUtilsModule::class
+	]
 )
 class UtilityModule

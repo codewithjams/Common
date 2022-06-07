@@ -35,28 +35,28 @@ import javax.inject.Named
 @Module
 class PersistenceModule {
 
-    /**
-     * Provides the instance of [DataStorePreference].
-     *
-     * @param dataStore Instance of [DataStore] from [providesDataStore].
-     * @return New Instance of [DataStorePreference].
-     */
-    @Provides
-    fun providesDataStorePreference(dataStore: DataStore<Preferences>): DataStorePreference =
-        DataStorePreference(dataStore)
+	/**
+	 * Provides the instance of [DataStorePreference].
+	 *
+	 * @param dataStore Instance of [DataStore] from [providesDataStore].
+	 * @return New Instance of [DataStorePreference].
+	 */
+	@Provides
+	fun providesDataStorePreference(dataStore: DataStore<Preferences>): DataStorePreference =
+		DataStorePreference(dataStore)
 
-    /**
-     * Provides the instance of [DataStore].
-     *
-     * @param context Instance of Application's [Context].
-     * @param fileName [String] denoting the File Name of the [DataStore].
-     */
-    @Provides
-    fun providesDataStore(
-        context: Context,
-        @Named(DATA_STORE_FILE_NAME) fileName: String
-    ): DataStore<Preferences> = PreferenceDataStoreFactory.create {
-        context.preferencesDataStoreFile(fileName)
-    }
+	/**
+	 * Provides the instance of [DataStore].
+	 *
+	 * @param context Instance of Application's [Context].
+	 * @param fileName [String] denoting the File Name of the [DataStore].
+	 */
+	@Provides
+	fun providesDataStore(
+		context: Context,
+		@Named(DATA_STORE_FILE_NAME) fileName: String
+	): DataStore<Preferences> = PreferenceDataStoreFactory.create {
+		context.preferencesDataStoreFile(fileName)
+	}
 
 }

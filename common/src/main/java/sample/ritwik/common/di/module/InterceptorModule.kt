@@ -22,31 +22,31 @@ import sample.ritwik.common.component.network.CacheInterceptor
 @Module
 class InterceptorModule {
 
-    /**
-     * Provides the [CacheInterceptor].
-     *
-     * @return New Instance of [CacheInterceptor].
-     */
-    @Provides
-    fun provideCacheInterceptor(): CacheInterceptor = CacheInterceptor()
+	/**
+	 * Provides the [CacheInterceptor].
+	 *
+	 * @return New Instance of [CacheInterceptor].
+	 */
+	@Provides
+	fun provideCacheInterceptor(): CacheInterceptor = CacheInterceptor()
 
-    /**
-     * Provides the [HttpLoggingInterceptor].
-     *
-     *
-     * This [HttpLoggingInterceptor] can logs the network activity depending on whether the
-     * Application's build environment is Debug or not.
-     *
-     * @return New Instance of [HttpLoggingInterceptor].
-     */
-    @Provides
-    fun providesLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor { message ->
-        android.util.Log.e("REST", message)
-    }.apply {
-        level = when {
-            BuildConfig.DEBUG -> HttpLoggingInterceptor.Level.BODY
-            else -> HttpLoggingInterceptor.Level.NONE
-        }
-    }
+	/**
+	 * Provides the [HttpLoggingInterceptor].
+	 *
+	 *
+	 * This [HttpLoggingInterceptor] can logs the network activity depending on whether the
+	 * Application's build environment is Debug or not.
+	 *
+	 * @return New Instance of [HttpLoggingInterceptor].
+	 */
+	@Provides
+	fun providesLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor { message ->
+		android.util.Log.e("REST", message)
+	}.apply {
+		level = when {
+			BuildConfig.DEBUG -> HttpLoggingInterceptor.Level.BODY
+			else -> HttpLoggingInterceptor.Level.NONE
+		}
+	}
 
 }

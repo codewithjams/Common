@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
 
-	implementation(Dependencies.Google.Dagger.standardLibrary)
-	implementation(Dependencies.Google.Dagger.android)
+	api(Dependencies.Google.Dagger.standardLibrary)
+	api(Dependencies.Google.Dagger.android)
 
 	kapt(Dependencies.Google.Dagger.androidProcessor)
 	kapt(Dependencies.Google.Dagger.compiler)

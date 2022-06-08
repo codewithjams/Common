@@ -17,7 +17,7 @@ import dagger.Module
  * proper update on Network from [NetworkCallbackModule].
  * 3. [com.droidboi.common.utility.permissions.helper.PermissionUtils]: Utility Class to provide
  * all the methods related to Permission, from [PermissionModule].
- * 3. [com.droidboi.common.utility.resources.helper.ResourceUtils]: Utility Class to provide
+ * 3. [com.droidboi.common.utility.resources.ResourceUtils]: Utility Class to provide
  * all types of Resources from Android OS for this application, from [ResourceModule].
  *
  * @author Ritwik Jamuar

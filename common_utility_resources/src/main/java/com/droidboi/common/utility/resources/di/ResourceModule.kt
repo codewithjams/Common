@@ -2,7 +2,9 @@ package com.droidboi.common.utility.resources.di
 
 import android.content.Context
 
-import com.droidboi.common.utility.resources.helper.ResourceUtils
+import com.droidboi.common.utility.resources.ResourceUtils
+
+import com.droidboi.common.utility.resources.impl.ResourceUtilsImpl
 
 import dagger.Module
 import dagger.Provides
@@ -22,6 +24,6 @@ class ResourceModule {
 	 * @return New Instance of [ResourceUtils].
 	 */
 	@Provides
-	fun providesResourceUtils(context: Context): ResourceUtils = ResourceUtils(context)
+	fun providesResourceUtils(context: Context): ResourceUtils = ResourceUtilsImpl(context)
 
 }

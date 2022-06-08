@@ -1,10 +1,6 @@
-package com.droidboi.common.utility.resources.helper
-
-import android.content.Context
+package com.droidboi.common.utility.resources
 
 import android.content.res.Resources
-
-import android.os.Build
 
 import androidx.annotation.ColorRes
 import androidx.annotation.IntegerRes
@@ -13,17 +9,16 @@ import androidx.annotation.StringRes
 import java.io.IOException
 import java.io.InputStream
 
-import javax.inject.Inject
-
 /**
- * Utility Class to provide all types of Resources from Android OS for this application.
+ * This is a unified resource provider abstracted away the common methods of
+ * gathering the resources.
  *
- * @param context [Context] from which the resources will be accessed.
+ *
+ * Marks any implementation as a provider of various Android Resources.
+ *
  * @author Ritwik Jamuar
  */
-class ResourceUtils @Inject constructor(private val context: Context) {
-
-	/*-------------------------------------- Public Methods --------------------------------------*/
+interface ResourceUtils {
 
 	/**
 	 * Provides the String Resources for the given [resourceID].
@@ -31,7 +26,7 @@ class ResourceUtils @Inject constructor(private val context: Context) {
 	 * @param resourceID [Int] as [StringRes] denoting the Resource ID of String.
 	 * @return [String] denoting the value of [resourceID].
 	 */
-	fun getString(@StringRes resourceID: Int) = context.getString(resourceID)
+	fun getString(@StringRes resourceID: Int): String
 
 	/**
 	 * Provides the String Resources for the given [resourceID].
@@ -40,8 +35,7 @@ class ResourceUtils @Inject constructor(private val context: Context) {
 	 * @param formatArguments Multiple Format Arguments of [Any] Data/Class Type.
 	 * @return [String] denoting the value of [resourceID].
 	 */
-	fun getString(@StringRes resourceID: Int, vararg formatArguments: Any?): String =
-		context.getString(resourceID, formatArguments)
+	fun getString(@StringRes resourceID: Int, vararg formatArguments: Any?): String
 
 	/**
 	 * Provides the Integer Resources for the given [resourceID].
@@ -49,7 +43,7 @@ class ResourceUtils @Inject constructor(private val context: Context) {
 	 * @param resourceID [Int] as [IntegerRes] denoting the Resource ID of Integer.
 	 * @return [Int] denoting the value of [resourceID].
 	 */
-	fun getInteger(@IntegerRes resourceID: Int): Int = context.resources.getInteger(resourceID)
+	fun getInteger(@IntegerRes resourceID: Int): Int
 
 	/**
 	 * Provides the Color Resources for the given [resourceID].
@@ -57,12 +51,7 @@ class ResourceUtils @Inject constructor(private val context: Context) {
 	 * @param resourceID [Int] as [ColorRes] denoting the Resource ID of Color.
 	 * @return [Int] denoting the color value of [resourceID].
 	 */
-	fun getColor(@ColorRes resourceID: Int, theme: Resources.Theme? = null) =
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			context.resources.getColor(resourceID, theme)
-		} else {
-			context.resources.getColor(resourceID)
-		}
+	fun getColor(@ColorRes resourceID: Int, theme: Resources.Theme? = null): Int
 
 	/**
 	 * Provides the supplied [fileName] as [InputStream].
@@ -73,6 +62,6 @@ class ResourceUtils @Inject constructor(private val context: Context) {
 	 *   in the 'assets' Resource Folder, or there was some trouble opening the file.
 	 */
 	@Throws(IOException::class)
-	fun getAsset(fileName: String): InputStream = context.resources.assets.open(fileName)
+	fun getAsset(fileName: String): InputStream
 
 }

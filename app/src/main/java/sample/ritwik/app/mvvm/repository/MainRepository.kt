@@ -4,7 +4,7 @@ import com.droidboi.common.persistence.dataStore.DataStorePreference
 
 import com.droidboi.common.repository.BaseRepository
 
-import com.droidboi.common.utility.resources.helper.ResourceUtils
+import com.droidboi.common.utility.resources.ResourceUtils
 
 import com.squareup.moshi.Moshi
 

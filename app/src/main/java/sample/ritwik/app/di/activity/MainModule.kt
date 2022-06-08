@@ -2,7 +2,7 @@ package sample.ritwik.app.di.activity
 
 import com.droidboi.common.persistence.dataStore.DataStorePreference
 
-import com.droidboi.common.utility.resources.helper.ResourceUtils
+import com.droidboi.common.utility.resources.ResourceUtils
 
 import com.squareup.moshi.Moshi
 

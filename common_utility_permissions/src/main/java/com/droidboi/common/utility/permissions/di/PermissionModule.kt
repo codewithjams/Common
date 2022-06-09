@@ -1,6 +1,6 @@
 package com.droidboi.common.utility.permissions.di
 
-import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 
 import com.droidboi.common.utility.permissions.helper.PermissionUtils
 
@@ -18,10 +18,11 @@ class PermissionModule {
 	/**
 	 * Provides the instance of [PermissionUtils].
 	 *
-	 * @param context Instance of Application's [Context].
+	 * @param activity Reference of [AppCompatActivity] on which this utility is dedicated to.
 	 * @return New Instance of [PermissionUtils].
 	 */
 	@Provides
-	fun providesPermissionUtils(context: Context): PermissionUtils = PermissionUtils(context)
+	fun providesPermissionUtils(activity: AppCompatActivity): PermissionUtils =
+		PermissionUtils(activity)
 
 }

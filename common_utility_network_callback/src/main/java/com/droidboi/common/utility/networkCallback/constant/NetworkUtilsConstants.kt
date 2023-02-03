@@ -1,25 +1,15 @@
 package com.droidboi.common.utility.networkCallback.constant
 
 /**
- * Constant [Integer] denoting no Action.
- */
-const val NETWORK_ACTION_NONE = 0
-
-/**
- * Constant [Integer] denoting Action as a change in the Network.
- */
-const val NETWORK_ACTION_CHANGED = 11
-
-/**
- * Constant [Integer] denoting Action as requiring Permission from User for allowing this
- * application to read Phone State.
- */
-const val NETWORK_PERMISSION_REQUIRED = 12
-
-/**
  * Constant [String] denoting the Network Connection Type as WiFi.
  */
 const val NETWORK_WiFi = "WiFi"
+
+/**
+ * Constant [String] denoting the Network Connection Type as Cellular
+ * but unsure about which generation.
+ */
+const val NETWORK_CELLULAR_UNKNOWN = "*G"
 
 /**
  * Constant [String] denoting the Network Connection Type as 2G.
@@ -40,3 +30,18 @@ const val NETWORK_GENERATION_4 = "4G"
  * Constant [String] denoting the Network Connection Type as 5G.
  */
 const val NETWORK_GENERATION_5 = "5G"
+
+/**
+ * Constant [String] denoting the Network Connection Type as Ethernet.
+ */
+const val NETWORK_ETHERNET = "Ethernet"
+
+/**
+ * Constant [String] denoting the Network Connection Type as VPN.
+ */
+const val NETWORK_VPN = "VPN"
+
+/**
+ * Constant [String] denoting the Network Connection Type as Bluetooth.
+ */
+const val NETWORK_BLUETOOTH = "Bluetooth"

@@ -2,17 +2,15 @@ package com.droidboi.common.utility.networkCallback.di
 
 import android.content.Context
 
-import android.net.ConnectivityManager
+import com.droidboi.common.utility.networkCallback.NetworkConnectivityManager
 
-import android.telephony.TelephonyManager
-
-import com.droidboi.common.utility.networkCallback.helper.NetworkUtils
+import com.droidboi.common.utility.networkCallback.impl.NetworkConnectivityManagerImpl
 
 import dagger.Module
 import dagger.Provides
 
 /**
- * [Module] for [NetworkUtils].
+ * [Module] for [NetworkConnectivityManager].
  *
  * @author Ritwik Jamuar
  */
@@ -20,15 +18,13 @@ import dagger.Provides
 class NetworkCallbackModule {
 
 	/**
-	 * Provides the instance of [NetworkUtils].
+	 * Provides the instance of [NetworkConnectivityManager].
 	 *
 	 * @param context Instance of Application's [Context].
-	 * @return New Instance of [NetworkUtils].
+	 * @return New Instance of [NetworkConnectivityManager].
 	 */
 	@Provides
-	fun providesNetworkUtils(context: Context): NetworkUtils = NetworkUtils(
-		context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager,
-		context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-	)
+	fun providesNetworkConnectivityManager(context: Context): NetworkConnectivityManager =
+		NetworkConnectivityManagerImpl(context)
 
 }

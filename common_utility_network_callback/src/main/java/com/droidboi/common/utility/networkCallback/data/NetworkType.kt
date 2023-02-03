@@ -3,85 +3,89 @@ package com.droidboi.common.utility.networkCallback.data
 import com.droidboi.common.utility.networkCallback.constant.*
 
 /**
- * Open Class to Map different types of Network.
+ * Represents the Type of Network onto which Data Connection is established.
  *
  * @author Ritwik Jamuar
  */
-open class NetworkType {
+sealed class NetworkType {
 
 	/**
-	 * Class to identify itself as [NetworkType] of WiFi.
+	 * [NetworkType] denoting WiFi Data Connection.
 	 *
 	 * @author Ritwik Jamuar
 	 */
-	class WiFi: NetworkType() {
+	object WiFi: NetworkType() { override fun toString(): String = NETWORK_WiFi }
 
-		override fun toString(): String = NETWORK_WiFi
+	/**
+	 * [NetworkType] denoting Cellular Data Connection.
+	 *
+	 * @author Ritwik Jamuar
+	 */
+	sealed class Cellular: NetworkType() {
+
+		/**
+		 * [Cellular] Network but uncertain about Generation of Telephony used.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		object Unknown: Cellular() { override fun toString(): String = NETWORK_CELLULAR_UNKNOWN }
+
+		/**
+		 * [Cellular] Network with 2G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		object Generation2: Cellular() { override fun toString(): String = NETWORK_GENERATION_2 }
+
+		/**
+		 * [Cellular] Network with 3G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		object Generation3: Cellular() { override fun toString(): String = NETWORK_GENERATION_3 }
+
+		/**
+		 * [Cellular] Network with 4G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		object Generation4: Cellular() { override fun toString(): String = NETWORK_GENERATION_4 }
+
+		/**
+		 * [Cellular] Network with 5G Connection.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		object Generation5: Cellular() { override fun toString(): String = NETWORK_GENERATION_5 }
 
 	}
 
 	/**
-	 * Class to identify itself as [NetworkType] of Mobile.
+	 * [NetworkType] denoting Ethernet Data Connection.
 	 *
 	 * @author Ritwik Jamuar
 	 */
-	open class Mobile: NetworkType() {
-
-		/**
-		 * Class to identify itself as [Mobile] Network with 2G Connection.
-		 *
-		 * @author Ritwik Jamuar
-		 */
-		class Generation2: Mobile() {
-
-			override fun toString(): String = NETWORK_GENERATION_2
-
-		}
-
-		/**
-		 * Class to identify itself as [Mobile] Network with 3G Connection.
-		 *
-		 * @author Ritwik Jamuar
-		 */
-		class Generation3: Mobile() {
-
-			override fun toString(): String = NETWORK_GENERATION_3
-
-		}
-
-		/**
-		 * Class to identify itself as [Mobile] Network with 4G Connection.
-		 *
-		 * @author Ritwik Jamuar
-		 */
-		class Generation4: Mobile() {
-
-			override fun toString(): String = NETWORK_GENERATION_4
-
-		}
-
-		/**
-		 * Class to identify itself as [Mobile] Network with 5G Connection.
-		 *
-		 * @author Ritwik Jamuar
-		 */
-		class Generation5: Mobile() {
-
-			override fun toString(): String = NETWORK_GENERATION_5
-
-		}
-
-	}
+	object Ethernet: NetworkType() { override fun toString(): String = NETWORK_ETHERNET }
 
 	/**
-	 * Class to identify itself as No [NetworkType].
+	 * [NetworkType] denoting VPN Data Connection.
 	 *
 	 * @author Ritwik Jamuar
 	 */
-	class None: NetworkType() {
+	object VPN: NetworkType() { override fun toString(): String = NETWORK_VPN }
 
-		override fun toString(): String = ""
+	/**
+	 * [NetworkType] denoting Bluetooth Data Connection.
+	 *
+	 * @author Ritwik Jamuar
+	 */
+	object Bluetooth: NetworkType() { override fun toString(): String = NETWORK_BLUETOOTH }
 
-	}
+	/**
+	 * [NetworkType] denoting None or Unknown Data Connection.
+	 *
+	 * @author Ritwik Jamuar
+	 */
+	object None : NetworkType() { override fun toString(): String = "" }
 
 }

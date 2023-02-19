@@ -2,6 +2,8 @@ package com.droidboi.common.utility.networkCallback
 
 import android.Manifest.permission.READ_PHONE_STATE
 
+import android.annotation.SuppressLint
+
 import android.content.Context
 
 import android.content.pm.PackageManager
@@ -231,6 +233,7 @@ interface NetworkConnectivityManager {
 	 * denoting the Cellular Network Type.
 	 * @return Determined [NetworkType.Cellular] denoting the Cellular Network Type based on [type].
 	 */
+	@SuppressLint("ObsoleteSdkInt")
 	private fun getCellularNetworkType(type: Int): NetworkType.Cellular {
 
 		val networkTypeIDEN = if (SDK_INT >= Build.VERSION_CODES.FROYO) {

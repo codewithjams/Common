@@ -142,12 +142,29 @@ interface ActionFragmentUI<ViewModel : ActionViewModel<out ActionModel>> : Actio
 		get() = fragment.viewLifecycleOwner
 
 	override fun onCreate(lifecycleOwner: LifecycleOwner) {
+
 		performArgumentExtraction()
-		super.onCreate(lifecycleOwner)
+
+		// Not calling super.onCreate(lifecycleOwner) because it will call
+		// the method `attachObserver(owner)` which subsequently access the abstract variable
+		// `lifecycleOwner`.
+
+		// Now, for Fragment, we are getting Fragment's View Lifecycle Owner
+		// as the main LifecycleOwner for our ActionUI, and this View's Lifecycle Owner
+		// is not available until the View is created.
+
+		// And, at this stage, accessing View's Lifecycle Owner causes IllegalStateException
+		// with below message:
+		// Caused by: java.lang.IllegalStateException:
+		// Can't access the Fragment View's LifecycleOwner when getView() is null
+		// i.e., before onCreateView() or after onDestroyView()
+
+		// So, now we are refraining to call `super.onCreate(lifecycleOwner)`.
+
 	}
 
 	override fun attachObservers(owner: LifecycleOwner) {
-		viewModel.actionLiveData.observe(lifecycleOwner) { action ->
+		viewModel.actionLiveData.observe(owner) { action ->
 			handleAction(action)
 		}
 	}
@@ -158,8 +175,13 @@ interface ActionFragmentUI<ViewModel : ActionViewModel<out ActionModel>> : Actio
 	 * Handle the workflow when the view of [fragment] is created.
 	 */
 	fun onViewCreated() {
+
+		// At this point, since the view is now created, it's safe to access `lifecycleOwner` now.
+		attachObservers(lifecycleOwner)
+
 		setUpViews()
 		initialize()
+
 	}
 
 	/**

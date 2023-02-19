@@ -1,11 +1,17 @@
 package sample.ritwik.app.ui.activity
 
+import androidx.appcompat.app.AppCompatActivity
+
+import androidx.databinding.DataBindingUtil
+
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 
 import com.droidboi.common.lifecycle.VMFactory
+
+import com.droidboi.common.views.mvvm.activity.BaseMVVMActivity
 
 import com.squareup.picasso.Picasso
 
@@ -17,25 +23,24 @@ import sample.ritwik.app.databinding.ActivityMainBinding
 
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
-import sample.ritwik.app.utility.constant.NAVIGATE_TO_COMMON_FRAGMENT
-
-import com.droidboi.common.views.mvvm.activity.BaseMVVMActivity
+import sample.ritwik.app.mvvm.view.MainView
 
 import javax.inject.Inject
 
 /**
- * [BaseMVVMActivity] for demonstration of 'common' Library.
+ * [BaseMVVMActivity] of [MainView] for demonstration of 'common' Library.
  *
  * @author Ritwik Jamuar
  */
-class MainActivity : BaseMVVMActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseMVVMActivity<MainView>(), MainView {
 
 	/*---------------------------------------- Components ----------------------------------------*/
 
-	/**
-	 * Reference of [VMFactory] of this [BaseMVVMActivity]
-	 * injected from [com.droidboi.common.lifecycle.di.module.ViewModelModule].
-	 */
+	private var _binding: ActivityMainBinding? = null
+
+	private val binding: ActivityMainBinding
+		get() = _binding!!
+
 	@Inject
 	lateinit var vmFactory: VMFactory
 
@@ -52,21 +57,33 @@ class MainActivity : BaseMVVMActivity<MainViewModel, ActivityMainBinding>() {
 		Navigation.findNavController(this, R.id.fragment_container)
 	}
 
-	/*---------------------------------- BaseActivity Callbacks ----------------------------------*/
+	/*------------------------------------ MainView Callbacks ------------------------------------*/
 
-	override val layoutRes: Int
-		get() = R.layout.activity_main
+	override val ui: MainView
+		get() = this
 
-	override fun inject() = AndroidInjection.inject(this)
-
-	/*-------------------------------- BaseMVVMActivity Callbacks --------------------------------*/
+	override val activity: AppCompatActivity
+		get() = this
 
 	override val viewModel: MainViewModel
 		get() = ViewModelProvider(this, vmFactory)[MainViewModel::class.java]
 
-	override fun onAction(action: Int) = when(action) {
-		NAVIGATE_TO_COMMON_FRAGMENT -> navigationController.navigate(R.id.commonFragment)
-		else -> Unit
+	override var uiStarted: Boolean = false
+
+	override fun setUpViews() {
+		_binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+	}
+
+	override fun cleanUpViews() {
+		_binding = null
+	}
+
+	override fun navigateToCommonFragment() {
+		navigationController.navigate(R.id.commonFragment)
+	}
+
+	override fun inject() {
+		AndroidInjection.inject(this)
 	}
 
 }

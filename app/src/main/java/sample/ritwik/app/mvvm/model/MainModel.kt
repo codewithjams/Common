@@ -1,6 +1,6 @@
 package sample.ritwik.app.mvvm.model
 
-import com.droidboi.common.mvvm.model.BaseModel
+import com.droidboi.common.mvvm.model.ActionModel
 
 import sample.ritwik.app.data.ui.LibraryComponent
 
@@ -11,7 +11,7 @@ import javax.inject.Inject
  *
  * @author Ritwik Jamuar
  */
-class MainModel @Inject constructor() : BaseModel {
+class MainModel @Inject constructor() : ActionModel {
 
 	/*------------------------------------- Member Variables -------------------------------------*/
 

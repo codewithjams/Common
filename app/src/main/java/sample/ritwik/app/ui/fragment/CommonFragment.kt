@@ -1,6 +1,14 @@
 package sample.ritwik.app.ui.fragment
 
+import android.os.Bundle
+
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+
+import androidx.databinding.DataBindingUtil
+
+import androidx.fragment.app.Fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -14,51 +22,81 @@ import sample.ritwik.app.R
 
 import sample.ritwik.app.databinding.FragmentCommonBinding
 
+import sample.ritwik.app.mvvm.model.MainModel
+
+import sample.ritwik.app.mvvm.view.CommonView
+
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.ui.adapter.LibraryComponentAdapter
 
-import sample.ritwik.app.utility.constant.ACTION_HIDE_PROGRESS
-import sample.ritwik.app.utility.constant.ACTION_SHOW_PROGRESS
-
 /**
- * [BaseMVVMFragment] to showcase the components used in Common Library.
+ * [Fragment] to showcase the components used in Common Library.
  *
  * @author Ritwik Jamuar
  */
-class CommonFragment : BaseMVVMFragment<MainViewModel, FragmentCommonBinding>() {
+class CommonFragment : BaseMVVMFragment<MainViewModel, CommonView>(), CommonView {
 
-	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
+	/*---------------------------------------- Components ----------------------------------------*/
 
-    override val layoutRes: Int
-        get() = R.layout.fragment_common
+	private var _binding: FragmentCommonBinding? = null
 
-	override fun initializeViews() {
+	private val binding: FragmentCommonBinding
+		get() = _binding!!
+
+	/*------------------------------------ Fragment Callbacks ------------------------------------*/
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		_binding = DataBindingUtil.inflate(inflater, R.layout.fragment_common, container, false)
+		return binding.root
+	}
+
+    /*----------------------------------- CommonView Callbacks -----------------------------------*/
+
+	override val ui: CommonView
+		get() = this
+
+	override val fragment: Fragment
+		get() = this
+
+	override val viewModel: MainViewModel
+		get() = _viewModel!!
+
+	override var uiStarted: Boolean = false
+
+	override fun setUpViews() {
 		binding.listComponents.initialize(
 			LibraryComponentAdapter(),
 			LinearLayoutManager(context)
 		)
+	}
+
+	override fun initialize() {
 		viewModel.fetchLibraryComponents()
 	}
 
-    override fun cleanUp() {
-        binding.listComponents.cleanUp()
-        super.cleanUp()
-    }
-
-    /*-------------------------------- BaseMVVMFragment Callbacks --------------------------------*/
-
-    override fun updateUI() {
-		binding.listComponents.addItems(viewModel.model.libraryComponents, true)
-    }
-
-	override fun onAction(action: Int) = when (action) {
-		ACTION_SHOW_PROGRESS -> showLoading()
-		ACTION_HIDE_PROGRESS -> hideLoading()
-		else -> Unit
+	override fun cleanUpViews() {
+		binding.listComponents.cleanUp()
+		_binding = null
 	}
 
-    /*------------------------------------- Private Methods --------------------------------------*/
+    override fun updateUI(model: MainModel) {
+		binding.listComponents.addItems(model.libraryComponents, true)
+    }
+
+	override fun toggleProgress(show: Boolean) {
+		if (show) {
+			showLoading()
+		} else {
+			hideLoading()
+		}
+	}
+
+	/*------------------------------------- Private Methods --------------------------------------*/
 
     /**
      * Shows the Loading Animation.

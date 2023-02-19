@@ -5,4 +5,4 @@ package com.droidboi.common.mvvm.model
  *
  * @author Ritwik Jamuar
  */
-interface BaseModel
+interface ActionModel

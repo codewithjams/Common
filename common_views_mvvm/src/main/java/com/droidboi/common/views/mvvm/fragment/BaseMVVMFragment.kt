@@ -6,98 +6,145 @@ import android.os.Bundle
 
 import android.view.View
 
-import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 
-import com.droidboi.common.mvvm.model.BaseModel
+import com.droidboi.common.mvvm.model.ActionModel
 
-import com.droidboi.common.mvvm.utility.ACTION_NONE
-import com.droidboi.common.mvvm.utility.ACTION_UPDATE_UI
+import com.droidboi.common.mvvm.viewModel.ActionViewModel
 
-import com.droidboi.common.mvvm.viewModel.BaseMVVMViewModel
-
-import com.droidboi.common.views.mvvm.activity.BaseMVVMActivity
-
-import com.droidboi.common.views.core.fragment.BaseFragment
+import com.droidboi.common.views.mvvm.view.ActionActivityUI
+import com.droidboi.common.views.mvvm.view.ActionFragmentUI
 
 /**
- * Abstract [BaseFragment] designed around MVVM Design Pattern.
+ * Abstract [Fragment] implementing some methods of [UI] to automate many callbacks
+ * in [ActionFragmentUI].
  *
- * @param ViewModel [BaseMVVMViewModel] as the ViewModel of the [BaseMVVMActivity]
- *   that hosts this [BaseFragment].
- * @param Binding Any Class referencing the View/Data Binding class of this [BaseFragment].
+ *
+ * Usage:
+ * ```
+ * data class ExampleModel(): ActionModel {
+ * }
+ *
+ * interface ExampleViewModel: ActionViewModel<ExampleModel> {
+ *     ...
+ *     ...
+ * }
+ *
+ * interface ExampleUI : ActionFragmentUI<ExampleViewModel> {
+ * }
+ *
+ * class ExampleFragment : BaseMVVMFragment<ExampleViewModel, ExampleUI>(), ExampleUI {
+ *
+ *     override val ui: ExampleUI
+ *         get() = this
+ *
+ *     override val fragment: Fragment
+ *         get() = this
+ *
+ *     override val viewModel: ExampleViewModel
+ *         get() = _viewModel
+ *
+ *     override var uiStarted: Boolean = false
+ *
+ *     override fun extractArguments(arguments: Bundle) = Unit
+ *     override fun setUpViews() = Unit
+ *     override fun initialize() = Unit
+ *     override fun cleanUpViews() = Unit
+ *
+ * }
+ * ```
+ *
+ * @param ViewModel Any [ActionViewModel] capable of propagating [Int] as Action Codes.
+ * @param UI Any [ActionFragmentUI] that wraps up the View's methods and fields.
+ * @throws RuntimeException If the Activity of this [BaseMVVMFragment] is not an implementation of
+ * [ActionActivityUI] sharing the same [ViewModel].
  * @author Ritwik Jamuar.
  */
-abstract class BaseMVVMFragment<ViewModel : BaseMVVMViewModel<out BaseModel>, Binding : ViewDataBinding> :
-	BaseFragment<Binding>() {
+abstract class BaseMVVMFragment<
+		ViewModel : ActionViewModel<out ActionModel>,
+		UI : ActionFragmentUI<ViewModel>
+		> : Fragment() {
+
+	/*------------------------------------- Abstract Fields --------------------------------------*/
+
+	/**
+	 * Reference of [UI] in order to automate calls for it.
+	 */
+	protected abstract val ui : UI
 
 	/*---------------------------------------- Components ----------------------------------------*/
 
 	/**
-	 * Nullable Reference of [ViewModel] that is used to manually clear it's instance in the event
-	 * of Fragment's destruction so that Memory Leak can be avoided.
+	 * Mutable reference of [ViewModel] so that the instance of [ViewModel] can be released
+	 * based on appropriate callbacks of [Fragment].
+	 *
+	 *
+	 * NOTE:
+	 *
+	 *
+	 * This must be used by extending [BaseMVVMFragment] as follows:
+	 * ```
+	 * class ExampleFragment : BaseMVVMFragment<ExampleViewModel, ExampleUI>(), ExampleUI {
+	 *
+	 *     ...
+	 *     ...
+	 *
+	 *     override val viewModel: ExampleViewModel
+	 *         get() = _viewModel
+	 *
+	 *     ...
+	 *     ...
+	 *
+	 * }
+	 * ```
 	 */
-	private var _viewModel: ViewModel? = null
+	protected var _viewModel: ViewModel? = null
 
-	/**
-	 * Reference of [ViewModel] as the ViewModel of [BaseMVVMActivity]
-	 * that hosts this [BaseMVVMFragment].
-	 */
-	protected val viewModel: ViewModel
-		get() = _viewModel!!
+	/*------------------------------------ Fragment Callbacks ------------------------------------*/
 
-	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
+	override fun onAttach(context: Context) {
 
-	@Suppress("UNCHECKED_CAST")
-	override fun attachListeners(context: Context) {
-		if (context is BaseMVVMActivity<out BaseMVVMViewModel<out BaseModel>, out ViewDataBinding>) {
-			_viewModel = context.viewModel as ViewModel
-			return
-		}
-		throw RuntimeException("$context must be an extension of ${BaseMVVMActivity::class.java}")
+		super.onAttach(context)
+
+		// At this point, since the context is not an instance of ActionActivityUI,
+		// we would not be able to fetch the shared ViewModel from Activity.
+		// Thus, we are crashing the application here.
+		if (context !is ActionActivityUI<*>)
+			throw RuntimeException("Activity not instance of ActionActivityUI")
+
+		// Get the instance of shared ViewModel from Context as implementation of ActionActivityUI.
+		@Suppress("UNCHECKED_CAST")
+		_viewModel = (context as? ActionActivityUI<ViewModel>)?.viewModel
+			// At this point, type casting the context has failed, so we crash the application
+				// to notify that wrong ViewModel is being assigned.
+			?: throw RuntimeException("Unable to cast to ActionActivityUI with given ViewModel")
+
+		// Add observer of Lifecycle of Fragment as the instance of UI so that
+		// UI can get appropriate callbacks on it's own.
+		lifecycle.addObserver(ui)
+
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		attachObservers()
+		ui.onViewCreated()
+	}
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		ui.onViewDestroyed()
 	}
 
 	override fun onDetach() {
+
 		super.onDetach()
+
 		_viewModel = null
+
+		// Remove observer of Lifecycle of Fragment as the instance of UI so that UI don't receive
+		// any more callbacks that can cause side-effects.
+		lifecycle.removeObserver(ui)
+
 	}
-
-	/*------------------------------------- Protected Methods ------------------------------------*/
-
-	/**
-	 * Attaches [androidx.lifecycle.Observer] of any [androidx.lifecycle.LiveData].
-	 */
-	protected open fun attachObservers() {
-		viewModel.actionLiveData.observe(viewLifecycleOwner) { action ->
-			processAction(action)
-		}
-	}
-
-	/**
-	 * Processes generic actions propagated from the [ViewModel].
-	 *
-	 * @param action [Int] denoting the code of the Action that shall be executed.
-	 */
-	protected open fun processAction(action: Int) = when (action) {
-		ACTION_NONE -> Unit
-		ACTION_UPDATE_UI -> updateUI()
-		else -> onAction(action)
-	}
-
-	/**
-	 * Updates the UI with new data.
-	 */
-	protected open fun updateUI() = Unit
-
-	/**
-	 * Handles anu non-generic [action] propagated from the [ViewModel].
-	 *
-	 * @param action [Int] denoting the code of the Action that shall be executed.
-	 */
-	protected open fun onAction(action: Int) = Unit
 
 }

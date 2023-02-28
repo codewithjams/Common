@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -62,6 +64,9 @@ class CommonFragment : BaseMVVMFragment<MainViewModel, CommonView>(), CommonView
 
 	override val fragment: Fragment
 		get() = this
+
+	override val scope: LifecycleCoroutineScope
+		get() = lifecycleScope
 
 	override val viewModel: MainViewModel
 		get() = _viewModel!!

@@ -1,4 +1,4 @@
-package sample.ritwik.common.component.network
+package sample.ritwik.app.repository.rest
 
 import okhttp3.CacheControl
 import okhttp3.Interceptor
@@ -9,15 +9,16 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
- * [BaseInterceptor] to add Cache to every request so that the application can be Offline Supported.
+ * [Interceptor] to add Cache to every request so that the application can be Offline Supported.
  *
  * @author Ritwik Jamuar
  */
-class CacheInterceptor @Inject constructor() : BaseInterceptor() {
+class CacheInterceptor @Inject constructor() : Interceptor {
 
 	/*-------------------------------- BaseInterceptor Callbacks ---------------------------------*/
 
-	override fun processRequest(chain: Interceptor.Chain): Response {
+	override fun intercept(chain: Interceptor.Chain): Response {
+
 		// Get the request from the Chain.
 		var request = chain.request()
 
@@ -34,6 +35,7 @@ class CacheInterceptor @Inject constructor() : BaseInterceptor() {
 
 		// Proceed with the Request.
 		return chain.proceed(request)
+
 	}
 
 }

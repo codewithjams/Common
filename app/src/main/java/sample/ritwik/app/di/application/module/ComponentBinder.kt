@@ -13,7 +13,7 @@ import dagger.multibindings.IntoMap
 
 import sample.ritwik.app.di.activity.MainModule
 
-import sample.ritwik.app.mvvm.viewModel.MainViewModel
+import sample.ritwik.app.mvvm.vmDelegate.MainViewModelDelegate
 
 import sample.ritwik.app.ui.activity.MainActivity
 
@@ -39,14 +39,14 @@ abstract class ComponentBinder {
 	/*-------------------------------- ViewModel Binding Methods ---------------------------------*/
 
 	/**
-	 * Provides the [ViewModel] from [MainViewModel].
+	 * Provides the [ViewModel] from [MainViewModelDelegate].
 	 *
-	 * @param viewModel Instance of [MainViewModel].
+	 * @param viewModel Instance of [MainViewModelDelegate].
 	 * @return Instance of [ViewModel].
 	 */
 	@Binds
 	@IntoMap
-	@ViewModelKey(MainViewModel::class)
-	abstract fun providesMainViewModel(viewModel: MainViewModel): ViewModel
+	@ViewModelKey(MainViewModelDelegate::class)
+	abstract fun providesMainVMDelegate(viewModel: MainViewModelDelegate): ViewModel
 
 }

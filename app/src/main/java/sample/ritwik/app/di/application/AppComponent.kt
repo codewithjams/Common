@@ -10,7 +10,7 @@ import sample.ritwik.app.application.App
 import sample.ritwik.app.di.application.module.AppModule
 import sample.ritwik.app.di.application.module.ComponentBinder
 
-import sample.ritwik.common.di.AppScope
+import sample.ritwik.app.di.application.scope.AppScope
 
 /**
  * [Component] to facilitate all the dependencies of this application.

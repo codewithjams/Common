@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 
 import com.droidboi.common.views.mvvm.fragment.BaseMVVMFragment
 
@@ -54,6 +56,9 @@ class WelcomeFragment : BaseMVVMFragment<MainViewModel, WelcomeView>(), WelcomeV
 
 	override val fragment: Fragment
 		get() = this
+
+	override val scope: LifecycleCoroutineScope
+		get() = lifecycleScope
 
 	override val viewModel: MainViewModel
 		get() = _viewModel!!

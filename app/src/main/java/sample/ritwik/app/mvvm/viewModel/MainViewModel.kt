@@ -1,25 +1,21 @@
 package sample.ritwik.app.mvvm.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-
-import com.droidboi.common.mvvm.utility.Event
-
 import com.droidboi.common.mvvm.viewModel.ActionViewModel
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 import sample.ritwik.app.data.ui.LibraryComponent
 
 import sample.ritwik.app.mvvm.model.MainModel
 
-import sample.ritwik.app.mvvm.repository.MainRepository
+import sample.ritwik.app.repository.ApplicationRepository
 
-import javax.inject.Inject
-
+/**
+ * Constant [Integer] as an Action Code to
+ */
 const val ACTION_UPDATE_UI = 1001
 
 /**
@@ -38,34 +34,13 @@ const val ACTION_HIDE_PROGRESS = 1003
  */
 const val NAVIGATE_TO_COMMON_FRAGMENT = 1004
 
-/**
- * ViewModel of [sample.ritwik.app.ui.activity.MainActivity].
- *
- * @param repository Instance of [MainRepository].
- * @param model Instance of [MainModel] for [model].
- * @author Ritwik Jamuar
- */
-class MainViewModel @Inject constructor(
-	private val repository: MainRepository,
-	override val model: MainModel
-) : ViewModel(), ActionViewModel<MainModel> {
+interface MainViewModel : ActionViewModel<MainModel> {
 
+	/*------------------------------------- Abstract Fields --------------------------------------*/
 
-	private val _actionLiveData = MutableLiveData<Int>()
-	private val _actionEventLiveData = MutableLiveData<Event<Int>>()
+	val repository: ApplicationRepository
 
-	/*--------------------------------- BaseViewModel Callbacks ----------------------------------*/
-
-	override val actionEventLiveData: LiveData<Event<Int>>
-		get() = _actionEventLiveData
-
-	override val actionLiveData: LiveData<Int>
-		get() = _actionLiveData
-
-	override fun notifyAction(action: Int) {
-		_actionEventLiveData.value = Event(action)
-		_actionLiveData.value = action
-	}
+	/*-------------------------------- ActionViewModel Callbacks ---------------------------------*/
 
 	override fun onUIStarted() = Unit
 
@@ -122,15 +97,19 @@ class MainViewModel @Inject constructor(
 	}
 
 	private fun populate() {
-		viewModelScope.launch {
+		scope.launch {
 			showProgress() // Show the Progress.
 
 			delay(5000) // Simulate REST API Call by delaying for 5 seconds.
 
 			val list: ArrayList<LibraryComponent> = ArrayList()
-			repository.provideListOfLibraryComponents().collect { components ->
-				list.addAll(components)
-			}
+
+			repository
+				.provideListOfLibraryComponents()
+				.flowOn(Dispatchers.IO)
+				.collect { components ->
+					list.addAll(components)
+				}
 
 			hideProgress() // Hide the Progress.
 

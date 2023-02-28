@@ -1,4 +1,4 @@
-package sample.ritwik.common.di
+package sample.ritwik.app.di.application.scope
 
 import javax.inject.Qualifier
 

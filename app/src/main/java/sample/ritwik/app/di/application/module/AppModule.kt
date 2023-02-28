@@ -9,13 +9,7 @@ import dagger.Provides
 
 import sample.ritwik.app.application.App
 
-import sample.ritwik.common.di.AppScope
-
-import sample.ritwik.common.di.module.CommonModule
-
-import sample.ritwik.common.utility.constant.BASE_URL
-import sample.ritwik.common.utility.constant.CACHE_DIRECTORY_NAME
-import sample.ritwik.common.utility.constant.DATA_STORE_FILE_NAME
+import sample.ritwik.app.di.application.scope.AppScope
 
 import javax.inject.Named
 
@@ -26,8 +20,9 @@ import javax.inject.Named
  */
 @Module(
 	includes = [
-		CommonModule::class,
-		RESTInterfaceModule::class
+		RepositoryModule::class,
+		PicassoModule::class,
+		UtilityModule::class
 	]
 )
 class AppModule {
@@ -52,27 +47,57 @@ class AppModule {
 	fun providesApplicationContext(app: App): Context = app.applicationContext
 
 	/**
-	 * Provides the [String] as the name of Cache Directory.
+	 * Provides the [String] as the name of Cache Directory for storing cache of REST API Calls.
 	 *
 	 * @return [String] denoting the name of Cache Directory.
 	 */
-	@AppScope
 	@Provides
-	@Named(CACHE_DIRECTORY_NAME)
-	fun providesCacheDirectoryName(): String = "cdjkcn"
+	@AppScope
+	@Named(CACHE_DIRECTORY_NAME_REST)
+	fun providesCacheDirectoryNameForREST(): String = "cdjkcn"
+
+	/**
+	 * Provides the [Long] as the size of the Cache File for storing cache of REST API Calls.
+	 *
+	 * @return [Long] as the size of Cache File.
+	 */
+	@Provides
+	@AppScope
+	@Named(CACHE_FILE_SIZE_REST)
+	fun providesCacheFileSizeForREST(): Long = 10 * 1024 * 1024
+
+	/**
+	 * Provides the [String] as the name of Cache Directory for storing cache of Images.
+	 *
+	 * @return [String] denoting the name of Cache Directory.
+	 */
+	@Provides
+	@AppScope
+	@Named(CACHE_DIRECTORY_NAME_IMAGE)
+	fun providesCacheDirectoryNameForImage(): String = "djbvce"
+
+	/**
+	 * Provides the [Long] as the size of the Cache File for storing cache of Images.
+	 *
+	 * @return [Long] as the size of Cache File.
+	 */
+	@Provides
+	@AppScope
+	@Named(CACHE_FILE_SIZE_IMAGE)
+	fun providesCacheFileSizeForImage(): Long = 100 * 1024 * 1024
 
 	/**
 	 * Provides the [String] as the Base URL for [retrofit2.Retrofit].
 	 *
 	 *
 	 * Make sure to provide a URL with prefix 'http://' or 'https://',
-	 * otherwise [sample.ritwik.common.di.module.RetrofitModule] would encounter
+	 * otherwise [sample.ritwik.app.di.application.module.RESTModule] would encounter
 	 * [IllegalArgumentException].
 	 *
 	 * @return [String] denoting the Base URL.
 	 */
-	@AppScope
 	@Provides
+	@AppScope
 	@Named(BASE_URL)
 	fun providesBaseURL(): String = "https://www.google.com"
 
@@ -81,8 +106,8 @@ class AppModule {
 	 *
 	 * @return [String] denoting the File Name of Data Store.
 	 */
-	@AppScope
 	@Provides
+	@AppScope
 	@Named(DATA_STORE_FILE_NAME)
 	fun providesDataStoreFileName(): String = "dkjns"
 

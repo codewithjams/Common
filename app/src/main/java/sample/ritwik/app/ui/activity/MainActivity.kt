@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 
 import androidx.databinding.DataBindingUtil
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -21,9 +23,11 @@ import sample.ritwik.app.R
 
 import sample.ritwik.app.databinding.ActivityMainBinding
 
+import sample.ritwik.app.mvvm.view.MainView
+
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
-import sample.ritwik.app.mvvm.view.MainView
+import sample.ritwik.app.mvvm.vmDelegate.MainViewModelDelegate
 
 import javax.inject.Inject
 
@@ -45,7 +49,7 @@ class MainActivity : BaseMVVMActivity<MainView>(), MainView {
 	lateinit var vmFactory: VMFactory
 
 	/**
-	 * Reference of [Picasso] injected from [sample.ritwik.common.di.module.PicassoModule].
+	 * Reference of [Picasso] to download and show Images from Internet.
 	 */
 	@Inject
 	lateinit var picassoLibrary: Picasso
@@ -65,8 +69,11 @@ class MainActivity : BaseMVVMActivity<MainView>(), MainView {
 	override val activity: AppCompatActivity
 		get() = this
 
+	override val scope: LifecycleCoroutineScope
+		get() = lifecycleScope
+
 	override val viewModel: MainViewModel
-		get() = ViewModelProvider(this, vmFactory)[MainViewModel::class.java]
+		get() = ViewModelProvider(this, vmFactory)[MainViewModelDelegate::class.java]
 
 	override var uiStarted: Boolean = false
 

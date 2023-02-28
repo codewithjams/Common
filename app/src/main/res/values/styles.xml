@@ -1,2 +1,19 @@
 <resources>
+
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="colorControlNormal">@android:color/white</item>
+		<item name="colorControlActivated">@color/colorPrimary</item>
+		<item name="colorControlHighlight">@color/colorPrimary</item>
+		<item name="android:textColorPrimaryInverse">@color/color_text</item>
+		<item name="android:homeAsUpIndicator">@drawable/ic_baseline_chevron_left_24</item>
+		<item name="homeAsUpIndicator">@drawable/ic_baseline_chevron_left_24</item>
+		<item name="actionMenuTextColor">@color/color_text</item>
+		<item name="android:textColorPrimary">@color/color_text</item>
+		<item name="android:windowBackground">@color/color_background</item>
+		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
+	</style>
+
 </resources>

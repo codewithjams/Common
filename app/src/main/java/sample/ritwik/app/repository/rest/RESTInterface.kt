@@ -1,4 +1,4 @@
-package sample.ritwik.app.component.network
+package sample.ritwik.app.repository.rest
 
 /**
  * Retrofit's Interface to map out different REST End-Points.

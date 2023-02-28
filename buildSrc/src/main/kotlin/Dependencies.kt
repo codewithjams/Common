@@ -25,6 +25,12 @@ object Dependencies {
 			"${prefix}x:kotlinx-coroutines-android:${Versions.Kotlin.coRoutines}"
 
 		/**
+		 * Provides core components of Co-Routines without any dependency on Android.
+		 */
+		const val coRoutinesCore =
+			"${prefix}x:kotlinx-coroutines-core:${Versions.Kotlin.coRoutines}"
+
+		/**
 		 * Gradle Plugin for Kotlin.
 		 */
 		const val gradlePlugin = "$prefix:kotlin-gradle-plugin:${Versions.Kotlin.standardLibrary}"
@@ -189,6 +195,12 @@ object Dependencies {
 			 */
 			const val standardLibrary =
 				"$prefix:datastore-preferences:${Versions.JetPack.DataStore.standardLibrary}"
+
+			/**
+			 * Core Library without Android dependency of [DataStore].
+			 */
+			const val core =
+				"$prefix:datastore-preferences-core:${Versions.JetPack.DataStore.standardLibrary}"
 
 		}
 

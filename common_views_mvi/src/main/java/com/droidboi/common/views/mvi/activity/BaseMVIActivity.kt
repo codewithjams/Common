@@ -2,67 +2,106 @@ package com.droidboi.common.views.mvi.activity
 
 import android.os.Bundle
 
-import androidx.databinding.ViewDataBinding
-
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatActivity
 
 import com.droidboi.common.mvi.Action
 import com.droidboi.common.mvi.State
 
-import com.droidboi.common.mvi.viewModel.BaseMVIViewModel
+import com.droidboi.common.mvi.viewModel.MVIViewModel
 
-import com.droidboi.common.views.core.activity.BaseActivity
-
-import kotlinx.coroutines.flow.collect
+import com.droidboi.common.views.mvi.view.StateActivityView
 
 /**
- * Abstract [BaseActivity] designed around MVI Design Pattern.
+ * Abstract [AppCompatActivity] designed around MVI Design Pattern to complement
+ * any given [StateActivityView].
  *
- * @param S A [State] of the view on the screen.
- * @param ViewModel [BaseMVIViewModel] as the ViewModel of this [BaseActivity].
- * @param Binding Any Class representing the View/Data Binding Class of this [BaseActivity].
+ *
+ * Usage:
+ * ```
+ * data class ExampleState(...) : State
+ *
+ * sealed class ExampleAction : Action {
+ *    ...
+ * }
+ *
+ * class ExampleMiddleWare(..) : MiddleWare<ExampleState, ExampleAction> {
+ *    ...
+ * }
+ *
+ * class ExampleReducer(...) : Reducer<ExampleState, ExampleAction> {
+ *    ...
+ * }
+ *
+ * interface ExampleViewModel : MVIViewModel<ExampleState, ExampleAction> {
+ *    ...
+ * }
+ *
+ * class ExampleVMDelegate : ViewModel(), ExampleViewModel {
+ *
+ *     ...
+ *
+ *     override val store: Store<ExampleState, ExampleAction>
+ *         get() = // Provide the instance of Store
+ *
+ *     override val scope: CoroutineScope
+ *         get() = viewModelScope
+ *
+ *     ...
+ *
+ * }
+ *
+ * interface ExampleView : StateActivityView<ExampleState, ExampleViewModel> {
+ *    ...
+ * }
+ *
+ * class ExampleActivity : BaseMVIActivity<ExampleView>(), ExampleView {
+ *
+ *     ...
+ *
+ *     override val ui: ExampleView
+ *         get() = this
+ *
+ *     override val viewModel: ExampleViewModel
+ *         get() = // Provide the instance of ViewModel through Delegate
+ *
+ *     override val activity: AppCompatActivity
+ *         get() = this
+ *
+ *     ...
+ *
+ * }
+ * ```
+ *
+ * @param UI Any [StateActivityView] acting as the UI abstraction of this [AppCompatActivity].
  * @author Ritwik Jamuar
- * @see BaseActivity
+ * @see StateActivityView
  */
-abstract class BaseMVIActivity<S : State, ViewModel : BaseMVIViewModel<S, out Action>, Binding : ViewDataBinding> :
-	BaseActivity<Binding>() {
+abstract class BaseMVIActivity<
+		UI : StateActivityView<out State, out MVIViewModel<out State, out Action>>
+		> : AppCompatActivity() {
 
 	/*---------------------------------------- Components ----------------------------------------*/
 
 	/**
-	 * Reference of [ViewModel] to notify any event from here to it as well as
-	 * observing any changes.
+	 * Reference of [UI] in order to automate calls for it.
 	 */
-	abstract val viewModel: ViewModel
+	abstract val ui: UI
 
 	/*------------------------------------ Activity Callbacks ------------------------------------*/
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		collectViewStates()
+		ui.onActivityCreated()
 	}
 
-	/*-------------------------------------- Private Methods -------------------------------------*/
-
-	/**
-	 * Starts collecting the [State]s propagated by [ViewModel].
-	 */
-	private fun collectViewStates() {
-		lifecycleScope.launchWhenResumed {
-			viewModel.viewState.collect { state ->
-				processViewState(state)
-			}
-		}
+	override fun onStart() {
+		super.onStart()
+		ui.onActivityStarted()
 	}
 
-	/*------------------------------------- Protected Methods ------------------------------------*/
-
-	/**
-	 * Processes the given [state] propagated from [ViewModel] to handle this state accordingly
-	 * in the UI.
-	 *
-	 * @param state [S] as the [State] that has to be processed.
-	 */
-	protected open fun processViewState(state: S): Unit = Unit
+	override fun onDestroy() {
+		super.onDestroy()
+		ui.onActivityDestroyed()
+	}
 
 }

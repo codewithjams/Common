@@ -4,84 +4,128 @@ import android.content.Context
 
 import android.os.Bundle
 
-import androidx.databinding.ViewDataBinding
+import android.view.View
 
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
 
 import com.droidboi.common.mvi.Action
 import com.droidboi.common.mvi.State
 
-import com.droidboi.common.mvi.viewModel.BaseMVIViewModel
-
-import com.droidboi.common.views.core.fragment.BaseFragment
+import com.droidboi.common.mvi.viewModel.MVIViewModel
 
 import com.droidboi.common.views.mvi.activity.BaseMVIActivity
 
-import kotlinx.coroutines.flow.collect
+import com.droidboi.common.views.mvi.view.StateFragmentView
 
 /**
- * Abstract [BaseFragment] designed around MVI Design Pattern.
+ * Abstract [Fragment] designed around MVI Design Pattern.
+ *
+ *
+ * Usage:
+ * ```
+ * data class ExampleState(...) : State
+ *
+ * sealed class ExampleAction : Action {
+ *    ...
+ * }
+ *
+ * class ExampleMiddleWare(..) : MiddleWare<ExampleState, ExampleAction> {
+ *    ...
+ * }
+ *
+ * class ExampleReducer(...) : Reducer<ExampleState, ExampleAction> {
+ *    ...
+ * }
+ *
+ * interface ExampleViewModel : MVIViewModel<ExampleState, ExampleAction> {
+ *    ...
+ * }
+ *
+ * class ExampleVMDelegate : ViewModel(), ExampleViewModel {
+ *
+ *     ...
+ *
+ *     override val store: Store<ExampleState, ExampleAction>
+ *         get() = // Provide the instance of Store
+ *
+ *     override val scope: CoroutineScope
+ *         get() = viewModelScope
+ *
+ *     ...
+ *
+ * }
+ *
+ * interface ExampleView : StateFragmentView<ExampleState, ExampleViewModel> {
+ *     ...
+ * }
+ *
+ * class ExampleFragment :
+ *     BaseMVIFragment<ExampleState, ExampleViewModel, ExampleView>(), ExampleFragmentView {
+ *
+ *     ...
+ *
+ *     override val ui: ExampleFragmentView
+ *         get() = this
+ *
+ *     override var mutableViewModel: ExampleViewModel? = null
+ *
+ *     override val fragment: Fragment
+ *         get() = this
+ *
+ *     ...
+ *
+ * }
+ * ```
  *
  * @param S A [State] of the view on the screen.
- * @param ViewModel [BaseMVIViewModel] as the ViewModel of the [BaseMVIActivity]
- *   that hosts this [BaseFragment].
- * @param Binding Any class representing the View/Data Binding Class of this [BaseFragment].
+ * @param ViewModel [MVIViewModel] as the ViewModel of the [BaseMVIActivity]
+ *   that hosts this [Fragment].
+ * @param UI Any [StateFragmentView] that wraps up the View's methods and fields.
  * @author Ritwik Jamuar
  */
-abstract class BaseMVIFragment<S : State, ViewModel : BaseMVIViewModel<S, out Action>, Binding : ViewDataBinding> :
-	BaseFragment<Binding>() {
+abstract class BaseMVIFragment<
+		S : State,
+		ViewModel : MVIViewModel<S, out Action>,
+		UI : StateFragmentView<S, ViewModel>
+		> : Fragment() {
 
 	/*---------------------------------------- Components ----------------------------------------*/
 
 	/**
-	 * Nullable Reference of [ViewModel] that is used to manually clear it's instance in the event
-	 * of Fragment's destruction so that Memory Leak can be avoided.
+	 * Reference of [UI] in order to automate calls for it.
 	 */
-	private var _viewModel: ViewModel? = null
-
-	/**
-	 * Reference of [ViewModel] to access the ViewModel of the [BaseMVIActivity]
-	 * that hosts this [BaseFragment].
-	 */
-	private val viewModel: ViewModel
-		get() = _viewModel!!
+	abstract val ui : UI
 
 	/*---------------------------------- BaseFragment Callbacks ----------------------------------*/
 
-	@Suppress("UNCHECKED_CAST")
-	override fun attachListeners(context: Context) {
-		super.attachListeners(context)
-		if (context is BaseMVIActivity<out State, out BaseMVIViewModel<out State, out Action>, out ViewDataBinding>) {
-			_viewModel = context.viewModel as ViewModel
-			return
-		}
-		throw RuntimeException("$context must be an extension of ${BaseMVIActivity::class.java}")
+	override fun onAttach(context: Context) {
+		super.onAttach(context)
+		ui.onFragmentAttached(context)
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		collectViewStates()
+		ui.onFragmentCreated()
 	}
 
-	/*-------------------------------------- Private Methods -------------------------------------*/
-
-	/**
-	 * Starts collecting the [State]s propagated by [ViewModel].
-	 */
-	private fun collectViewStates() {
-		lifecycleScope.launchWhenResumed {
-			viewModel.viewState.collect { state ->
-				processViewState(state)
-			}
-		}
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		ui.onFragmentViewCreated()
 	}
 
-	/*------------------------------------- Protected Methods ------------------------------------*/
+	override fun onDestroyView() {
+		super.onDestroyView()
+		ui.onFragmentViewDestroyed()
+	}
 
-	/**
-	 * Processes the given [state] propagated from [ViewModel] to handle this state accordingly
-	 * in the UI.
-	 */
-	protected open fun processViewState(state: S): Unit = Unit
+	override fun onDestroy() {
+		super.onDestroy()
+		ui.onFragmentDestroyed()
+	}
+
+	override fun onDetach() {
+		super.onDetach()
+		ui.onFragmentDetached()
+	}
 
 }

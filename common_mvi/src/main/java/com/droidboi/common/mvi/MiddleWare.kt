@@ -16,7 +16,7 @@ package com.droidboi.common.mvi
 interface MiddleWare<S : State, A : Action> {
 
 	/**
-	 * Process thhe given [action] and [currentState] and determines if we need to perform
+	 * Process the given [action] and [currentState] and determines if we need to perform
 	 * any side-effects, or trigger a new action.
 	 *
 	 * @param action [Action] which is triggered from the UI by the User.

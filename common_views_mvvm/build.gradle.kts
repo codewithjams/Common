@@ -3,6 +3,10 @@ plugins {
 	id(Plugins.kotlinAnnotationProcessor)
 }
 
+android {
+	namespace = "com.droidboi.common.views.mvvm"
+}
+
 dependencies {
 
 	api(project(":common_mvvm"))

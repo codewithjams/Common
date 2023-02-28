@@ -3,6 +3,10 @@ plugins {
 	id(Plugins.kotlinAnnotationProcessor)
 }
 
+android {
+	namespace = "com.droidboi.common.utility.networkCallback"
+}
+
 dependencies {
 
 	api(Dependencies.Kotlin.coRoutines)

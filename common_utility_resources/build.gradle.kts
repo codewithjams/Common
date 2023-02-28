@@ -3,6 +3,10 @@ plugins {
 	id(Plugins.kotlinAnnotationProcessor)
 }
 
+android {
+	namespace = "com.droidboi.common.utility.resources"
+}
+
 dependencies {
 
 	implementation(Dependencies.JetPack.Annotation.standardLibrary)

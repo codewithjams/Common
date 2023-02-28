@@ -2,6 +2,10 @@ plugins {
 	id(Plugins.commonLibraryModulePlugin)
 }
 
+android {
+	namespace = "com.droidboi.common.persistence.sharedPreferences"
+}
+
 dependencies {
 
 	api(project(":common_persistence"))

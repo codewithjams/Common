@@ -2,6 +2,10 @@ plugins {
 	id(Plugins.commonLibraryModulePlugin)
 }
 
+android {
+	namespace = "com.droidboi.common.views.mvi"
+}
+
 dependencies {
 
 	api(project(":common_mvi"))

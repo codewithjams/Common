@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+	namespace = "com.droidboi.common.views.dialogs"
 	buildFeatures {
 		dataBinding = true
 	}

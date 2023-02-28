@@ -3,6 +3,10 @@ plugins {
 	id(Plugins.kotlinAnnotationProcessor)
 }
 
+android {
+	namespace = "com.droidboi.common.utility.views"
+}
+
 dependencies {
 
 	api(Dependencies.JetPack.Core.standardLibraryKTX)

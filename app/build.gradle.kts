@@ -5,9 +5,9 @@ plugins {
 
 android {
 
-	defaultConfig {
-		applicationId = "sample.ritwik.app"
+	namespace = "sample.ritwik.app"
 
+	defaultConfig {
 		versionCode = 1
 		versionName = "1.0"
 	}

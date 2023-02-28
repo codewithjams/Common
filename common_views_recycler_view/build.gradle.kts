@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+	namespace = "com.droidboi.common.views.recyclerView"
 	buildFeatures {
 		dataBinding = true
 	}

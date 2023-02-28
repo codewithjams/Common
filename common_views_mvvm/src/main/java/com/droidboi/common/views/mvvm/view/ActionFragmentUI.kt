@@ -4,30 +4,19 @@ import android.os.Bundle
 
 import androidx.fragment.app.Fragment
 
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleCoroutineScope
 
 import com.droidboi.common.mvvm.model.ActionModel
 
-import com.droidboi.common.mvvm.view.ActionUI
+import com.droidboi.common.mvvm.view.ActionView
 
 import com.droidboi.common.mvvm.viewModel.ActionViewModel
 
 /**
- * [ActionUI] designed for [Fragment].
- *
- *
- * NOTE:
- *
- *
- * This [ActionUI] is to be used in conjunction with
- * [com.droidboi.common.views.mvvm.fragment.BaseMVVMFragment] as this abstract class performs
- * following internal operations:
- * 1. Extracting [ViewModel] from [ActionActivityUI].
- * 2. Managing Callbacks for when View is created or destroyed.
+ * [ActionView] designed for [Fragment].
  *
  *
  * Usage:
- *
  * ```
  * data class ExampleModel(): ActionModel {
  * }
@@ -99,18 +88,24 @@ import com.droidboi.common.mvvm.viewModel.ActionViewModel
  * ```
  *
  * @param ViewModel Any [ActionViewModel] capable of propagating [Int] as Action Codes.
- * @see ActionUI
+ * @see ActionView
  * @see com.droidboi.common.views.mvvm.fragment.BaseMVVMFragment
  * @author Ritwik Jamuar
  */
-interface ActionFragmentUI<ViewModel : ActionViewModel<out ActionModel>> : ActionUI<ViewModel> {
+interface ActionFragmentUI<ViewModel : ActionViewModel<out ActionModel>> : ActionView<ViewModel> {
 
 	/*------------------------------------- Abstract Fields --------------------------------------*/
 
 	/**
-	 * Reference of [Fragment] on which this [ActionUI] is implemented.
+	 * Reference of [Fragment] on which this [ActionView] is implemented.
 	 */
 	val fragment: Fragment
+
+	/**
+	 * [LifecycleCoroutineScope] to launch some task, whose lifecycle is attached to
+	 * that of an [androidx.fragment.app.Fragment].
+	 */
+	val scope: LifecycleCoroutineScope
 
 	/*------------------------------------- Abstract Methods -------------------------------------*/
 
@@ -138,38 +133,11 @@ interface ActionFragmentUI<ViewModel : ActionViewModel<out ActionModel>> : Actio
 
 	/*------------------------------------ ActionUI Callbacks ------------------------------------*/
 
-	override val lifecycleOwner: LifecycleOwner
-		get() = fragment.viewLifecycleOwner
-
-	override fun onCreate(lifecycleOwner: LifecycleOwner) {
-
-		performArgumentExtraction()
-
-		// Not calling super.onCreate(lifecycleOwner) because it will call
-		// the method `attachObserver(owner)` which subsequently access the abstract variable
-		// `lifecycleOwner`.
-
-		// Now, for Fragment, we are getting Fragment's View Lifecycle Owner
-		// as the main LifecycleOwner for our ActionUI, and this View's Lifecycle Owner
-		// is not available until the View is created.
-
-		// And, at this stage, accessing View's Lifecycle Owner causes IllegalStateException
-		// with below message:
-		// Caused by: java.lang.IllegalStateException:
-		// Can't access the Fragment View's LifecycleOwner when getView() is null
-		// i.e., before onCreateView() or after onDestroyView()
-
-		// So, now we are refraining to call `super.onCreate(lifecycleOwner)`.
-
-	}
-
-	override fun attachObservers(owner: LifecycleOwner) {
-		viewModel.actionLiveData.observe(owner) { action ->
-			handleAction(action)
-		}
-	}
-
 	/*-------------------------------------- Public Methods --------------------------------------*/
+
+	fun onFragmentCreated() {
+		performArgumentExtraction()
+	}
 
 	/**
 	 * Handle the workflow when the view of [fragment] is created.
@@ -177,7 +145,7 @@ interface ActionFragmentUI<ViewModel : ActionViewModel<out ActionModel>> : Actio
 	fun onViewCreated() {
 
 		// At this point, since the view is now created, it's safe to access `lifecycleOwner` now.
-		attachObservers(lifecycleOwner)
+		collectActionsFromVM()
 
 		setUpViews()
 		initialize()
@@ -199,6 +167,16 @@ interface ActionFragmentUI<ViewModel : ActionViewModel<out ActionModel>> : Actio
 	private fun performArgumentExtraction() {
 		fragment.arguments?.let { arguments ->
 			extractArguments(arguments)
+		}
+	}
+
+	/**
+	 * Collects the [com.droidboi.common.mvvm.utility.Event] emitted from [ViewModel] as an some
+	 * action to be performed in this [ActionView].
+	 */
+	private fun collectActionsFromVM() {
+		scope.launchWhenResumed {
+			collectActions()
 		}
 	}
 

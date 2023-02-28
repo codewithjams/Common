@@ -103,26 +103,13 @@ abstract class BaseMVVMFragment<
 	/*------------------------------------ Fragment Callbacks ------------------------------------*/
 
 	override fun onAttach(context: Context) {
-
 		super.onAttach(context)
+		extractViewModelFromView(context)
+	}
 
-		// At this point, since the context is not an instance of ActionActivityUI,
-		// we would not be able to fetch the shared ViewModel from Activity.
-		// Thus, we are crashing the application here.
-		if (context !is ActionActivityUI<*>)
-			throw RuntimeException("Activity not instance of ActionActivityUI")
-
-		// Get the instance of shared ViewModel from Context as implementation of ActionActivityUI.
-		@Suppress("UNCHECKED_CAST")
-		_viewModel = (context as? ActionActivityUI<ViewModel>)?.viewModel
-			// At this point, type casting the context has failed, so we crash the application
-				// to notify that wrong ViewModel is being assigned.
-			?: throw RuntimeException("Unable to cast to ActionActivityUI with given ViewModel")
-
-		// Add observer of Lifecycle of Fragment as the instance of UI so that
-		// UI can get appropriate callbacks on it's own.
-		lifecycle.addObserver(ui)
-
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		ui.onFragmentCreated()
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -141,10 +128,30 @@ abstract class BaseMVVMFragment<
 
 		_viewModel = null
 
-		// Remove observer of Lifecycle of Fragment as the instance of UI so that UI don't receive
-		// any more callbacks that can cause side-effects.
-		lifecycle.removeObserver(ui)
+	}
 
+	/*-------------------------------------- Private Methods -------------------------------------*/
+
+	private fun extractViewModelFromView(context: Context) {
+
+		// At this point, since the context is not an instance of ActionActivityUI,
+		// we would not be able to fetch the shared ViewModel from Activity.
+		// Thus, we are crashing the application here.
+		if (context !is ActionActivityUI<*>)
+			throw RuntimeException("Activity not instance of ActionActivityUI")
+
+		// Get the instance of shared ViewModel from Context as implementation of ActionActivityUI.
+		@Suppress("UNCHECKED_CAST")
+		_viewModel = (context as? ActionActivityUI<ViewModel>)?.viewModel
+
+				// At this point, type casting the context has failed, so we crash the application
+				// to notify that wrong ViewModel is being assigned.
+			?: throw RuntimeException("Unable to cast to ActionActivityUI with given ViewModel")
+
+	}
+
+	private fun cleanUpViewModelFromView() {
+		_viewModel = null
 	}
 
 }

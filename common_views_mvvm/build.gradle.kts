@@ -3,19 +3,12 @@ plugins {
 	id(Plugins.kotlinAnnotationProcessor)
 }
 
-android {
-	buildFeatures {
-		dataBinding = true
-	}
-}
-
 dependencies {
 
-	api(project(":common_views_core"))
 	api(project(":common_mvvm"))
 
 	implementation(Dependencies.JetPack.AppCompat.standardLibrary)
-	implementation(Dependencies.JetPack.Core.standardLibraryKTX)
+	implementation(Dependencies.JetPack.Lifecycle.runTime)
 
 	kapt(Dependencies.JetPack.Lifecycle.compiler)
 

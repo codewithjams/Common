@@ -8,12 +8,10 @@ import com.droidboi.common.mvvm.model.ActionModel
 
 import com.droidboi.common.mvvm.viewModel.ActionViewModel
 
-import com.droidboi.common.views.core.activity.BaseActivity
-
 import com.droidboi.common.views.mvvm.view.ActionActivityUI
 
 /**
- * Abstract [BaseActivity] designed around MVVM Design Pattern.
+ * Abstract [AppCompatActivity] designed around MVVM Design Pattern.
  *
  *
  * Usage:
@@ -51,7 +49,7 @@ import com.droidboi.common.views.mvvm.view.ActionActivityUI
  * ```
  *
  * @author Ritwik Jamuar
- * @see BaseActivity
+ * @see ActionActivityUI
  */
 abstract class BaseMVVMActivity<UI : ActionActivityUI<out ActionViewModel<out ActionModel>>> :
 	AppCompatActivity() {
@@ -66,23 +64,18 @@ abstract class BaseMVVMActivity<UI : ActionActivityUI<out ActionViewModel<out Ac
 	/*------------------------------------ Activity Callbacks ------------------------------------*/
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-
-		// Add observer of Lifecycle of Activity as the instance of UI so that
-		// UI can get appropriate callbacks on it's own.
-		lifecycle.addObserver(ui)
-
 		super.onCreate(savedInstanceState)
+		ui.onActivityCreated()
+	}
 
+	override fun onStart() {
+		super.onStart()
+		ui.onUIStarted()
 	}
 
 	override fun onDestroy() {
-
 		super.onDestroy()
-
-		// Remove observer of Lifecycle of Fragment as the instance of UI so that UI don't receive
-		// any more callbacks that can cause side-effects.
-		lifecycle.removeObserver(ui)
-
+		ui.onActivityDestroyed()
 	}
 
 }

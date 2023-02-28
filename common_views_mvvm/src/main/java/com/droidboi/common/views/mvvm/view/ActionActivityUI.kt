@@ -4,18 +4,16 @@ import android.content.Intent
 
 import androidx.appcompat.app.AppCompatActivity
 
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleCoroutineScope
 
 import com.droidboi.common.mvvm.model.ActionModel
 
-import com.droidboi.common.mvvm.utility.observeEvent
-
-import com.droidboi.common.mvvm.view.ActionUI
+import com.droidboi.common.mvvm.view.ActionView
 
 import com.droidboi.common.mvvm.viewModel.ActionViewModel
 
 /**
- * [ActionUI] designed for [AppCompatActivity].
+ * [ActionView] designed for [AppCompatActivity].
  *
  * Usage:
  *
@@ -70,18 +68,24 @@ import com.droidboi.common.mvvm.viewModel.ActionViewModel
  * ```
  *
  * @param ViewModel Any [ActionViewModel] capable of propagating [Int] as Action Codes.
- * @see ActionUI
+ * @see ActionView
  * @see com.droidboi.common.views.mvvm.activity.BaseMVVMActivity
  * @author Ritwik Jamuar
  */
-interface ActionActivityUI<ViewModel : ActionViewModel<out ActionModel>> : ActionUI<ViewModel> {
+interface ActionActivityUI<ViewModel : ActionViewModel<out ActionModel>> : ActionView<ViewModel> {
 
 	/*------------------------------------- Abstract Fields --------------------------------------*/
 
 	/**
-	 * Reference of [AppCompatActivity] on which this [ActionUI] is implemented.
+	 * Reference of [AppCompatActivity] on which this [ActionView] is implemented.
 	 */
 	val activity: AppCompatActivity
+
+	/**
+	 * [LifecycleCoroutineScope] to launch some task, whose lifecycle is attached to
+	 * that of an [android.app.Activity].
+	 */
+	val scope: LifecycleCoroutineScope
 
 	/*------------------------------------- Abstract Methods -------------------------------------*/
 
@@ -109,25 +113,21 @@ interface ActionActivityUI<ViewModel : ActionViewModel<out ActionModel>> : Actio
 
 	/*------------------------------------ ActionUI Callbacks ------------------------------------*/
 
-	override val lifecycleOwner: LifecycleOwner
-		get() = activity
+	/*-------------------------------------- Public Methods --------------------------------------*/
 
-	override fun onCreate(lifecycleOwner: LifecycleOwner) {
+	fun onActivityCreated() {
 		inject()
 		performArgumentExtraction()
-		super.onCreate(lifecycleOwner)
+		collectActionsFromVM()
 		initialize()
 	}
 
-	override fun onDestroy(lifecycleOwner: LifecycleOwner) {
-		super.onDestroy(lifecycleOwner)
-		performResourceCleanUp()
+	fun onActivityStarted() {
+		viewModel.onUIStarted()
 	}
 
-	override fun attachObservers(owner: LifecycleOwner) {
-		viewModel.actionEventLiveData.observeEvent(lifecycleOwner) { action ->
-			handleAction(action)
-		}
+	fun onActivityDestroyed() {
+		performResourceCleanUp()
 	}
 
 	/*------------------------------------- Private Methods --------------------------------------*/
@@ -138,6 +138,16 @@ interface ActionActivityUI<ViewModel : ActionViewModel<out ActionModel>> : Actio
 	private fun performArgumentExtraction() {
 		activity.intent?.let {
 			extractArguments(it)
+		}
+	}
+
+	/**
+	 * Collects the [com.droidboi.common.mvvm.utility.Event] emitted from [ViewModel] as an some
+	 * action to be performed in this [ActionView].
+	 */
+	private fun collectActionsFromVM() {
+		scope.launchWhenResumed {
+			collectActions()
 		}
 	}
 

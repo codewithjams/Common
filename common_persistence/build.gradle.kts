@@ -1,22 +1,15 @@
 plugins {
-    id(Plugins.commonLibraryModulePlugin)
-    id(Plugins.kotlinAnnotationProcessor)
+    id("java-library")
+    id("kotlin")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
 
-    implementation(Dependencies.Kotlin.coRoutines)
-    implementation(Dependencies.Google.Dagger.standardLibrary)
-    implementation(Dependencies.Google.Dagger.android)
-
-    api(Dependencies.JetPack.DataStore.standardLibrary)
-
-    kapt(Dependencies.Google.Dagger.androidProcessor)
-    kapt(Dependencies.Google.Dagger.compiler)
-
     testImplementation(Dependencies.JUnit.standardLibrary)
-
-    androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
-    androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

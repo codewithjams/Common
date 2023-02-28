@@ -589,11 +589,23 @@ object Dependencies {
 			private const val prefix = "$commonPrefix.okhttp3"
 
 			/**
+			 * [OkHttp3](https://square.github.io/okhttp/): Standard Library as HTTP client.
+			 */
+			const val standardLibrary =
+				"$prefix:okhttp:${Versions.Square.OkHttp3.standardLibrary}"
+
+			/**
 			 * [Logging Interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
 			 * is used to log HTTP request and response data.
 			 */
 			const val loggingInterceptor =
 				"$prefix:logging-interceptor:${Versions.Square.OkHttp3.loggingInterceptor}"
+
+			/**
+			 * [MockWebServer](https://square.github.io/okhttp/#mockwebserver): Mocks a Web Server.
+			 */
+			const val mockWebServer =
+				"$prefix:mockwebserver:${Versions.Square.OkHttp3.mockWebServer}"
 
 		}
 

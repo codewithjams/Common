@@ -6,12 +6,12 @@
 object Versions {
 
 	object Gradle {
-		const val version = "7.2.1"
+		const val version = "7.4.1"
 	}
 
 	object Kotlin {
-		const val standardLibrary = "1.6.21"
-		const val coRoutines = "1.6.2"
+		const val standardLibrary = "1.8.0"
+		const val coRoutines = "1.6.4"
 	}
 
 	object Android {
@@ -21,15 +21,15 @@ object Versions {
 	object JetPack {
 
 		object Activity {
-			const val standardLibrary = "1.4.0"
+			const val standardLibrary = "1.6.1"
 		}
 
 		object Annotation {
-			const val standardLibrary = "1.3.0"
+			const val standardLibrary = "1.6.0"
 		}
 
 		object AppCompat {
-			const val standardLibrary = "1.4.2"
+			const val standardLibrary = "1.6.1"
 		}
 
 		object CardView {
@@ -41,7 +41,7 @@ object Versions {
 		}
 
 		object Core {
-			const val standardLibrary = "1.8.0"
+			const val standardLibrary = "1.9.0"
 		}
 
 		object DataBinding {
@@ -57,7 +57,7 @@ object Versions {
 		}
 
 		object Lifecycle {
-			const val standardLibrary = "2.4.1"
+			const val standardLibrary = "2.5.1"
 		}
 
 		object MultiDex {
@@ -65,7 +65,7 @@ object Versions {
 		}
 
 		object Navigation {
-			const val standardLibrary = "2.4.2"
+			const val standardLibrary = "2.5.3"
 		}
 
 		object RecyclerView {
@@ -73,9 +73,9 @@ object Versions {
 		}
 
 		object Test {
-			const val coreKTX = "1.4.0"
-			const val jUnitExtensionKTX = "1.1.3"
-			const val espresso = "3.4.0"
+			const val coreKTX = "1.5.0"
+			const val jUnitExtensionKTX = "1.1.5"
+			const val espresso = "3.5.1"
 		}
 
 	}
@@ -83,7 +83,7 @@ object Versions {
 	object Google {
 
 		object Dagger {
-			const val standardLibrary = "2.42"
+			const val standardLibrary = "2.45"
 		}
 
 		object Firebase {
@@ -96,7 +96,7 @@ object Versions {
 		}
 
 		object Gson {
-			const val standardLibrary = "2.8.9"
+			const val standardLibrary = "2.10.1"
 		}
 
 		object MaterialDesign {
@@ -112,15 +112,17 @@ object Versions {
 	object Square {
 
 		object LeakCanary {
-			const val standardLibrary = "2.7"
+			const val standardLibrary = "2.10"
 		}
 
 		object Moshi {
-			const val standardLibrary = "1.12.0"
+			const val standardLibrary = "1.14.0"
 		}
 
 		object OkHttp3 {
-			const val loggingInterceptor = "4.9.2"
+			const val standardLibrary = "4.10.1"
+			const val loggingInterceptor = "4.10.0"
+			const val mockWebServer = "4.10.1"
 		}
 
 		object Picasso {

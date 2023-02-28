@@ -15,15 +15,13 @@ import com.droidboi.common.utility.resources.ResourceUtils
 import java.io.IOException
 import java.io.InputStream
 
-import javax.inject.Inject
-
 /**
- * Utility Class to provide all types of Resources from Android OS for this application.
+ * [ResourceUtils] implemented using [Context]
  *
  * @param context [Context] from which the resources will be accessed.
  * @author Ritwik Jamuar
  */
-class ResourceUtilsImpl @Inject constructor(private val context: Context) : ResourceUtils {
+class ContextResourceUtils(private val context: Context) : ResourceUtils {
 
 	/*-------------------------------------- Public Methods --------------------------------------*/
 

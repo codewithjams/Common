@@ -16,9 +16,15 @@ import com.droidboi.common.utility.networkCallback.data.NetworkData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-import javax.inject.Inject
-
-class NetworkConnectivityManagerImpl @Inject constructor(override val context: Context) :
+/**
+ * Implementation of [NetworkConnectivityManager].
+ *
+ * @param context Application's [Context] to instantiate different components
+ *   of [NetworkConnectivityManager].
+ *
+ * @author Ritwik Jamuar
+ */
+class NetworkConnectivityManagerImpl(override val context: Context) :
 	NetworkConnectivityManager {
 
 	/*---------------------------------------- Components ----------------------------------------*/

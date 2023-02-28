@@ -1,4 +1,4 @@
-package com.droidboi.common.repository
+package com.droidboi.common.rest.retrofit
 
 import org.junit.Test
 

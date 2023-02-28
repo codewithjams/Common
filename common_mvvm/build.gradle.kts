@@ -1,14 +1,18 @@
 plugins {
-	id(Plugins.commonLibraryModulePlugin)
+	id("java-library")
+	id("kotlin")
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
 
-	api(project(":common_lifecycle"))
+	implementation(Dependencies.Kotlin.coRoutinesCore)
+	implementation(Dependencies.JetPack.Annotation.standardLibrary)
 
 	testImplementation(Dependencies.JUnit.standardLibrary)
-
-	androidTestImplementation(Dependencies.JetPack.Test.jUnitExtensionKTX)
-	androidTestImplementation(Dependencies.JetPack.Test.espresso)
 
 }

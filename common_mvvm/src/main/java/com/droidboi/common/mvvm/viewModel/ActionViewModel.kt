@@ -2,11 +2,12 @@ package com.droidboi.common.mvvm.viewModel
 
 import androidx.annotation.MainThread
 
-import androidx.lifecycle.LiveData
-
 import com.droidboi.common.mvvm.model.ActionModel
 
 import com.droidboi.common.mvvm.utility.Event
+import kotlinx.coroutines.CoroutineScope
+
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * ViewModel contract based on Action Codes.
@@ -26,19 +27,15 @@ interface ActionViewModel<Model : ActionModel> {
 	 * Propagates any action via an [Event].
 	 *
 	 *
-	 * NOTE: Use this [LiveData] if you want to make sure the propagated Action stays unique
+	 * NOTE: Use this [StateFlow] if you want to make sure the propagated Action stays unique
 	 * in the closest propagations.
 	 */
-	val actionEventLiveData: LiveData<Event<Int>>
+	val actionEventFlow: StateFlow<Event<Int>>
 
 	/**
-	 * Propagates any action normally.
-	 *
-	 *
-	 * NOTE: Use this [LiveData] if you want to receive all the actions irrespective of whether same
-	 * Action gets propagated or not.
+	 * [CoroutineScope] of this [ActionViewModel] to perform any concurrent activity.
 	 */
-	val actionLiveData: LiveData<Int>
+	val scope: CoroutineScope
 
 	/*------------------------------------- Abstract Methods -------------------------------------*/
 

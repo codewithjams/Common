@@ -8,7 +8,7 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
- * [Plugin] containing the common build configuration of a Library Module [Project].
+ * [Plugin] containing the common build configuration of an Android Library Module [Project].
  *
  * @author Ritwik Jamuar
  */
@@ -17,7 +17,7 @@ class LibraryModulePlugin : Plugin<Project> {
 	override fun apply(target: Project) {
 
 		// Adding this Plugin configures the build-process of an Android Library.
-		target.plugins.apply(Plugins.library)
+		target.plugins.apply(Plugins.androidLibrary)
 
 		// Add this Plugin for supporting Kotlin with Android.
 		target.plugins.apply(Plugins.kotlinAndroid)

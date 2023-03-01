@@ -10,7 +10,7 @@ object Versions {
 	}
 
 	object Kotlin {
-		const val standardLibrary = "1.8.0"
+		const val standardLibrary = "1.8.10"
 		const val coRoutines = "1.6.4"
 	}
 
@@ -34,6 +34,12 @@ object Versions {
 
 		object CardView {
 			const val standardLibrary = "1.0.0"
+		}
+
+		object Compose {
+			const val composeKotlinCompilerExtensionVersion = "1.4.3"
+			const val ui = "1.3.3"
+			const val material = "1.3.1"
 		}
 
 		object ConstraintLayout {

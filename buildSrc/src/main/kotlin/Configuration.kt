@@ -8,7 +8,7 @@ object Configuration {
 	/**
 	 * Compile SDK Version.
 	 */
-	const val compileSDKVersion = 32
+	const val compileSDKVersion = 33
 
 	/**
 	 * Minimum SDK Version.
@@ -18,7 +18,7 @@ object Configuration {
 	/**
 	 * Target SDK Version.
 	 */
-	const val targetSDKVersion = 32
+	const val targetSDKVersion = 33
 
 	/**
 	 * Java Version for compilation.

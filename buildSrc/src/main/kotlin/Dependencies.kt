@@ -72,6 +72,12 @@ object Dependencies {
 			const val standardLibraryKTX =
 				"$prefix:activity-ktx:${Versions.JetPack.Activity.standardLibrary}"
 
+			/**
+			 * Standard Library along with [Compose] specifics implementation of [Activity].
+			 */
+			const val compose =
+				"$prefix:activity-compose:${Versions.JetPack.Activity.standardLibrary}"
+
 		}
 
 		/**
@@ -120,6 +126,77 @@ object Dependencies {
 			 */
 			const val standardLibrary =
 				"$prefix:cardview:${Versions.JetPack.CardView.standardLibrary}"
+
+		}
+
+		/**
+		 * [Compose](https://developer.android.com/jetpack/androidx/releases/compose):
+		 * Define your UI programmatically with composable functions that describe its shape
+		 * and data dependencies.
+		 */
+		object Compose {
+
+			private const val composePrefix = "$commonPrefix.compose"
+
+			/**
+			 * [Compose UI](https://developer.android.com/jetpack/androidx/releases/compose-ui):
+			 * Fundamental components of compose UI needed to interact with the device,
+			 * including layout, drawing, and input.
+			 */
+			object UI {
+
+				private const val prefix = "$composePrefix.ui"
+
+				/**
+				 * Standard Library providing core components of [UI].
+				 */
+				const val standardLibrary =
+					"$prefix:ui:${Versions.JetPack.Compose.ui}"
+
+				/**
+				 * Provide different tools of [UI].
+				 */
+				const val tooling =
+					"$prefix:ui-tooling:${Versions.JetPack.Compose.ui}"
+
+				/**
+				 * Provide preview tooling for [UI].
+				 */
+				const val toolingPreview =
+					"$prefix:ui-tooling-preview:${Versions.JetPack.Compose.ui}"
+
+				/**
+				 * Provides Test rules and transitive dependencies for testing [UI] components.
+				 */
+				const val testManifest =
+					"$prefix:ui-test-manifest:${Versions.JetPack.Compose.ui}"
+
+				/**
+				 * Provides components needed for `createAndroidComposeRule`,
+				 * but not `createComposeRule`.
+				 */
+				const val testJUnit4 =
+					"$prefix:ui-test-junit4:${Versions.JetPack.Compose.ui}"
+
+			}
+
+			/**
+			 * [Compose Material](https://developer.android.com/jetpack/androidx/releases/compose-material):
+			 * Build Jetpack Compose UIs with ready to use Material Design Components.
+			 * This is the higher level entry point of Compose, designed to provide components
+			 * that match those described at [www.material.io](www.material.io).
+			 */
+			object Material {
+
+				private const val prefix = "$composePrefix.material"
+
+				/**
+				 * Standard Library providing core components of [Material].
+				 */
+				const val standardLibrary =
+					"$prefix:material:${Versions.JetPack.Compose.material}"
+
+			}
 
 		}
 

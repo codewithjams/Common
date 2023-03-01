@@ -8,12 +8,22 @@ object Plugins {
 	/**
 	 * Gradle Plugin for indicating a Gradle Project as an Android Application.
 	 */
-	val application by lazy { "com.android.application" }
+	val androidApplication by lazy { "com.android.application" }
 
 	/**
 	 * Gradle Plugin for indicating a Gradle Project as an Android Library.
 	 */
-	val library by lazy { "com.android.library" }
+	val androidLibrary by lazy { "com.android.library" }
+
+	/**
+	 * Gradle Plugin for indicating a Gradle Project as a Java Library.
+	 */
+	val javaLibrary by lazy { "java-library" }
+
+	/**
+	 * Gradle Plugin for facilitating Kotlin.
+	 */
+	val kotlin by lazy { "kotlin" }
 
 	/**
 	 * Gradle Plugin for facilitating Kotlin options for Android module.
@@ -29,12 +39,17 @@ object Plugins {
 	 * Custom Gradle Plugin containing the common build configuration
 	 * for building an Android Application.
 	 */
-	val commonApplicationModulePlugin by lazy { "application-module-plugin" }
+	val androidApplicationModulePlugin by lazy { "android-application-module-plugin" }
 
 	/**
 	 * Custom Gradle Plugin containing the common build configuration
 	 * for building an Android Library.
 	 */
-	val commonLibraryModulePlugin by lazy { "library-module-plugin" }
+	val androidLibraryModulePlugin by lazy { "android-library-module-plugin" }
+
+	/**
+	 * Custom Gradle Plugin containing the common build configuration for building a Java Library.
+	 */
+	val javaLibraryModulePlugin by lazy { "java-library-module-plugin" }
 
 }

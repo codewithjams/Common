@@ -8,7 +8,7 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
- * [Plugin] containing the common build configuration of an Application Module [Project].
+ * [Plugin] containing the common build configuration of an Android Application Module [Project].
  *
  * @author Ritwik Jamuar
  */
@@ -17,7 +17,7 @@ class ApplicationModulePlugin : Plugin<Project> {
 	override fun apply(target: Project) {
 
 		// Adding this Plugin configures the build-process of an Android Application.
-		target.plugins.apply(Plugins.application)
+		target.plugins.apply(Plugins.androidApplication)
 
 		// Add this Plugin for supporting Kotlin with Android.
 		target.plugins.apply(Plugins.kotlinAndroid)

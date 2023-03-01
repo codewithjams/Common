@@ -8,14 +8,19 @@ gradlePlugin {
 
 	plugins {
 
-		register("library-module-plugin") {
-			id = "library-module-plugin"
+		register("android-library-module-plugin") {
+			id = "android-library-module-plugin"
 			implementationClass = "LibraryModulePlugin"
 		}
 
-		register("application-module-plugin") {
-			id = "application-module-plugin"
+		register("android-application-module-plugin") {
+			id = "android-application-module-plugin"
 			implementationClass = "ApplicationModulePlugin"
+		}
+
+		register("java-library-module-plugin") {
+			id = "java-library-module-plugin"
+			implementationClass = "JavaLibraryModulePlugin"
 		}
 
 	}
@@ -32,7 +37,7 @@ dependencies {
 	compileOnly(gradleApi())
 
 	implementation("com.android.tools.build:gradle:7.4.1")
-	implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
+	implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
 	implementation(kotlin("android-extensions"))
 
 }

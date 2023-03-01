@@ -2,11 +2,23 @@ package sample.ritwik.app.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 
-import androidx.databinding.DataBindingUtil
-
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+
+import androidx.activity.compose.setContent
+
+import androidx.compose.foundation.layout.fillMaxSize
+
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+
+import androidx.compose.runtime.Composable
+
+import androidx.compose.ui.Modifier
+
+import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -21,13 +33,13 @@ import dagger.android.AndroidInjection
 
 import sample.ritwik.app.R
 
-import sample.ritwik.app.databinding.ActivityMainBinding
-
 import sample.ritwik.app.mvvm.view.MainView
 
 import sample.ritwik.app.mvvm.viewModel.MainViewModel
 
 import sample.ritwik.app.mvvm.vmDelegate.MainViewModelDelegate
+
+import sample.ritwik.app.ui.theme.TestTheme
 
 import javax.inject.Inject
 
@@ -39,11 +51,6 @@ import javax.inject.Inject
 class MainActivity : BaseMVVMActivity<MainView>(), MainView {
 
 	/*---------------------------------------- Components ----------------------------------------*/
-
-	private var _binding: ActivityMainBinding? = null
-
-	private val binding: ActivityMainBinding
-		get() = _binding!!
 
 	@Inject
 	lateinit var vmFactory: VMFactory
@@ -78,11 +85,20 @@ class MainActivity : BaseMVVMActivity<MainView>(), MainView {
 	override var uiStarted: Boolean = false
 
 	override fun setUpViews() {
-		_binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+		setContent {
+			TestTheme {
+				// A surface container using the 'background' color from the theme
+				Surface(
+					modifier = Modifier.fillMaxSize(),
+					color = MaterialTheme.colors.background
+				) {
+					Greeting("Droid")
+				}
+			}
+		}
 	}
 
 	override fun cleanUpViews() {
-		_binding = null
 	}
 
 	override fun navigateToCommonFragment() {
@@ -93,4 +109,17 @@ class MainActivity : BaseMVVMActivity<MainView>(), MainView {
 		AndroidInjection.inject(this)
 	}
 
+}
+
+@Composable
+fun Greeting(name: String) {
+	Text(text = "Hello $name!")
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+	TestTheme {
+		Greeting("Android")
+	}
 }

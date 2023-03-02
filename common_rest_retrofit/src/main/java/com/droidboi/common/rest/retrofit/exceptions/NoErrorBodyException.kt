@@ -13,7 +13,27 @@ private const val ERROR_MESSAGE_ERROR_BODY_NOT_FOUND = "Error Body not found"
  */
 class NoErrorBodyException : RuntimeException() {
 
+	/*----------------------------------- Throwable Callbacks ------------------------------------*/
+
 	override val message: String
 		get() = ERROR_MESSAGE_ERROR_BODY_NOT_FOUND
+
+	/*------------------------------------- Object Callbacks -------------------------------------*/
+
+	override fun equals(other: Any?): Boolean {
+
+		if (other == null)
+			return false
+
+		if (other !is NoErrorBodyException)
+			return false
+
+		return true
+
+	}
+
+	override fun hashCode(): Int {
+		return javaClass.hashCode()
+	}
 
 }

@@ -13,7 +13,27 @@ private const val ERROR_MESSAGE_NO_RESPONSE = "No Response"
  */
 class NoResponseException : RuntimeException() {
 
+	/*----------------------------------- Throwable Callbacks ------------------------------------*/
+
 	override val message: String
 		get() = ERROR_MESSAGE_NO_RESPONSE
+
+	/*------------------------------------- Object Callbacks -------------------------------------*/
+
+	override fun equals(other: Any?): Boolean {
+
+		if (other == null)
+			return false
+
+		if (other !is NoResponseException)
+			return false
+
+		return true
+
+	}
+
+	override fun hashCode(): Int {
+		return javaClass.hashCode()
+	}
 
 }

@@ -68,7 +68,7 @@ interface RetrofitRESTCaller {
 		}.map { response ->
 			handleRESTResponse(response, process, errorConverter, errorHandler)
 		}.catch { throwable ->
-			handleRESTFailure<TypeProcessed, TypeError>(throwable, errorConverter, errorHandler)
+			emit(handleRESTFailure(throwable, errorConverter, errorHandler))
 		}
 
 		return flowOf(loadingFlow, restCallFlow).flattenConcat().flowOn(dispatcher)

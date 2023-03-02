@@ -126,9 +126,9 @@ object Versions {
 		}
 
 		object OkHttp3 {
-			const val standardLibrary = "4.10.1"
+			const val standardLibrary = "4.10.0"
 			const val loggingInterceptor = "4.10.0"
-			const val mockWebServer = "4.10.1"
+			const val mockWebServer = "4.10.0"
 		}
 
 		object Picasso {

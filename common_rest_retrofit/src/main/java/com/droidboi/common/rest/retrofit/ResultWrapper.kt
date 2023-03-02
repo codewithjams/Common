@@ -39,14 +39,6 @@ sealed class ResultWrapper<out T> {
 		object NetworkErrorConnection : Error()
 
 		/**
-		 * [Error] caused when SSL Handshake couldn't happen between Client & Server,
-		 * hence unable to establish a secure connection.
-		 *
-		 * @author Ritwik Jamuar
-		 */
-		object NetworkErrorSSLHandShake : Error()
-
-		/**
 		 * [Error] caused when something went wrong while the REST API Call performs
 		 * the IO operations.
 		 *

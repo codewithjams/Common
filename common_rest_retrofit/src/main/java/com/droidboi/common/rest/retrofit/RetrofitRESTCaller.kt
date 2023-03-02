@@ -17,8 +17,6 @@ import java.io.IOException
 
 import java.net.ConnectException
 
-import javax.net.ssl.SSLHandshakeException
-
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -139,7 +137,6 @@ interface RetrofitRESTCaller {
 	): ResultWrapper<TypeProcessed> {
 		when (throwable) {
 			is ConnectException -> return ResultWrapper.Error.NetworkErrorConnection
-			is SSLHandshakeException -> return ResultWrapper.Error.NetworkErrorSSLHandShake
 			is IOException -> return ResultWrapper.Error.NetworkErrorIO(throwable)
 			is HttpException -> {
 				try {

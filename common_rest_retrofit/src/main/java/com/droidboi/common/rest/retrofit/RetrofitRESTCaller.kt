@@ -16,6 +16,7 @@ import retrofit2.Response
 import java.io.IOException
 
 import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 import kotlin.coroutines.CoroutineContext
 
@@ -137,6 +138,7 @@ interface RetrofitRESTCaller {
 	): ResultWrapper<TypeProcessed> {
 		when (throwable) {
 			is ConnectException -> return ResultWrapper.Error.NetworkErrorConnection
+			is SocketTimeoutException -> return ResultWrapper.Error.NetworkErrorTimeOut
 			is IOException -> return ResultWrapper.Error.NetworkErrorIO(throwable)
 			is HttpException -> {
 				try {

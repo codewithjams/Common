@@ -39,6 +39,13 @@ sealed class ResultWrapper<out T> {
 		object NetworkErrorConnection : Error()
 
 		/**
+		 * [Error] caused when fetching response timed out.
+		 *
+		 * @author Ritwik Jamuar
+		 */
+		object NetworkErrorTimeOut : Error()
+
+		/**
 		 * [Error] caused when something went wrong while the REST API Call performs
 		 * the IO operations.
 		 *

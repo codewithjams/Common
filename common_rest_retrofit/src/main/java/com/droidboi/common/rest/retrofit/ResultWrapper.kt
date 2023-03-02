@@ -50,9 +50,11 @@ sealed class ResultWrapper<out T> {
 		 * [Error] caused when something went wrong while the REST API Call performs
 		 * the IO operations.
 		 *
+		 * @param throwable Instance of [Throwable] wrapping up the cause of failure of
+		 *   REST API Call.
 		 * @author Ritwik Jamuar
 		 */
-		object NetworkErrorIO : Error()
+		data class NetworkErrorIO(val throwable: Throwable) : Error()
 
 		/**
 		 * [Error] caused in the source server.

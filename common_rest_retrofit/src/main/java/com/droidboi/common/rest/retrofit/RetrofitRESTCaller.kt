@@ -140,7 +140,7 @@ interface RetrofitRESTCaller {
 		when (throwable) {
 			is ConnectException -> return ResultWrapper.Error.NetworkErrorConnection
 			is SSLHandshakeException -> return ResultWrapper.Error.NetworkErrorSSLHandShake
-			is IOException -> return ResultWrapper.Error.NetworkErrorIO
+			is IOException -> return ResultWrapper.Error.NetworkErrorIO(throwable)
 			is HttpException -> {
 				try {
 
